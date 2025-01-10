@@ -9,11 +9,11 @@ export default function Regisztracio(){
     const [password_confirmation, setPasswordConfirmation] = useState("");
 
     const navigate = useNavigate();
-
     const {loginReg, errors} = useAuthContext();
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    //összegyűjtjük az adatokat egyetlen objektumba
         const adat = {
             name:name,
             email:email,

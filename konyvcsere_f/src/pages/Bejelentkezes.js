@@ -10,8 +10,9 @@ export default function Bejelentkezes(){
     const {loginReg, errors} = useAuthContext();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //megakadályozza az alapértelmezett újratöltődést
 
+    //összegyűjtjük az adatokat egyetlen objektumba
     const adat={
         email:email,
         password:password,
@@ -21,6 +22,8 @@ export default function Bejelentkezes(){
     loginReg(adat, "/login");
     };
 
+    // value beállítása a state értékére
+    // state értékének módosítása ha változik a beviteli mező tartalma
     return(
         <div className="m-auto" style={{ maxWidth: "400px" }}>
       <h1 className="text-center">Bejelentkezés</h1>

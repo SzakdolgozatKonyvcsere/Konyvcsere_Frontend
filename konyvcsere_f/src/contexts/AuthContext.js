@@ -13,12 +13,17 @@ export const AuthProvider = ({children}) => {
         password:"",
         password_confirmation:"",
     });
+    //lekérjük a csrf tokent a backendről
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+    
+    //felhasználó adatainak lekérése
     const getUser = async () => {
         const {data} = await myAxios.get("/api/user");
         console.log(data)
         setUser(data);
     };
+
+    //elküldi a kijelentkezési kérelmet, majd törli a felhasználói adatokat
     const logout = async () => {
         await csrf();
 
@@ -28,11 +33,12 @@ export const AuthProvider = ({children}) => {
         });
     };
 
+    //elküldi a bejelentkezési v. regisztrációs kérelmet
     const loginReg = async ({ ...adat}, vegpont) => {
         //lekérem a csrf tokent
         await csrf();
         console.log(adat,vegpont);
-
+        
     try{
         await myAxios.post(vegpont, adat);
         console.log("sikerült!")
