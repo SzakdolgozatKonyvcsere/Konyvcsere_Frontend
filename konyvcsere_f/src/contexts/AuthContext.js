@@ -12,6 +12,10 @@ export const AuthProvider = ({children}) => {
         email:"",
         password:"",
         password_confirmation:"",
+        user_name:"",
+        tel:"",
+        city:"",
+        //img_url:"",
     });
     //lekérjük a csrf tokent a backendről
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
