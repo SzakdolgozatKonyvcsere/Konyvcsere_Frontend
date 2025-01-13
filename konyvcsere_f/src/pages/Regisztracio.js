@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function Regisztracio(){
-    const [name, setName] = useState("");
+    const [user_name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [password_confirmation, setPasswordConfirmation] = useState("");
-    const [user_name, setUserName] = useState("");
+    const [full_name, setUserName] = useState("");
     const [city, setCity] = useState("");
     const [tel, setTel] = useState("");
     //const [img_url, setImgUrl] = useState("");
@@ -19,11 +19,11 @@ export default function Regisztracio(){
         e.preventDefault();
     //összegyűjtjük az adatokat egyetlen objektumba
         const adat = {
-            name:name,
+            user_name:user_name,
             email:email,
             password:password,
             password_confirmation:password_confirmation,
-            user_name:user_name,
+            full_name:full_name,
             city:city,
             tel:tel,
             //img_url:img_url,
@@ -36,8 +36,8 @@ export default function Regisztracio(){
         <h1 className="text-center">Regisztráció</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-3 mt-3">
-            <label htmlFor="name" className="form-label">Név:</label>
-            <input type="text" value={name} onChange={(e) => {setName(e.target.value);}} className="form-control" id="name" placeholder="Név" name="name"/>
+            <label htmlFor="user_name" className="form-label">Felhaszálónév:</label>
+            <input type="text" value={user_name} onChange={(e) => {setName(e.target.value);}} className="form-control" id="user_name" placeholder="Felhaszálónév" name="user_name"/>
             <div>
               {errors.name && (<span className="text-danger">{errors.name[0]}</span>)}
             </div>
@@ -65,8 +65,8 @@ export default function Regisztracio(){
             </div>
           </div>
           <div className="mb-3 mt-3">
-            <label htmlFor="user_name" className="form-label">Felhasználó név:</label>
-            <input type="text" value={user_name} onChange={(e) => {setUserName(e.target.value);}} className="form-control" id="user_name" placeholder="Felhasználó név" name="user_name"/>
+            <label htmlFor="full_name" className="form-label">Név:</label>
+            <input type="text" value={full_name} onChange={(e) => {setUserName(e.target.value);}} className="form-control" id="full_name" placeholder="Név" name="full_name"/>
             <div>
               {errors.user_name && (<span className="text-danger">{errors.user_name[0]}</span>)}
             </div>

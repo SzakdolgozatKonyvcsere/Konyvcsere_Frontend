@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, use } from "react";
-import {myAxios} from "../api/axios";
+import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -8,11 +8,11 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [errors, setErrors] = useState({
-        name:"",
+        user_name:"",
         email:"",
         password:"",
         password_confirmation:"",
-        user_name:"",
+        full_name:"",
         tel:"",
         city:"",
         //img_url:"",

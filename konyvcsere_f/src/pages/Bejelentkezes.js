@@ -46,7 +46,7 @@ export default function Bejelentkezes(){
         <div className=" text-center">
           <button type="submit" className="btn btn-primary w-100">Login</button>
           <p>
-            Még nincs felhaszálóneve?
+            Még nincs fiókja?
             <Link className="nav-link text-info" to="/regisztracio">Regisztráció</Link>
           </p>
         </div>
