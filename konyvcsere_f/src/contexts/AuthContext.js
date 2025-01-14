@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, use } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,7 @@ export const AuthProvider = ({children}) => {
         console.log(data)
         setUser(data);
     };
+
 
     //elküldi a kijelentkezési kérelmet, majd törli a felhasználói adatokat
     const logout = async () => {
