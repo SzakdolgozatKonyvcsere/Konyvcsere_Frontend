@@ -1,5 +1,4 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { createContext, useState, useContext, use, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -37,9 +36,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-useEffect(()=>{
-    getUser()
-},[])
+    useEffect(()=>{
+        getUser()
+    },[])
 
     //elküldi a kijelentkezési kérelmet, majd törli a felhasználói adatokat
     const logout = async () => {
@@ -50,6 +49,13 @@ useEffect(()=>{
             console.log(resp);
         });
     };
+
+    useEffect(()=>{
+        if (!user) {
+            getUser() // user oldal frissitesenel elveszett eddig, ez megelozi azt
+        }
+     },[getUser])
+    
 
     //elküldi a bejelentkezési v. regisztrációs kérelmet
     const loginReg = async ({ ...adat }, vegpont) => {
@@ -68,32 +74,15 @@ useEffect(()=>{
             }
         }
     };
-        console.log(adat,vegpont);
-        
-    try{
-        await myAxios.post(vegpont, adat);
-        console.log("sikerült!")
-        getUser()
-        navigate("/");
-    }catch (error){
-        console.log(error);
-        if (error.response.status === 422){
-            setErrors(error.response.data.errors);
-        }
-    }
- };
-
- useEffect(()=>{
-    if (!user) {
-        getUser() // user oldal frissitesenel elveszett eddig, ez megelozi azt
-    }
- },[getUser])
 
     return (
         <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
             {children}
         </AuthContext.Provider>
     );
+};
 export default function useAuthContext() {
     return useContext(AuthContext);
 }
+
+  
