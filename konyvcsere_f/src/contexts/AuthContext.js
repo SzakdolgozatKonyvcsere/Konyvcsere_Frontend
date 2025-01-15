@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, use } from "react";
+import { createContext, useState, useContext, use, useEffect } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -55,6 +55,12 @@ export const AuthProvider = ({children}) => {
         }
     }
  };
+
+ useEffect(()=>{
+    if (!user) {
+        getUser() // user oldal frissitesenel elveszett eddig, ez megelozi azt
+    }
+ },[getUser])
 
  return (
     <AuthContext.Provider value={{logout, loginReg, errors, getUser, user}}>
