@@ -6,7 +6,7 @@ export default function Bejelentkezes(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigate = useNavigate();
+  
     const {loginReg, errors} = useAuthContext();
 
     const handleSubmit = async (e) => {

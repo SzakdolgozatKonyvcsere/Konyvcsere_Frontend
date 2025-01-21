@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         //img_url:"",
     });
     //lekérjük a csrf tokent a backendről
-    const csrf = () => myAxios.get("/sanctum/csrf-cookie", { withCredentials: true });
+    const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
     //felhasználó adatainak lekérése
     const getUser = async () => {
@@ -36,9 +36,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    useEffect(()=>{
-        getUser()
-    },[])
+ 
 
     //elküldi a kijelentkezési kérelmet, majd törli a felhasználói adatokat
     const logout = async () => {
@@ -50,11 +48,7 @@ export const AuthProvider = ({ children }) => {
         });
     };
 
-    useEffect(()=>{
-        if (!user) {
-            getUser() // user oldal frissitesenel elveszett eddig, ez megelozi azt
-        }
-     },[getUser])
+
     
 
     //elküldi a bejelentkezési v. regisztrációs kérelmet
