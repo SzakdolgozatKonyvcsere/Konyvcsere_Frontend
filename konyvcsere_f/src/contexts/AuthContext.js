@@ -19,12 +19,12 @@ export const AuthProvider = ({ children }) => {
         //img_url:"",
     });
     //lekérjük a csrf tokent a backendről
-    const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+    const csrf = () => myAxios.get("/sanctum/csrf-cookie", { withCredentials: true });
 
     //felhasználó adatainak lekérése
     const getUser = async () => {
         try {
-            const { data } = await myAxios.get("/api/user");
+            const { data } = await myAxios.get("/api/user/");
             console.log(data)
     
             setUser(data);
