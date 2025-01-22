@@ -12,7 +12,6 @@ export default function Regisztracio(){
     const [tel, setTel] = useState("");
     //const [img_url, setImgUrl] = useState("");
 
-    const navigate = useNavigate();
     const {loginReg, errors} = useAuthContext();
     
     const handleSubmit = async (e) => {
