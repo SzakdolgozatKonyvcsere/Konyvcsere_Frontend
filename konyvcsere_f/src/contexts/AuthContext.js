@@ -17,9 +17,17 @@ export const AuthProvider = ({ children }) => {
 
   //bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
-    const { data } = await myAxios.get("/api/user");
-    console.log(data)
-    setUser(data);
+    // megpróbál auto. bejelentkeztetni
+    // lefut a getUser valahol, akkor is ha nincs bejelentkezve a felhasznalo
+    // ha nem 401 unauthorized hibát kap hanem valami mást, kiírja
+    try {
+      const { data } = await myAxios.get("/api/user");
+      setUser(data);
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba! " + error.message);
+      }
+    }
   };
 
   const logout = async () => {
@@ -27,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
     myAxios.post("/logout").then((resp) => {
       setUser(null);
-      console.log(resp);
+      console.log(resp + "skibidi");
     });
   };
 
