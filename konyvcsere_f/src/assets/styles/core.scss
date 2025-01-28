@@ -2,14 +2,24 @@
 
 .App{
     max-width: $max-width;
+    
 }
 
+body{
+    background-color: $primary-background-color;
+}
 #root {
+    
     .navbar {
         color: $primary-text-color;
+        width: 100%;
+        padding: 0;
         
         .container-fluid {
             background-color: plum;
+           
+
+
             .navbar-nav {
                 
             }
@@ -19,4 +29,5 @@
             }
         }
     }
+
 }
