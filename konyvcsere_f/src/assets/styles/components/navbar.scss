@@ -1,0 +1,30 @@
+.navbar {
+    color: $primary-text-color;
+    width: 100%;
+    padding: 0px;
+
+    .container-fluid {
+        background-color: $secondary-background-color;
+        padding: 10px;
+
+
+        .navbar-nav {
+            
+            .navbar-item {
+                &:hover {
+                    opacity: 85%;
+                    background-color: #d67bd6;
+                }
+
+                &:active {
+                    background-color: #d890d8;
+                }
+                .nav-link {
+
+                }
+            }
+        }
+
+        
+    }
+}

@@ -1,38 +1,71 @@
 @import 'variables';
+$assetPath: "/assets/kepek/";
+@import 'components/navbar.scss';
 
-.App{
+.App {
     max-width: $max-width;
-    
+
 }
 
-body{
+body {
     background-color: $primary-background-color;
 }
 
 #root {
-    
+    .main {
+        display: flex;
+        height: 100vh;
+    }
+
     .navbar {
         color: $primary-text-color;
         width: 100%;
-        padding-top: 0;
-        padding-bottom: 0;
-        
+        padding: 0;
+
         .container-fluid {
             background-color: plum;
-           
 
 
-            .navbar-nav {
-                
-            }
 
-            .navbar-item {
+            .navbar-nav {}
 
-            }
+            .navbar-item {}
         }
     }
-    .kezdo{
-        margin: 30px;
-    }
+    
+    
 
+}
+
+.container {
+    display: flex;
+    height: 30vh;
+}
+
+article {
+    flex: 0 0 50vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(#{$assetPath}/kep3.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50vh;
+    height: 50vh;
+    margin-left: -25vh; 
+}
+
+.aside {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+    text-align: right; 
+}
+
+.p {
+    text-align: right; 
+    white-space: normal;
 }
