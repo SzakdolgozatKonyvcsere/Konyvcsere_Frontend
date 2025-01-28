@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'components/navbar.scss';
 
 .App{
     max-width: $max-width;
@@ -10,24 +11,6 @@ body{
 }
 #root {
     
-    .navbar {
-        color: $primary-text-color;
-        width: 100%;
-        padding: 0;
-        
-        .container-fluid {
-            background-color: plum;
-           
-
-
-            .navbar-nav {
-                
-            }
-
-            .navbar-item {
-                
-            }
-        }
-    }
+    
 
 }
