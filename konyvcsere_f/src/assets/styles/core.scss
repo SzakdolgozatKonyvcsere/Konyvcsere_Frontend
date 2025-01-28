@@ -1,5 +1,6 @@
 @import 'variables';
 $assetPath: "/assets/kepek/";
+@import 'components/navbar.scss';
 
 .App {
     max-width: $max-width;
@@ -31,6 +32,8 @@ body {
             .navbar-item {}
         }
     }
+    
+    
 
 }
 
@@ -40,7 +43,7 @@ body {
 }
 
 article {
-    flex: 0 0 50vh; /* A kép szélessége */
+    flex: 0 0 50vh; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,17 +52,17 @@ article {
     background-repeat: no-repeat;
     width: 50vh;
     height: 50vh;
-    margin-left: -25vh; /* Ha a képet balra szeretnéd tolni */
+    margin-left: -25vh; 
 }
 
 .aside {
     display: flex;
-    justify-content: flex-start; /* A szöveg igazítása */
+    justify-content: flex-start; 
     align-items: center;
     flex: 1;
     padding: 20px;
     background-color: #f4f4f4;
-    text-align: right; /* A szöveg jobbra igazítása */
+    text-align: right; 
 }
 
 .p {

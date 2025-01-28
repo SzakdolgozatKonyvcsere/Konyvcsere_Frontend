@@ -22,6 +22,11 @@ Csatlakozz hozzánk, és hozd létre saját könyvcsere-listádat! Cserélj, fed
         <p>Bejelentkezett felhasználó: {user==null?"Nincs bejelentkezett felhasználó":user.full_name}</p>
         </div>
         </section>
+        <main className="body__main">
+            <div>
+                <h1>Kezdőlap</h1>
+                <p>Bejelentkezett felhasználó: {user==null?"Nincs bejelentkezett felhasználó":user.full_name}</p>
+            </div>
         </main>
     )
 }
