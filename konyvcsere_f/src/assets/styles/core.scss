@@ -1,6 +1,8 @@
+@import 'colors';
 @import 'variables';
-$assetPath: "/assets/kepek/";
 @import 'components/navbar.scss';
+$assetPath: "/assets/kepek/";
+
 
 .App {
     max-width: $max-width;
@@ -17,15 +19,19 @@ body {
     color: $text-color;
     margin: 0;
     padding: 0;
+    background-color: $primary-background-color;
+    font-size: 15px;
 }
 
 #root {
-    .main {
+    .main-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px;
 
+        height: 100vh;
+        width: 90%;
     }
 
     .navbar {
@@ -54,6 +60,13 @@ body {
         align-items: center;
         justify-content: space-between;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: $primary-background-color;
+            background-image: linear-gradient($secondary-background-color, $primary-background-color);
+            background-repeat: no-repeat;
+            background-size: cover; // ha nem jo torles
+
+
+            .navbar-nav {}
 
             .navbar-item {}
         }
@@ -117,4 +130,18 @@ ul {
         font-size: 16px;
         line-height: 1.6;
     }
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+p {
+    text-align: center; 
+    white-space: normal;
+}
 }
