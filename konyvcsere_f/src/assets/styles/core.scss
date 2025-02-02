@@ -6,28 +6,54 @@ $assetPath: "/assets/kepek/";
     max-width: $max-width;
 
 }
-
+$primary-color: #5E4B56;
+$secondary-color: #ae9c7cba;
+$accent-color: #A67F78;
+$background-color: #cdc0aaec;
+$text-color: #2E2E2E;
 body {
-    background-color: $primary-background-color;
+    background-color: $background-color;
+    font-family: 'Poppins', sans-serif;
+    color: $text-color;
+    margin: 0;
+    padding: 0;
 }
 
 #root {
     .main {
         display: flex;
-        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+
     }
 
     .navbar {
-        color: $primary-text-color;
+        background-color: #d8a7b1;
+        color: black;
         width: 100%;
-        padding: 0;
+        padding: 15px 0;
+
+        .navbar-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
         .container-fluid {
-            background-color: plum;
-
-
-
-            .navbar-nav {}
+        background-color: $primary-color;
+        width: 100%;
+        padding: 15px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
             .navbar-item {}
         }
@@ -36,36 +62,59 @@ body {
     
 
 }
+.kezdo {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: $secondary-color;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
 
 .container {
     display: flex;
-    height: 30vh;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 article {
-    flex: 0 0 50vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url(#{$assetPath}/kep3.jpg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 50vh;
+    flex: 1;
+    min-width: 300px;
     height: 50vh;
-    margin-left: -25vh; 
+    display: flex;
+    background-image: url("#{$assetPath}/kep2.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+   
 }
 
 .aside {
-    display: flex;
-    justify-content: flex-start; 
-    align-items: center;
     flex: 1;
-    padding: 20px;
-    background-color: #f4f4f4;
-    text-align: right; 
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+h2 {
+    color: $primary-color;
 }
 
 .p {
-    text-align: right; 
-    white-space: normal;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: none; 
+    padding: 0;
+
+    li {
+        font-size: 16px;
+        line-height: 1.6;
+    }
 }
