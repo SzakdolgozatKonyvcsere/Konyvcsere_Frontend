@@ -63,7 +63,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getUser();
+    if (!user) {
+      getUser()
+    }
   }, [])
 
   return (
