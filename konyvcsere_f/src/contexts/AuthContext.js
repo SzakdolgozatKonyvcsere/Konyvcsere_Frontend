@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [konyvekLista, setKonyvekLista]=useState([]);
+
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({
@@ -14,6 +16,34 @@ export const AuthProvider = ({ children }) => {
     password_confirmation: "",
   });
   const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+
+  //könyvek listája
+  const getAdat = async (vegpont, callbackFv) => {
+    try{
+      const response = await myAxios.get(vegpont);
+      console.log("adat: ", response.data);
+      callbackFv(response.data)
+    }catch (err){
+      console.log("Hiba", err);
+    }finally{
+
+    }
+  };
+
+  const postAdat = async (vegpont, adat) => {
+    try {
+        const response = await myAxios.post(vegpont, adat);
+        console.log("adat: ", response.data);
+
+    } catch (err) {
+        console.log("Hiba", err);
+    } finally {
+    }
+};
+
+
+
+
 
   //bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
@@ -64,10 +94,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     getUser();
+    getAdat("/api/osszes-konyv", setKonyvekLista)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
+    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user, konyvekLista, setKonyvekLista, getAdat, postAdat }}>
       {children}
     </AuthContext.Provider>
   );
