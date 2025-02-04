@@ -19,7 +19,7 @@ function TablazatKonyvek() {
                     </tr>
                 </thead>
                 <tbody>
-                    {konyvekLista.map((konyvek, key)=>(
+                  {   konyvekLista.map((konyvek, key)=>(
                         <SorKonyv key={key} konyvek={konyvek}/>
                 ))}
                 </tbody>

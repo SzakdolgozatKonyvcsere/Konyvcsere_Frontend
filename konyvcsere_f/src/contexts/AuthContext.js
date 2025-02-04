@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
     getAdat("/api/osszes-konyv", setKonyvekLista)
     if (!user) {
       getUser()
-    }
+    } 
   }, [])
 
   return (
