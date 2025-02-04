@@ -10,7 +10,7 @@ export default function Kezdolap(){
         
         
             {/*<h1>Kezdőlap</h1>*/}
-            <section class="container">
+            <section className="container">
                 <article>
                 
                 </article>

@@ -8,6 +8,8 @@ import NavigacioAdmin from '../components/NavigacioAdmin'
 export default function AdminLayout() {
     const { user } = useAuthContext();
     return (
-        user && user.role === 0 ? <> <NavigacioAdmin /> <Outlet /> </> : <Navigate to="/bejelentkezes"></Navigate>
+        user && user.role === 0 ? <> <NavigacioAdmin /> <UserTablazatAdmin /> <Outlet /> </> : <Navigate to="/bejelentkezes"></Navigate>
+        
+
     )
 }
