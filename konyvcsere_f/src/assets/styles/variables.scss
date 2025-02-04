@@ -1,4 +1,25 @@
-$primary-text-color: #000000;
-$secondary-text-color: #616161;
-$primary-background-color: bisque;
+@import 'colors';
+
+
+// M E R T E K E G Y S E G E K
 $max-width: 1200px;
+
+// T O R E S P O N T O K
+$small-screen: 480px;  // Mobil
+$medium-screen: 768px; // Tablet
+$large-screen: 1024px; // Kis Monitor
+$big-screen: 1440px;   // Nagy Monitor
+
+/*      P é l d a
+body {
+    font-size: 16px;
+  
+    @media (max-width: $medium-screen) {
+      font-size: 14px; // Smaller font for tablets
+    }
+  
+    @media (max-width: $small-screen) {
+      font-size: 12px; // Even smaller for mobile
+    }
+}
+*/
