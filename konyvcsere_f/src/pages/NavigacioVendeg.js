@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 //dinamikus navigáció
-export default function Navigacio(){
+export default function NavigacioVendeg(){
     const {user,logout} = useAuthContext();
 
     return(
