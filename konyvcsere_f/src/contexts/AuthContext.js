@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [konyvekLista, setKonyvekLista]=useState([]);
@@ -47,9 +47,6 @@ export const AuthProvider = ({ children }) => {
 
   //bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
-    // megpróbál auto. bejelentkeztetni
-    // lefut a getUser valahol, akkor is ha nincs bejelentkezve a felhasznalo
-    // ha nem 401 unauthorized hibát kap hanem valami mást, kiírja
     try {
       const { data } = await myAxios.get("/api/user");
       setUser(data);
@@ -80,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       //sikeres bejelentkezés/regisztráció esetén
       //Lekérdezzük a usert
       //await getUser();
-      //elmegyünk  a kezdőlapra
+      //elmegyünk a kezdőlapra
       await getUser()
       navigate("/");
       

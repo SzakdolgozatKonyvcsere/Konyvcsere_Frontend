@@ -10,7 +10,6 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
 
     function App() {
         const { user } = useAuthContext(); 
-        console.log(user)
       return (
           <Routes>
               {/* Vendég layout */}
