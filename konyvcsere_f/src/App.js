@@ -21,16 +21,36 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
                     </Route>
                 )}
 
-                {/* Admin és User ugyanazon útvonalon */}
+                {/* Admin és User útvonalai */}
                 {user && (
                     <Route                   
                         element={                     
-                                <AdminLayout />
-                           
+                                <AdminLayout />                            
                         }
                     >
                           <Route path="/" element={<Kezdolap />} />
                         <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+                    </Route>
+                     )}
+                
+                {/* Admin specifikus útvonalak */}
+                {user && user.role === 0 && (
+                    <Route                   
+                        element={                     
+                                <AdminLayout />                            
+                        }
+                    >
+                    </Route>
+                     )}
+
+                {/* User specifikus útvonalak */}
+                {user && user.role === 1 && (
+                    <Route                   
+                        element={                     
+                                <UserLayout />
+                            
+                        }
+                    >
                     </Route>
                      )}
           </Routes>
