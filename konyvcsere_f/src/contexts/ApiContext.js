@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
-const ApiContext = createContext();
+export const ApiContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-export default function useAuthContext() {
-  return useContext(AuthContext);
+export default function useApiContext() {
+  return useContext(ApiContext);
 }
+
