@@ -1,7 +1,19 @@
 import useAuthContext from "../contexts/AuthContext";
+import { useState, useEffect } from "react";
 
 export default function Kezdolap(){
     const {user} = useAuthContext();
+
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState(null);
+    
+      useEffect(() => {
+        setLoading(true);
+        if (user !== null) {
+          setLoading(false);
+        }
+      }, [user]);
+  
 
     //ellenőrizzük van-e bejelentkezett felhasználó
     return(

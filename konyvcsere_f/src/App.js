@@ -7,55 +7,38 @@ import AdminLayout from "./layouts/AdminLayout";
 import UserLayout from "./layouts/UserLayout";
 import useAuthContext from "./contexts/AuthContext";
 import TablazatKonyvek from "./components/TablazatKonyvek";
+import Loader from "./components/Loader";
+import { myAxios } from "./api/axios";
 
-    function App() {
-        const { user } = useAuthContext(); 
-      return (
-          <Routes>
-              {/* Vendég layout */}
-              {!user && (
-                    <Route element={<VendegLayout />}>
-                        <Route path="/" element={<Kezdolap />} />
-                        <Route path="bejelentkezes" element={<Bejelentkezes />} />
-                        <Route path="regisztracio" element={<Regisztracio />} />
-                    </Route>
-                )}
+function App() {
+  const { user } = useAuthContext();
 
-                {/* Admin és User útvonalai */}
-                {user && (
-                    <Route                   
-                        element={                     
-                                <AdminLayout />                            
-                        }
-                    >
-                          <Route path="/" element={<Kezdolap />} />
-                        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
-                    </Route>
-                     )}
-                
-                {/* Admin specifikus útvonalak */}
-                {user && user.role === 0 && (
-                    <Route                   
-                        element={                     
-                                <AdminLayout />                            
-                        }
-                    >
-                    </Route>
-                     )}
+  return (
+    <Routes>
+      {/* Vendég layout */}
+      {!user && (
+        <Route element={<VendegLayout />}>
+          <Route path="/" element={<Kezdolap />} />
+          <Route path="bejelentkezes" element={<Bejelentkezes />} />
+          <Route path="regisztracio" element={<Regisztracio />} />
+        </Route>
+      )}
 
-                {/* User specifikus útvonalak */}
-                {user && user.role === 1 && (
-                    <Route                   
-                        element={                     
-                                <UserLayout />
-                            
-                        }
-                    >
-                    </Route>
-                     )}
-          </Routes>
-        
-      );
-  }
-  
-  export default App;
+      {/* Admin és User útvonalai */}
+      {user && (
+        <Route element={<AdminLayout />}>
+          <Route path="/" element={<Kezdolap />} />
+          <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+        </Route>
+      )}
+
+      {/* Admin specifikus útvonalak */}
+      {user && user.role === 0 && <Route element={<AdminLayout />}></Route>}
+
+      {/* User specifikus útvonalak */}
+      {user && user.role === 1 && <Route element={<UserLayout />}></Route>}
+    </Routes>
+  );
+}
+
+export default App;
