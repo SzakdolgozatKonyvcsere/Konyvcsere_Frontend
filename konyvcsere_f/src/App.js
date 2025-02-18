@@ -24,19 +24,17 @@ function App() {
         </Route>
       )}
 
-      {/* Admin és User útvonalai */}
-      {user && (
-        <Route element={<AdminLayout />}>
-          <Route path="/" element={<Kezdolap />} />
-          <Route path="osszeskonyv" element={<TablazatKonyvek />} />
-        </Route>
-      )}
-
       {/* Admin specifikus útvonalak */}
-      {user && user.role === 0 && <Route element={<AdminLayout />}></Route>}
+      {user && user.role === 0 && <Route element={<AdminLayout />}>
+        <Route path="/" element={<Kezdolap />} />
+        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+      </Route>}
 
       {/* User specifikus útvonalak */}
-      {user && user.role === 1 && <Route element={<UserLayout />}></Route>}
+      {user && user.role === 1 && <Route element={<UserLayout />}>
+        <Route path="/" element={<Kezdolap />} />
+        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+      </Route>}
     </Routes>
   );
 }
