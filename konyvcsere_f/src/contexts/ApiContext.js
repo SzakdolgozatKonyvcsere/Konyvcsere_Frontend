@@ -7,7 +7,7 @@ export const ApiContext = createContext("");
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
   
-  const getBooks = async () => {
+  //const getBooks = async () => {
   const [userLista, setUserLista]=useState([]);
 
   /*const getBooks = async () => {
@@ -44,7 +44,7 @@ export const ApiProvider = ({ children }) => {
 }
 
 useEffect(()=>{
-  getUsers("osszes_user", setUserLista)
+  getUsers("/api/admin/users", setUserLista)
   
 },[])
 
@@ -55,6 +55,7 @@ useEffect(()=>{
     </ApiContext.Provider>
   );
 };
+
 export default function useApiContext() {
   return useContext(ApiContext);
 }
