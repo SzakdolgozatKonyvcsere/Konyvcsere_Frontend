@@ -3,7 +3,7 @@ import { AllUserContext } from '../contexts/AllUsersContext'
 import {useContext} from 'react'
 import UserSorAdmin from './UserSorAdmin';
 
-export default function TablazatReceptek() {
+export default function UserTablazatAdmin() {
     const {userLista}=useContext(AllUserContext);
     
   return (
@@ -29,7 +29,7 @@ export default function TablazatReceptek() {
             </tr>
         </thead>
         <tbody>
-            {receptLista.map((user)=>{
+            {userLista.map((user)=>{
                 return <UserSorAdmin user={user} key={user.id} />
             })}
         </tbody>

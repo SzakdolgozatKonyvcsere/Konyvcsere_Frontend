@@ -1,14 +1,20 @@
 
 
 import useApiContext from "../contexts/ApiContext";
+import UserTablazatAdmin from "../components/UserTablazatAdmin";
 
 export default function UsersTablazatAdmin() {
      const { user } = useApiContext(); 
 
     return (
-        <div>
-            <h1>Táblátat Összes User - Admin</h1>
-            <p>Bejelentkezett felhasználó: { user==null?"Nincs bejelentkezett felhasználó!":user.name }</p>
-        </div>
+        <main>
+            <h1>Táblázat Összes User - Admin</h1>
+            <div>
+                
+                <UserTablazatAdmin />
+                {/*<p>Bejelentkezett felhasználó: { user==null?"Nincs bejelentkezett felhasználó!":user.name }</p>*/}
+            </div>
+        </main>
+       
     );
 }

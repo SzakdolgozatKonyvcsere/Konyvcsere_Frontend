@@ -37,10 +37,12 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
                 {user && user.role === 0 && (
                     <Route                   
                         element={                     
-                                <AdminLayout />                            
+                                <AdminLayout />
+                                                            
                         }
                     >
                     </Route>
+                    
                      )}
 
                 {/* User specifikus útvonalak */}
