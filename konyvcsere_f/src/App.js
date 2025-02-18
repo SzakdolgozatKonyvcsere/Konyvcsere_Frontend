@@ -28,7 +28,8 @@ function App() {
 
       {/* Admin specifikus útvonalak */}
       {user && user.role === 0 && <Route element={<AdminLayout />}>
-        <Route path="/" element={<UsersTablazatAdmin />} />
+        <Route path="/" element={<Kezdolap />} />
+        <Route path="osszesuser" element={<UsersTablazatAdmin />} />
         {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
       </Route>}
 
