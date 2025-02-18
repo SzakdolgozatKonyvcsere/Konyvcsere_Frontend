@@ -5,5 +5,5 @@ import NavigacioUser from "../pages/NavigacioUser";
 
 export default function UserLayout() {
   const { user } = useAuthContext();
-    return user && user.role === 1 ?  <>  <NavigacioUser /> <Outlet /> </> : <Navigate to="/bejelentkezes" />;
+    return user && user.role === 1 ?  <> <NavigacioUser /> <Outlet /> </> : <Navigate to="/bejelentkezes" />;
 }
