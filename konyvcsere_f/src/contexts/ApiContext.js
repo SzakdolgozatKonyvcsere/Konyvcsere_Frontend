@@ -6,6 +6,8 @@ export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
+  
+  const getBooks = async () => {
   const [userLista, setUserLista]=useState([]);
 
   /*const getBooks = async () => {
