@@ -12,6 +12,7 @@ import VendegLayout from "./layouts/VendegLayout";
                   <Route path="bejelentkezes" element={<Bejelentkezes />} />
                   <Route path="regisztracio" element={<Regisztracio />} />
                 
+                
               </Route>
           </Routes>
         
