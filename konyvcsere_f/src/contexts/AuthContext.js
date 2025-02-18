@@ -2,9 +2,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [konyvekLista, setKonyvekLista]=useState([]);
+
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({
@@ -15,11 +17,36 @@ export const AuthProvider = ({ children }) => {
   });
   const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
+  //könyvek listája
+  const getAdat = async (vegpont, callbackFv) => {
+    try{
+      const response = await myAxios.get(vegpont);
+      console.log("adat: ", response.data);
+      callbackFv(response.data)
+    }catch (err){
+      console.log("Hiba", err);
+    }finally{
+
+    }
+  };
+
+  const postAdat = async (vegpont, adat) => {
+    try {
+        const response = await myAxios.post(vegpont, adat);
+        console.log("adat: ", response.data);
+
+    } catch (err) {
+        console.log("Hiba", err);
+    } finally {
+    }
+};
+
+
+
+
+
   //bejelentkezett felhasználó adatainak lekérdezése
   const getUser = async () => {
-    // megpróbál auto. bejelentkeztetni
-    // lefut a getUser valahol, akkor is ha nincs bejelentkezve a felhasznalo
-    // ha nem 401 unauthorized hibát kap hanem valami mást, kiírja
     try {
       const { data } = await myAxios.get("/api/user");
       setUser(data);
@@ -50,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       //sikeres bejelentkezés/regisztráció esetén
       //Lekérdezzük a usert
       //await getUser();
-      //elmegyünk  a kezdőlapra
+      //elmegyünk a kezdőlapra
       await getUser()
       navigate("/");
       
@@ -63,13 +90,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    getAdat("/api/osszes-konyv", setKonyvekLista)
     if (!user) {
       getUser()
-    }
+    } 
   }, [])
 
   return (
-    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
+    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user, konyvekLista, setKonyvekLista, getAdat, postAdat }}>
       {children}
     </AuthContext.Provider>
   );
