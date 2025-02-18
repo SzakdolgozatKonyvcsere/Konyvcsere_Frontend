@@ -33,10 +33,6 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
                     </Route>
                      )}
                 
-<<<<<<< HEAD
-                
-              </Route>
-=======
                 {/* Admin specifikus útvonalak */}
                 {user && user.role === 0 && (
                     <Route                   
@@ -57,7 +53,6 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
                     >
                     </Route>
                      )}
->>>>>>> 1060421af9726bf8fbd1d68b87b8053c1dbc5f21
           </Routes>
         
       );
