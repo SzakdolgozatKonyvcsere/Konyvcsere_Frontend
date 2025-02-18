@@ -44,7 +44,7 @@ export const ApiProvider = ({ children }) => {
 }
 
 useEffect(()=>{
-  getUsers("/api/admin/users", setUserLista)
+  getUsers("/api/users", setUserLista)
   
 },[])
 
