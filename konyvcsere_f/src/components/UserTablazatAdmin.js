@@ -2,9 +2,10 @@ import React from 'react'
 import { AllUserContext } from '../contexts/AllUsersContext'
 import {useContext} from 'react'
 import UserSorAdmin from './UserSorAdmin';
+import { ApiContext } from '../contexts/ApiContext';
 
-export default function TablazatReceptek() {
-    const {userLista}=useContext(AllUserContext);
+export default function UserTablazatAdmin() {
+    const {userLista}=useContext(ApiContext);
     
   return (
     <div className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -29,7 +30,7 @@ export default function TablazatReceptek() {
             </tr>
         </thead>
         <tbody>
-            {receptLista.map((user)=>{
+            {userLista.map((user)=>{
                 return <UserSorAdmin user={user} key={user.id} />
             })}
         </tbody>

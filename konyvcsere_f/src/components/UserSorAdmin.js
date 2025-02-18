@@ -9,7 +9,7 @@ export default function UserSorAdmin(props){
         <>
       <tr>
         <td scope="col">
-            {props.user.nev}
+            {props.user.name}
         </td>
         <td scope="col">
             {props.user.email}

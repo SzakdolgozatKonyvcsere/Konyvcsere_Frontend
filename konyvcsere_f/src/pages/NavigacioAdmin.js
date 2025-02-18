@@ -19,6 +19,11 @@ export default function NavigacioAdmin() {
                             Könyvek listázása
                         </Link>
                     </li>
+                    <li className="navbar-item">
+                        <Link className="nav-link" to="/osszesuser">
+                            Felhasználók listázása
+                        </Link>
+                    </li>
 
                     <li className="navbar-item">
                         <button className="nav-link" onClick={() => { logout() }}>
