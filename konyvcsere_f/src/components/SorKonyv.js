@@ -6,12 +6,12 @@ function SorKonyv(props){
 return (
     <tr className="konyvSor">
     <td scope="row"></td>
-    <td>{props.konyv.cim}</td>
-    <td>{props.konyv.kiado}</td>
-    <td>{props.konyv.mu}</td>
-    <td>{props.konyv.nyelv}</td>
-    <td>{props.konyv.kiadas_ev}</td>
-    <td>{props.konyv.konyv_allapot}</td>
+    <td>{props.konyv.title}</td>
+    <td>{props.konyv.publisher}</td>
+    <td>{props.konyv.work}</td>
+    <td>{props.konyv.language}</td>
+    <td>{props.konyv.publication_year}</td>
+    <td>{props.konyv.book_status}</td>
     </tr>
 )
 }

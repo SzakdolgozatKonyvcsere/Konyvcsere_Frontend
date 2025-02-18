@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [konyvekLista, setKonyvekLista]=useState([]);
+  //const [konyvekLista, setKonyvekLista]=useState([]);
 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
   //könyvek listája
-  const getAdat = async (vegpont, callbackFv) => {
+  /*const getAdat = async (vegpont, callbackFv) => {
     try{
       const response = await myAxios.get(vegpont);
       console.log("adat: ", response.data);
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
         console.log("Hiba", err);
     } finally {
     }
-};
+};*/
 
 
 
@@ -90,14 +90,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getAdat("/api/osszes-konyv", setKonyvekLista)
+    //getAdat("/api/osszes-konyv", setKonyvekLista)
     if (!user) {
       getUser()
     } 
   }, [])
+  
 
   return (
-    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user, konyvekLista, setKonyvekLista, getAdat, postAdat }}>
+    <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
       {children}
     </AuthContext.Provider>
   );
