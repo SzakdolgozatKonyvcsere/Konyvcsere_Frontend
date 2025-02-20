@@ -9,6 +9,8 @@ import useAuthContext from "./contexts/AuthContext";
 import TablazatKonyvek from "./components/TablazatKonyvek";
 import Loader from "./components/Loader";
 import { myAxios } from "./api/axios";
+import UsersTablazatAdmin from "./pages/UsersTablazatAdmin";
+import KezdolapUser from "./pages/KezdolapUser";
 
 function App() {
   const { user } = useAuthContext();
@@ -27,14 +29,14 @@ function App() {
       {/* Admin specifikus útvonalak */}
       {user && user.role === 0 && <Route element={<AdminLayout />}>
         <Route path="/" element={<Kezdolap />} />
-        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
-        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+        <Route path="osszesuser" element={<UsersTablazatAdmin />} />
+        {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
       </Route>}
 
       {/* User specifikus útvonalak */}
       {user && user.role === 1 && <Route element={<UserLayout />}>
-        <Route path="/" element={<Kezdolap />} />
-        <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+        <Route path="/" element={<KezdolapUser />} />
+        {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
       </Route>}
     </Routes>
   );
