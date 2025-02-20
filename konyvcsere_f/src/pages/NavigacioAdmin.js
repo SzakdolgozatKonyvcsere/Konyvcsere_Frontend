@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function NavigacioAdmin() {
-    const {  logout } = useAuthContext();
+    const { logout } = useAuthContext();
 
     return (
         <nav className="navbar navbar-expand-sm bg-light">

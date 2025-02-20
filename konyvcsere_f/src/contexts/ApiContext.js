@@ -8,6 +8,7 @@ export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
   
   //const getBooks = async () => {
+    const [loading, setLoading] = useState(true);
   const [userLista, setUserLista]=useState([]);
 
   /*const getBooks = async () => {
@@ -25,11 +26,11 @@ export const ApiProvider = ({ children }) => {
       console.log("getusers");
       const response = await myAxios.get(vegpont);
       callbackfv(response.data)
-  } catch (err) {
-      console.log("Hiba:", err);
-  }finally{
-      
-  }
+    } catch (err) {
+        console.log("Hiba:", err);
+    }finally{
+      setLoading(false); // Stop loading after fetching user 
+    }
   }
 
   const postUsers = async(vegpont,adat)=>{
@@ -44,13 +45,8 @@ export const ApiProvider = ({ children }) => {
 }
 
   useEffect(()=>{
-    getUsers("osszes_user", setUserLista)
-    
+    getUsers("/api/users", setUserLista)
   },[])
-useEffect(()=>{
-  getUsers("/api/users", setUserLista)
-  
-},[])
 
 
   return (
@@ -59,7 +55,7 @@ useEffect(()=>{
     </ApiContext.Provider>
   );
 };
-}
+
 
 export default function useApiContext() {
   return useContext(ApiContext);

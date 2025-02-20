@@ -10,7 +10,6 @@ export default function UsersTablazatAdmin() {
         <main>
             <h1>Táblázat Összes User - Admin</h1>
             <div>
-                
                 <UserTablazatAdmin />
                 {/*<p>Bejelentkezett felhasználó: { user==null?"Nincs bejelentkezett felhasználó!":user.name }</p>*/}
             </div>
