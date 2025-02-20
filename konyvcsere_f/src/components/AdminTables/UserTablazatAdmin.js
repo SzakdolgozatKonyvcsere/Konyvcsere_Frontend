@@ -1,11 +1,11 @@
 import React from 'react'
-import { AllUserContext } from '../contexts/AllUsersContext'
+import { AllUserContext } from '../../contexts/AllUsersContext'
 import {useContext} from 'react'
 import UserSorAdmin from './UserSorAdmin';
-import { ApiContext } from '../contexts/ApiContext';
+import { ApiContext } from '../../contexts/ApiContext';
 
 export default function UserTablazatAdmin() {
-    const {userLista}=useContext(ApiContext);
+  const {userLista}=useContext(ApiContext);
     
   return (
     <div className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import useAuthContext from '../contexts/AuthContext'
-import AllUsersContext from '../contexts/AllUsersContext'
+import useAuthContext from '../../contexts/AuthContext'
+import AllUsersContext from '../../contexts/AllUsersContext'
 
 export default function UserSorAdmin(props){
 

@@ -1,7 +1,7 @@
 
 
 import useApiContext from "../contexts/ApiContext";
-import UserTablazatAdmin from "../components/UserTablazatAdmin";
+import UserTablazatAdmin from "../components/AdminTables/UserTablazatAdmin";
 
 export default function UsersTablazatAdmin() {
      const { user } = useApiContext(); 
