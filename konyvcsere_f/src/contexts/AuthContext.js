@@ -6,8 +6,10 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   //const [konyvekLista, setKonyvekLista]=useState([]);
-
+  
+  
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // Amíg tölt az oldal ne jelenlenek meg az adatok
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({
     name: "",
@@ -41,21 +43,20 @@ export const AuthProvider = ({ children }) => {
     }
 };*/
 
-
-
-
-
   //bejelentkezett felhasználó adatainak lekérdezése
-  const getUser = async () => {
+
+  const getUser = async () => { 
     try {
       const { data } = await myAxios.get("/api/user");
-      setUser(data);
-    } catch (error) {
-      if (error.response && error.response.status !== 401) {
-        console.log("Hiba! " + error.message);
-      }
-    }
-  };
+      setUser(data); 
+    } catch (error) { 
+        if (error.response && error.response.status !== 401) { 
+          console.log("Hiba! " + error.message); 
+        } 
+      } finally { 
+        setLoading(false); // Stop loading after fetching user 
+      } 
+    };
 
   const logout = async () => {
     await csrf();

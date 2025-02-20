@@ -6,10 +6,20 @@ export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  
-  const getBooks = async () => {
-  const [userLista, setUserLista]=useState([]);
 
+  const getBooks = async () => {
+    const [userLista, setUserLista]=useState([]);
+    const { user } = useAuthContext();
+      console.log("Kérés: "+user+ "\nTartalom: "+data);
+      try {
+        if(user) {
+          const { data } = await myAxios.get("/api/osszes-konyv");
+        }
+      } catch (error) {
+          if (error.response && error.response.status !== 401) {
+            console.log("Hiba! " + error.message);
+          }
+        }
   /*const getBooks = async () => {
     try {
       const { data } = await myAxios.get("/api/osszes-konyv");
@@ -43,10 +53,10 @@ export const ApiProvider = ({ children }) => {
     }
 }
 
-useEffect(()=>{
-  getUsers("osszes_user", setUserLista)
-  
-},[])
+  useEffect(()=>{
+    getUsers("osszes_user", setUserLista)
+    
+  },[])
 
 
   return (
@@ -55,6 +65,7 @@ useEffect(()=>{
     </ApiContext.Provider>
   );
 };
+}
 export default function useApiContext() {
   return useContext(ApiContext);
 }
