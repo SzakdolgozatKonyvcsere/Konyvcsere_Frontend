@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {useContext} from 'react'
 import { ApiContext } from '../../contexts/ApiContext';
 
-export default function TableAdminCreate(tHeadLabels, tBodyContent, editFn, removeFn) {
+export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {
   // tHeadLabels should be an array [], with the column names
+  {/*const [resolvedLabels, setResolvedLabels] = useState([]);
+
+  useEffect(() => {
+    async function resolveLabels() {
+      const labels = await Promise.resolve(tHeadLabels); // Ensure labels are resolved
+      setResolvedLabels(labels);
+    }
+    resolveLabels();
+  }, [tHeadLabels]);*/}
+  
+  console.log("Propok: \nlabels: " + tHeadLabels + "\nbody:" + tBodyContent);
+
   const data = tHeadLabels.reduce((accumulator, label, index) => {
     accumulator[`key_${index}`] = label //Key generation - key_0, key_1...
     return accumulator;

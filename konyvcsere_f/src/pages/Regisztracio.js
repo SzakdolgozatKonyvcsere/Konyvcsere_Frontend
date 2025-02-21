@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
@@ -11,8 +11,23 @@ export default function Regisztracio(){
     const [city, setCity] = useState("");
     const [tel, setTel] = useState("");
     //const [img_url, setImgUrl] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    const {loginReg, errors} = useAuthContext();
+    const {loginReg, errors, user} = useAuthContext();
+    
+    /* Give user and if they exist, navigate them to the main page */
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+      if (user) {
+        navigate('/');
+      } else {
+        setLoading(false);
+      }
+    }, [user, navigate]);
+    if (loading) {
+      return null;
+    }
     
     const handleSubmit = async (e) => {
         e.preventDefault();

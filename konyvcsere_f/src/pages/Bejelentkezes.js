@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
@@ -6,8 +6,22 @@ export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(true);
 
-  const { loginReg, errors } = useAuthContext();
+  const { loginReg, errors, user } = useAuthContext();  
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/'); 
+    } else {
+      setLoading(false);
+    }
+  }, [user, navigate]);
+  if (loading) {
+    return null;
+  }  
 
   const handleSubmit = async (e) => {
     e.preventDefault(); //megakadályozza az alapértelmezett újratöltődést
@@ -17,7 +31,6 @@ export default function Bejelentkezes() {
       email: email,
       password: password,
     };
-    console.log(adat);
 
     loginReg(adat, "/login");
   };

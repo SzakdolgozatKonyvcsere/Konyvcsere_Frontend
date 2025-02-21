@@ -15,14 +15,14 @@ const UsersTableAdmin = React.lazy(() => import("./pages/UsersTableAdmin"));
 
 function App() {
   const { user } = useAuthContext();
-
+  
   return (
     <Suspense fallback={<Loader/>}>
       <Routes>
         {/* Vendég layout */}
         {!user && (
           <Route element={<VendegLayout />}>        
-              <Route path="/" element={<Kezdolap />} />
+              <Route path="/" element={<Kezdolap/>} />
               <Route path="bejelentkezes" element={<Bejelentkezes />} />
               <Route path="regisztracio" element={<Regisztracio />} />          
           </Route>  
