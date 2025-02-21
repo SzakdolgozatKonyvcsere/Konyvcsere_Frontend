@@ -1,16 +1,14 @@
-
-
 import useApiContext from "../contexts/ApiContext";
-import UserTablazatAdmin from "../components/AdminTables/UserTablazatAdmin";
+import UserTableAdmin from "../components/AdminTables/UserTableAdmin";
 
-export default function UsersTablazatAdmin() {
+export default function UsersTableAdmin() {
      const { user } = useApiContext(); 
 
     return (
         <main>
             <h1>Táblázat Összes User - Admin</h1>
             <div>
-                <UserTablazatAdmin />
+                <UserTableAdmin /> {/*UserTablazatAdmin*/}
                 {/*<p>Bejelentkezett felhasználó: { user==null?"Nincs bejelentkezett felhasználó!":user.name }</p>*/}
             </div>
         </main>

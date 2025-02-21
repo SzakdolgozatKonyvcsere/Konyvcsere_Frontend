@@ -1,21 +1,38 @@
 /* HTML: <div class="loader"></div> */
-.loader {
-  width: 50px;
-  aspect-ratio: 1;
-  color: #854f1d;
-  border-radius: 50%;
-  display: grid;
-  background: 
-    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)
-    -4px -4px/calc(50% + 2px) calc(50% + 2px),
-    radial-gradient(farthest-side,currentColor 6px,#0000 7px calc(100% - 6px),currentColor calc(100% - 5px)) no-repeat;
-  animation: l10 2s infinite linear;
-  position: relative;
+
+.loader-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(41, 41, 41, 0.4);
+  z-index: 500;
+  
+
+  .loader-element {
+    z-index: 501;
+    top: 40%;
+    margin: auto;
+    width: 100px;
+    aspect-ratio: 1;
+    color: #5b2d03;
+    border-radius: 50%;
+    display: grid;
+    position: relative;
+    background: 
+      conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)
+      -4px -4px/calc(50% + 2px) calc(50% + 2px),
+      radial-gradient(farthest-side,currentColor 6px,#0000 7px calc(100% - 6px),currentColor calc(100% - 5px)) no-repeat;
+    animation: l10 2s infinite linear;
+    
+  }
+  .loader-element:before {
+    content: "";
+    border-radius: inherit;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+  @keyframes l10 {to{transform: rotate(.5turn)}}
 }
-.loader:before {
-  content: "";
-  border-radius: inherit;
-  background: inherit;
-  transform: rotate(45deg);
-}
-@keyframes l10 {to{transform: rotate(.5turn)}}
+  

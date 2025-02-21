@@ -2,9 +2,8 @@ import React from 'react'
 import {useContext} from 'react'
 import { ApiContext } from '../../contexts/ApiContext';
 
-export default function TableAdminCreate(tHeadLabels, tBodyContent) {
+export default function TableAdminCreate(tHeadLabels, tBodyContent, editFn, removeFn) {
   // tHeadLabels should be an array [], with the column names
-  
   const data = tHeadLabels.reduce((accumulator, label, index) => {
     accumulator[`key_${index}`] = label //Key generation - key_0, key_1...
     return accumulator;
@@ -53,11 +52,11 @@ export default function TableAdminCreate(tHeadLabels, tBodyContent) {
                   </td>
                   )
                 )}
-              <td  className='table_admin-row--button'>
-                <button onClick={""}>✎</button>
+              <td className='table_admin-row--button'>
+                <button onClick={editFn}>✎</button>
               </td>
-              <td  className='table_admin-row--button'>
-                <button onClick={""}>🗑️</button>
+              <td className='table_admin-row--button'>
+                <button onClick={removeFn}>🗑️</button>
               </td> 
              </tr> 
             ))
