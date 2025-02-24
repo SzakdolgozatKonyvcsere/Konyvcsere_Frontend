@@ -12,13 +12,6 @@ export default function Bejelentkezes() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/'); 
-    } else {
-      setLoading(false);
-    }
-  }, [user, navigate]);
   if (loading) {
     return null;
   }  
