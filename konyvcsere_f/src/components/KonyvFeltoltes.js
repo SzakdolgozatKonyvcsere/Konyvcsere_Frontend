@@ -18,13 +18,13 @@ export default function Konyvfeltoltes() {
   const { user : authUser } = useAuthContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!authUser) {
       navigate("/login");
     } else {
       setLoading(false);
     }
-  }, [authUser, navigate]);
+  }, [authUser, navigate]);*/
 
   if (loading) {
     return null;
