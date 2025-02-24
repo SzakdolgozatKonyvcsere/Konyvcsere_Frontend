@@ -19,17 +19,15 @@ export const BookProvider = ({ children }) => {
 
     const addBooks = async (konyvadat) => {
         try {
-          const { data } = await myAxios.get("/api/booksupload");
-          setBookLista(data);
+          const response = await myAxios.post("/api/booksupload", konyvadat);
+          setBookLista(response.data);
         } catch (error) {
           if (error.response && error.response.status !== 401) {
             console.log("Hiba:" + error.message);
           }
         } finally{
-          setLoading(false); // Stop loading after fetching books
+          setLoading(false); // Stop loading after post request
         }
-
-        
       };
       
 /* 
