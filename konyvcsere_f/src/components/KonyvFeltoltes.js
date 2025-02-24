@@ -4,7 +4,9 @@ import useAuthContext from "../contexts/AuthContext";
 
 export default function Konyvfeltoltes() {
 
-  const [id, setId] = useState("");
+  const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
+
+  
   const [user, setUser] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
@@ -14,10 +16,15 @@ export default function Konyvfeltoltes() {
   const [language, setLanguage] = useState("");
   //const [image, setImage] = useState(null);
 
+  useEffect(() => {
+    if (authUser) {
+      setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
+    }
+  }, [authUser]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const konyvAdat = {
-      id,
       user,
       author,
       title,
@@ -35,14 +42,14 @@ export default function Konyvfeltoltes() {
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+        {/*<div className="mb-3">
           <label htmlFor="id" className="form-label">id</label>
           <input type="text" value={id} onChange={(e) => setId(e.target.value)} className="form-control" id="id" name="id" required />
         </div>
         <div className="mb-3">
           <label htmlFor="user" className="form-label">felh</label>
-          <input type="text" value={user} onChange={(e) => setUser(e.target.value)} className="form-control" id="user" name="user" required />
-        </div>
+          <input type="text" value={user} onChange={(e) => setUser(e.target.value)} className="form-control" id="user" name="user" disabled />
+        </div>*/}
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
           <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
@@ -57,7 +64,7 @@ export default function Konyvfeltoltes() {
         </div>
         <div className="mb-3">
           <label htmlFor="year" className="form-label">Év</label>
-          <input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="form-control" id="year" name="year" required />
+          <input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="form-control" id="year" name="year" min={1700} max={new Date().getFullYear()} required />
         </div>
         <div className="mb-3">
           <label htmlFor="genre" className="form-label">Műfaj</label>
