@@ -15,7 +15,7 @@ export default function Konyvfeltoltes() {
 
   const [loading, setLoading] = useState(true);
 
-  const { user: authUser } = useAuthContext();
+  const { user : authUser } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {

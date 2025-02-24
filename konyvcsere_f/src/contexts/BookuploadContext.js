@@ -11,7 +11,7 @@ export const BookProvider = ({ children }) => {
   
   //const navigate = useNavigate();
   const [loading, setLoading] = useState(true); // Amíg tölt az oldal ne jelenlenek meg az adatok
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
   const [books, setBooks] = useState([]);
   const [bookLista, setBookLista] = useState([]);
 
@@ -40,13 +40,13 @@ export const BookProvider = ({ children }) => {
             console.log("Hiba",error);
         }finally{
         }
-      }*/
+      }
     
     
       useEffect(()=>{
         //getUsers("/api/users", setUserLista)
         addBooks("/api/booksupload", setBookLista)
-      },[])
+      },[])*/
     
     
       return (

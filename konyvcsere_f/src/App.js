@@ -7,11 +7,13 @@ import TablazatKonyvek from "./components/TablazatKonyvek";
 import React, { Suspense } from "react";
 import Loader from "./components/Loader";
 
+
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
 const KezdolapUser = React.lazy(() => import("./pages/KezdolapUser"));
 const UsersTableAdmin = React.lazy(() => import("./pages/UsersTableAdmin"));
+const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
 
 function App() {
   const { user } = useAuthContext();
@@ -38,7 +40,7 @@ function App() {
         {/* User specifikus útvonalak */}
         {user && user.role === 1 && <Route element={<UserLayout />}>
           <Route path="/" element={<KezdolapUser />} />
-          <Route path="bookupload" element={<UsersTableAdmin />} />
+          <Route path="bookupload" element={<KonyvFeltoltes />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
         </Route>}
       </Routes>
