@@ -12,9 +12,16 @@ export default function Bejelentkezes() {
 
   const navigate = useNavigate();
 
+ /*  useEffect(() => {
+    if (!user) {
+      navigate('/'); 
+    } else {
+      setLoading(false);
+    }
+  }, [user, navigate]);
   if (loading) {
     return null;
-  }  
+  }  */
 
   const handleSubmit = async (e) => {
     e.preventDefault(); //megakadályozza az alapértelmezett újratöltődést

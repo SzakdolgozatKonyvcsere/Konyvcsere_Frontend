@@ -17,9 +17,9 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <ApiProvider>
-          <BookProvider>
+          
             <App />
-          </BookProvider>
+         
         </ApiProvider>
       </AuthProvider>
     </BrowserRouter>
