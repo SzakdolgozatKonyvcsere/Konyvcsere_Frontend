@@ -4,7 +4,7 @@ import useAuthContext from "../contexts/AuthContext";
 
 export default function Regisztracio(){
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
     const [password_confirmation, setPasswordConfirmation] = useState("");
     const [full_name, setFullName] = useState("");
