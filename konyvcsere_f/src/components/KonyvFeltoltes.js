@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/*import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
@@ -24,7 +24,7 @@ export default function Konyvfeltoltes() {
     } else {
       setLoading(false);
     }
-  }, [authUser, navigate]);*/
+  }, [authUser, navigate]);
 
   if (loading) {
     return null;
@@ -90,4 +90,4 @@ export default function Konyvfeltoltes() {
       </form>
     </div>
   );
-}
+}*/
