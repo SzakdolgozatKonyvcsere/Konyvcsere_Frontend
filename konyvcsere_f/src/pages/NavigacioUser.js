@@ -16,6 +16,18 @@ export default function NavigacioUser() {
                     </li>
 
                     <li className="navbar-item">
+                        <Link className="nav-link" to="/">
+                            Könyv feltöltés
+                        </Link>
+                    </li>
+
+                    <li className="navbar-item">
+                        <Link className="nav-link" to="/">
+                            Feltöltött könyveim
+                        </Link>
+                    </li>
+
+                    <li className="navbar-item">
                         <button className="nav-link" onClick={() => { logout() }}>
                             Kijelentkezés
                         </button>

@@ -9,6 +9,7 @@ import App from "./App";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { ApiProvider } from "./contexts/ApiContext";
+import { BookProvider } from "./contexts/BookuploadContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <ApiProvider>
-          <App />
+          <BookProvider>
+            <App />
+          </BookProvider>
         </ApiProvider>
       </AuthProvider>
     </BrowserRouter>
