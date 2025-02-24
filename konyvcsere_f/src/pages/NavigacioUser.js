@@ -16,13 +16,13 @@ export default function NavigacioUser() {
                     </li>
 
                     <li className="navbar-item">
-                        <Link className="nav-link" to="/">
+                        <Link className="nav-link" to="/konyvfeltoltes">
                             Könyv feltöltés
                         </Link>
                     </li>
 
                     <li className="navbar-item">
-                        <Link className="nav-link" to="/">
+                        <Link className="nav-link" to="/feltoltottkonyvek">
                             Feltöltött könyveim
                         </Link>
                     </li>

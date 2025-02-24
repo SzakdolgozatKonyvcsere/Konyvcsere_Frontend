@@ -40,7 +40,7 @@ function App() {
         {/* User specifikus útvonalak */}
         {user && user.role === 1 && <Route element={<UserLayout />}>
           <Route path="/" element={<KezdolapUser />} />
-          <Route path="bookupload" element={<KonyvFeltoltes />} />
+          <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
         </Route>}
       </Routes>
