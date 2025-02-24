@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
-export default function BookUpload() {
+export default function Konyvfeltoltes() {
   const [id, setId] = useState("");
   const [user, setUser] = useState("");
   const [author, setAuthor] = useState("");
