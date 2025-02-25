@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function NavigacioAdmin() {
-    const { logout } = useAuthContext();
+    const { user, logout } = useAuthContext();
 
     return (
         <nav className="navbar navbar-expand-sm bg-light">
@@ -33,6 +33,10 @@ export default function NavigacioAdmin() {
 
 
                 </ul>
+                <div className="navbar-profile">
+                    <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
+                    <a href="#"><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"}></img></a>
+                </div>
             </div>
         </nav>
     );
