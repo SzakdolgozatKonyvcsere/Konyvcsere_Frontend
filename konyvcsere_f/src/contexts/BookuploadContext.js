@@ -9,8 +9,22 @@ export const BookuploadProvider = ({ children }) => {
     //const [loading, setLoading] = useState(false);
     //const [error, setError] = useState(null);
     const [books, setBooks] = useState([]);
+    const [works, setWorks] = useState([]);
 
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+
+
+  const uploadWork = async ({...adat}, vegpont) => {
+    try {
+      await myAxios.post(vegpont, adat);
+      console.log("Sikeres műfeltöltés:", adat);
+  }catch (err) {
+      console.error("Hiba a mű feltöltése közben:", err);
+      if (err.response) {
+          console.error("Szerver válasza:", err.response.data);
+      }
+  }
+  }
 
     const uploadBook = async ({...adat}, vegpont) => {
 
@@ -18,8 +32,8 @@ export const BookuploadProvider = ({ children }) => {
     console.log(adat, vegpont);
     try {
         await myAxios.post(vegpont, adat);
-        console.log("Sikeres feltöltés:", adat);
-        Navigate("/feltoltottkonyvek");
+        console.log("Sikeres könyvfeltöltés:", adat);
+        //Navigate("/feltoltottkonyvek");
     }catch (err) {
         console.error("Hiba a könyv feltöltése közben:", err);
         if (err.response) {
@@ -46,12 +60,13 @@ export const BookuploadProvider = ({ children }) => {
       };
 
       return (
-        <BookuploadContext.Provider value={{ books, uploadBook }}>
+        <BookuploadContext.Provider value={{ works, uploadWork, books, uploadBook }}>
           {children}
         </BookuploadContext.Provider>
       );
 
 }
+
 
 /*import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -107,5 +122,4 @@ export const BookProvider = ({ children }) => {
         </BookuploadContext.Provider>
       );
     };*/
-
 
