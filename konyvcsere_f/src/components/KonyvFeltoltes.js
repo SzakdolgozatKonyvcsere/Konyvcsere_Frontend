@@ -101,9 +101,10 @@ export default function Konyvfeltoltes() {
           <input type="number" value={publication_year} onChange={(e) => setYear(Number(e.target.value))} className="form-control" id="publication_year" name="publication_year" min={1700} max={new Date().getFullYear()} required />
         </div>
         <div className="mb-3">
-          <label htmlFor="genre" className="form-label">Műfaj választása</label>
-          <select
-        id="genre"
+          <label htmlFor="genre" className="form-label">Műfaj</label>
+          <input type="text" value={genres} onChange={(e) => setGenres(e.target.value)} className="form-control" id="genre" name="genre" required />
+          </div>
+      {/*id="genre"
         value={selectedGenre}
         onChange={(e) => setSelectedGenre(e.target.value)}
         required
@@ -113,9 +114,9 @@ export default function Konyvfeltoltes() {
           <option key={genre.genre_id} value={genre.genre_id}>
             {genre.genre_name}
           </option>
-        ))}
+        ))} 
       </select>
-        </div>
+        </div> */}
         <div className="mb-3">
           <label htmlFor="language" className="form-label">Nyelv</label>
           <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} className="form-control" id="language" name="language" required />

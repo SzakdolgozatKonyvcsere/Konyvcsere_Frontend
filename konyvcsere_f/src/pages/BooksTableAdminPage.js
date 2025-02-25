@@ -6,7 +6,7 @@ export default function BooksTableAdminPage(){
 
     return(
         <main>
-            <h1>Táblázat összes könyv - Admin</h1>
+            <h1>Táblázat Összes Könyv - Admin</h1>
             <div>
                 <BookTableAdmin books={bookLista}/>
             </div>
