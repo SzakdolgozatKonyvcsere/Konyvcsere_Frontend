@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AuthContext from '../contexts/AuthContext';
+import AuthContext from '../../contexts/AuthContext';
 import SorKonyv from "./SorKonyv";
 
 function TablazatKonyvek() {
@@ -16,6 +16,8 @@ function TablazatKonyvek() {
                         <th scope="col">Nyelv</th>
                         <th scope="col">Kiadási év</th>
                         <th scope="col">Könyv állapota</th>
+                        <th scope="col">Módosítás</th>
+                        <th scope="col">Törlés:</th>
                     </tr>
                 </thead>
                 <tbody>
