@@ -3,7 +3,7 @@
     background-color: white;
 
     &>td {
-      max-width: 15vw;
+      max-width: 10vw;
       max-height: 20px;
     }
     
@@ -12,8 +12,9 @@
     }
     
     &--longText{
-      font-size: 0.65rem;
-      text-align: center;  
+      font-size: 0.60rem;
+      text-align: center;
+      overflow: hidden;
     }
     
     &--button {
