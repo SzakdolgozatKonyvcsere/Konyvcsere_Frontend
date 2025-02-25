@@ -8,21 +8,23 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
     <>
     
       <TableAdminCreate
-        tHeadLabels={[
-          "ID:",
-          "Név:",
-          "Email:",
-          "Teljes név:",
-          "Város:",
-          "Telefonszám:",
-          "Szerep:",
-          "Státusz:",
-          "Kép:",
-          "Token:",
-          "Készült:",
-          "Utolsó módosítás dátuma:"
-        ]}
-        tBodyContent={users}
+        tHeadLabels={
+          {
+            id:"ID:",
+            name:"Név:",
+            email:"Email:",
+            full_name:"Teljes név:",
+            city:"Város:",
+            tel:"Telefonszám:",
+            role:"Szerep:",
+            online_status:"Státusz:",
+            img_url:"Kép:",
+            remember_token:"Token:",
+            created_at:"Létrehozás dátuma:",
+            updated_at:"Utolsó módosítás:"
+          }
+        }
+        tBodyContent={users} // CALL VIEW AS ENDPOINT
         editFn={(row) => console.log("Editing:", row)}
         removeFn={(row) => console.log("Removing:", row)}
       />

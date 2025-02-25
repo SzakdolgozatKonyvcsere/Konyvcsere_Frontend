@@ -1,16 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "./AuthContext";
 
 export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  
+  const user = useAuthContext();
   
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
+  const [bookDemandLista, setBookDemandLista] = useState([]);
   
   //Users
   const getUsers = async (vegpont, callbackfv) => {
@@ -57,15 +59,34 @@ export const ApiProvider = ({ children }) => {
     }
   }
 
+  //Book demands
+  const getBookDemands = async () => {
+    try {
+      const { data } = await myAxios.get("/api/book-demands");
+      setBookDemandLista(data);
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      }
+    } finally{
+      setLoading(false); // Stop loading after fetching
+    }
+  };
+
 
   useEffect(()=>{
-    getUsers("/api/users", setUserLista)
-    getBooks("/api/book-offers", setBookLista)
+    //if (user.role === 0) {
+      getUsers("/api/users", setUserLista)
+      getBooks("/api/book-offers", setBookLista)
+    //} 
+    //getBookDemands("/api/book-demands", setBookDemandLista)
+    //postWorks("/api/work-upload")
+    //postBooks("/api/book-offer-upload")
   },[])
 
 
   return (
-    <ApiContext.Provider value={{ userLista, bookLista, getUsers, postUsers, getBooks, postBooks }}>
+    <ApiContext.Provider value={{ userLista, bookLista, bookDemandLista, getUsers, postUsers, getBooks, postBooks, getBookDemands }}>
       {children}
     </ApiContext.Provider>
   );
