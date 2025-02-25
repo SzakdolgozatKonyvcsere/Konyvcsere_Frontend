@@ -3,6 +3,7 @@
 @import 'components/navbar.scss';
 @import 'components/loader.scss';
 @import 'components/admin_table.scss';
+@import 'components/admin_content.scss';
 $assetPath: "/assets/kepek/";
 
 
@@ -10,11 +11,7 @@ $assetPath: "/assets/kepek/";
     max-width: $max-width;
 
 }
-$primary-color: #5E4B56;
-$secondary-color: #ae9c7cba;
-$accent-color: #A67F78;
-$background-color: #cdc0aaec;
-$text-color: #2E2E2E;
+
 
 body {
     background-color: $background-color;
@@ -127,17 +124,9 @@ aside {
 }
 
 
-h1 {
+h1, h2, h3 {
     color: $text-color;
-}
-
-h2 {
-    color: $text-color;
-}
-
-h5{
-    color: $text-color;
-    
+    padding: 10px;
 }
 
 .p {

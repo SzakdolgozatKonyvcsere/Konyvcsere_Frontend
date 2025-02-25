@@ -38,6 +38,7 @@ export const ApiProvider = ({ children }) => {
   const getBooks = async () => {
     try {
       const { data } = await myAxios.get("/api/book-offers");
+      setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
         console.log("Hiba:" + error.message);
@@ -64,7 +65,7 @@ export const ApiProvider = ({ children }) => {
 
 
   return (
-    <ApiContext.Provider value={{ userLista, getUsers, postUsers, getBooks, postBooks }}>
+    <ApiContext.Provider value={{ userLista, bookLista, getUsers, postUsers, getBooks, postBooks }}>
       {children}
     </ApiContext.Provider>
   );
