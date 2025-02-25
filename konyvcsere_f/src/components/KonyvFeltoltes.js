@@ -7,8 +7,8 @@ import { myAxios } from "../api/axios";
 export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
-  const { uploadBook } = useContext(BookuploadContext);
-  const [genres, setGenres] = useState([]); // Műfajok listája
+  const { uploadBook, uploadWork } = useContext(BookuploadContext);
+  const [genre, setGenre] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
 
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Konyvfeltoltes() {
   useEffect(() => {    
     myAxios.get("/api/genres")
     .then(response => {
-      setGenres(response.data); // Beállítjuk a műfajokat
+      setGenre(response.data); // Beállítjuk a műfajokat
     })
     .catch(error => {
       console.error("Hiba a műfajok lekérése közben:", error);
@@ -49,12 +49,13 @@ export default function Konyvfeltoltes() {
       title,
       publisher,
       publication_year,
-      genres,
-      genre_id: selectedGenre, // A kiválasztott műfaj az ID alapján
+      genre,
+      genre_id: selectedGenre , // A kiválasztott műfaj az ID alapján
       language,
       quality,
     };
     console.log("Feltöltött könyv", konyvAdat);
+    uploadWork(konyvAdat, "/api/mufeltoltes")
     uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
   /*try {
@@ -110,7 +111,7 @@ export default function Konyvfeltoltes() {
         required
       >
         <option value="">-- Válassz műfajt --</option>
-        {genres.map((genre) => (
+        {genre.map((genre) => (
           <option key={genre.genre_id} value={genre.genre_id}>
             {genre.genre_name}
           </option>
