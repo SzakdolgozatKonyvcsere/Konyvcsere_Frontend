@@ -8,7 +8,7 @@ export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
-  const [genre, setGenre] = useState([]); // Műfajok listája
+  const [genres, setGenres] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
 
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Konyvfeltoltes() {
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication_year, setYear] = useState("");
-  //const [genre, setGenre] = useState("");
+  const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
   const [quality, setQuality] = useState("");
   //const [image, setImage] = useState(null);
@@ -26,7 +26,7 @@ export default function Konyvfeltoltes() {
   useEffect(() => {    
     myAxios.get("/api/genres")
     .then(response => {
-      setGenre(response.data); // Beállítjuk a műfajokat
+      setGenres(response.data); // Beállítjuk a műfajokat
     })
     .catch(error => {
       console.error("Hiba a műfajok lekérése közben:", error);
@@ -103,8 +103,8 @@ export default function Konyvfeltoltes() {
         </div>
         <div className="mb-3">
           <label htmlFor="genre" className="form-label">Műfaj</label>
-          <input type="text" value={genres} onChange={(e) => setGenres(e.target.value)} className="form-control" id="genre" name="genre" required />
-          </div>
+          <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />
+        </div>
       {/*id="genre"
         value={selectedGenre}
         onChange={(e) => setSelectedGenre(e.target.value)}

@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "./AuthContext";
 
 export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  
+  const user = useAuthContext();
   
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
@@ -74,9 +75,13 @@ export const ApiProvider = ({ children }) => {
 
 
   useEffect(()=>{
-    getUsers("/api/users", setUserLista)
-    getBooks("/api/book-offers", setBookLista)
-    getBookDemands("/api/book-demands", setBookDemandLista)
+    //if (user.role === 0) {
+      getUsers("/api/users", setUserLista)
+      getBooks("/api/book-offers", setBookLista)
+    //} 
+    //getBookDemands("/api/book-demands", setBookDemandLista)
+    //postWorks("/api/work-upload")
+    //postBooks("/api/book-offer-upload")
   },[])
 
 

@@ -11,7 +11,7 @@ export default function NavigacioUser() {
                 <ul className="navbar-nav">
                     <li className="navbar-item">
                         <Link className="nav-link" to="/">
-                            Kezdőlap User
+                            Kezdőlap
                         </Link>
                     </li>
 
@@ -37,7 +37,7 @@ export default function NavigacioUser() {
                 </ul>
                 <div className="navbar-profile">
                     <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
-                    <a href="#"><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"}></img></a>
+                    <a><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"} ></img></a>
                 </div>
             </div>
         </nav>
