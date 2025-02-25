@@ -1,8 +1,61 @@
+import { createContext, useState } from "react";
+import { myAxios } from "../api/axios";
+import { Navigate } from "react-router-dom";
+
+export const BookuploadContext = createContext();
+
+export const BookuploadProvider = ({ children }) => {
+
+    //const [loading, setLoading] = useState(false);
+    //const [error, setError] = useState(null);
+    const [books, setBooks] = useState([]);
+
+    const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+
+    const uploadBook = async ({...adat}, vegpont) => {
+
+        await csrf();
+    console.log(adat, vegpont);
+    try {
+        await myAxios.post(vegpont, adat);
+        console.log("Sikeres feltöltés:", adat);
+        Navigate("/feltoltottkonyvek");
+    }catch (err) {
+        console.error("Hiba a könyv feltöltése közben:", err);
+        if (err.response) {
+            console.error("Szerver válasza:", err.response.data);
+        }
+    }
+
+    /* 
+    const uploadBook = async (bookData) => {
+        //setLoading(true);
+        //setError(null);
+        try {
+            const response = await myAxios.post("/api/konyvfeltoltes", bookData);
+            setBooks((prevBooks) => [...prevBooks, response.data.book]); // Frissítés lokálisan
+            console.log("Sikeres feltöltés:", response.data);
+            //setLoading(false);
+            return response.data;
+        } catch (err) {
+            console.error("Hiba a könyv feltöltése közben:", err);
+            //setError(error);
+            //setLoading(false);
+            throw err;
+        }*/
+      };
+
+      return (
+        <BookuploadContext.Provider value={{ books, uploadBook }}>
+          {children}
+        </BookuploadContext.Provider>
+      );
+
+}
+
 /*import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { myAxios } from "../api/axios";
-
-
 
 export const BookuploadContext = createContext();
 
