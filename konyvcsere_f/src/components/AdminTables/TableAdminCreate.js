@@ -60,7 +60,7 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                 {
                   Object.values(row).map((col, colInd) => (
                   <td scope="col" key={colInd} className={col.length >= 100 ? "table_admin-row--longText" : ""}>
-                    {col /* Content */} 
+                    {col} 
                   </td>
                   )
                 )}
