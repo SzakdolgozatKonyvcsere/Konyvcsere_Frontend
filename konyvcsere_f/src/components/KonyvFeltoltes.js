@@ -1,20 +1,37 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
+import { BookuploadContext } from "../contexts/BookuploadContext";
+import { myAxios } from "../api/axios";
 
 export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
+  const { uploadBook } = useContext(BookuploadContext);
+  const [genres, setGenres] = useState([]); // Műfajok listája
+  const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
 
+  const navigate = useNavigate();
   
   const [user, setUser] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
-  const [year, setYear] = useState("");
-  const [genre, setGenre] = useState("");
+  const [publication_year, setYear] = useState("");
+  //const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
+  const [quality, setQuality] = useState("");
   //const [image, setImage] = useState(null);
+
+  useEffect(() => {    
+    myAxios.get("/api/genres")
+    .then(response => {
+      setGenres(response.data); // Beállítjuk a műfajokat
+    })
+    .catch(error => {
+      console.error("Hiba a műfajok lekérése közben:", error);
+    });
+  }, []);
 
   useEffect(() => {
     if (authUser) {
@@ -24,19 +41,36 @@ export default function Konyvfeltoltes() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    
     const konyvAdat = {
       user,
       author,
       title,
       publisher,
-      year,
-      genre,
+      publication_year,
+      genres,
+      genre_id: selectedGenre, // A kiválasztott műfaj az ID alapján
       language,
+      quality,
     };
     console.log("Feltöltött könyv", konyvAdat);
+    uploadBook(konyvAdat, "/api/konyvfeltoltes");
+
+  /*try {
+    const result = await uploadBook(konyvAdat);
+    console.log("Sikeres feltöltés:", result);
+    navigate("/feltoltottkonyvek"); // átirányítás a saját könyvek oldalra
+  } catch (err) {
+    // Hibakezelés itt, ha szükséges
+    console.error("Feltöltési hiba:", err);
   }
+  console.log("hm")
 
-
+    await uploadBook(konyvAdat); // Könyv elküldése Contexten keresztül
+    navigate("/feltoltottkonyvek"); // Átirányítás a könyvlistához
+    */
+}
 
   return (
     <div className="card max-w-lg mx-auto mt-10 p-5">
@@ -63,16 +97,32 @@ export default function Konyvfeltoltes() {
           <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} className="form-control" id="publisher" name="publisher" required />
         </div>
         <div className="mb-3">
-          <label htmlFor="year" className="form-label">Év</label>
-          <input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="form-control" id="year" name="year" min={1700} max={new Date().getFullYear()} required />
+          <label htmlFor="publication_year" className="form-label">Év</label>
+          <input type="number" value={publication_year} onChange={(e) => setYear(Number(e.target.value))} className="form-control" id="publication_year" name="publication_year" min={1700} max={new Date().getFullYear()} required />
         </div>
         <div className="mb-3">
-          <label htmlFor="genre" className="form-label">Műfaj</label>
-          <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />
+          <label htmlFor="genre" className="form-label">Műfaj választása</label>
+          <select
+        id="genre"
+        value={selectedGenre}
+        onChange={(e) => setSelectedGenre(e.target.value)}
+        required
+      >
+        <option value="">-- Válassz műfajt --</option>
+        {genres.map((genre) => (
+          <option key={genre.genre_id} value={genre.genre_id}>
+            {genre.genre_name}
+          </option>
+        ))}
+      </select>
         </div>
         <div className="mb-3">
           <label htmlFor="language" className="form-label">Nyelv</label>
           <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} className="form-control" id="language" name="language" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="quality" className="form-label">Minőség 1-5 </label>
+          <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
         
         <button type="submit" className="btn btn-primary w-100">Feltöltés</button>

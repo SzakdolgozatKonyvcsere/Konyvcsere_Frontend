@@ -6,7 +6,7 @@ import useAuthContext from "./contexts/AuthContext";
 import TablazatKonyvek from "./components/TablazatKonyvek";
 import React, { Suspense } from "react";
 import Loader from "./components/Loader";
-
+import { BookuploadContext } from "./contexts/BookuploadContext";
 
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));

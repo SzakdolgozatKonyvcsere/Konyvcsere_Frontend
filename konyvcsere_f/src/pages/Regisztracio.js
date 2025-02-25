@@ -29,7 +29,7 @@ export default function Regisztracio(){
       return null;
     }
     
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => { 
         e.preventDefault();
     //összegyűjtjük az adatokat egyetlen objektumba
         const adat = {
