@@ -32,7 +32,7 @@ export default function NavigacioVendeg(){
                 </ul>
                 <div className="navbar-profile">
                     <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
-                    <a href="#"><img className="user--profile-picture" alt="felhasználó profilképe" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBTym3IWgvwc58Oq_BCusGZKtqqllkljgw3g&s"></img></a>
+                    <a href="#"><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"}></img></a>
                 </div>
             </div>
         </nav>
