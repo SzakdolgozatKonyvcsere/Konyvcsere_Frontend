@@ -65,7 +65,7 @@ export const ApiProvider = ({ children }) => {
 
 
   return (
-    <ApiContext.Provider value={{ userLista, getUsers, postUsers, getBooks, postBooks }}>
+    <ApiContext.Provider value={{ userLista, bookLista, getUsers, postUsers, getBooks, postBooks }}>
       {children}
     </ApiContext.Provider>
   );
