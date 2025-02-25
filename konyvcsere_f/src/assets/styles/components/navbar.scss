@@ -42,7 +42,10 @@
                 &--profile-picture {
                     width: 50px;
                     height: 50px;
+                    padding: 1.5px;
                     border-radius: 999px;
+                    background-color: white;
+                    border: 1.2px solid black;
                 }
 
                 &--name {

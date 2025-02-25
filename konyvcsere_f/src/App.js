@@ -13,6 +13,7 @@ const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
 const KezdolapUser = React.lazy(() => import("./pages/KezdolapUser"));
+const EditContentPage = React.lazy(() => import("./pages/EditContentPage"));
 const UsersTableAdminPage = React.lazy(() => import("./pages/UsersTableAdminPage"));
 const BooksTableAdminPage = React.lazy(() => import("./pages/BooksTableAdminPage")) ;
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
@@ -37,7 +38,8 @@ function App() {
         {user && user.role === 0 && <Route element={<AdminLayout />}>
           <Route path="/" element={<Kezdolap />} />
           <Route path="osszesuser" element={<UsersTableAdminPage />} />
-          <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
+          <Route path="osszeskonyv" element={<TablazatKonyvek />} />
+          <Route path="tartalom-szerk" element={<EditContentPage />} />
         </Route>}
 
         {/* User specifikus útvonalak */}

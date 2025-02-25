@@ -1,0 +1,33 @@
+
+.content-edit {
+  display: flex;
+  &--selection {
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    background-color: #5f4a2e;
+    margin: auto;
+    height: 50vh;
+    &__item {
+      display: flex;
+      flex: calc(33% - 10px);
+      align-self: center;
+      align-items: center;
+      justify-content: space-evenly;
+      max-height: 50px;
+      padding: 20px;
+      margin: 20px;
+      text-decoration: none;
+      background-color: #ffffff;
+      border: 2px black solid;
+      color: $primary-text-color;
+      transition: all 0.2s;
+      &:hover {
+        background-color: #c7c7c7;
+      }
+      &:active {
+        opacity: 80%;
+      }
+    }
+  }
+}
