@@ -8,16 +8,33 @@ export const BookuploadProvider = ({ children }) => {
 
     //const [loading, setLoading] = useState(false);
     //const [error, setError] = useState(null);
-    const [books, setBooks] = useState([]);
+    //const [books, setBooks] = useState([]);
     const [works, setWorks] = useState([]);
 
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
 
-  const uploadWork = async ({...adat}, vegpont) => {
+     /*const uploadWork = async (e) => {
+      e.preventDefault();
+      try {
+        
+        await myAxios.post("/api/mufeltoltes", works);
+        console.log("Sikeres műfeltöltés:", works);
+        setWorks({ genre_id: "", title: "" });
+        
+    }catch (err) {
+        console.error("Hiba a mű feltöltése közben:", err);
+        if (err.response) {
+            console.error("Szerver válasza:", err.response.data);
+        }
+    }
+    }*/
+ const uploadWork = async ({...adat}, vegpont) => {
+  await csrf();
     try {
       await myAxios.post(vegpont, adat);
       console.log("Sikeres műfeltöltés:", adat);
+      //Navigate("/feltoltottkonyvek");
   }catch (err) {
       console.error("Hiba a mű feltöltése közben:", err);
       if (err.response) {
@@ -26,14 +43,14 @@ export const BookuploadProvider = ({ children }) => {
   }
   }
 
-    const uploadBook = async ({...adat}, vegpont) => {
+    /*const uploadBook = async ({...adat}, vegpont) => {
 
         await csrf();
     console.log(adat, vegpont);
     try {
         await myAxios.post(vegpont, adat);
         console.log("Sikeres könyvfeltöltés:", adat);
-        //Navigate("/feltoltottkonyvek");
+        
     }catch (err) {
         console.error("Hiba a könyv feltöltése közben:", err);
         if (err.response) {
@@ -41,7 +58,7 @@ export const BookuploadProvider = ({ children }) => {
         }
     }
 
-    /* 
+     
     const uploadBook = async (bookData) => {
         //setLoading(true);
         //setError(null);
@@ -56,11 +73,11 @@ export const BookuploadProvider = ({ children }) => {
             //setError(error);
             //setLoading(false);
             throw err;
-        }*/
-      };
+        }
+      };*/
 
       return (
-        <BookuploadContext.Provider value={{ works, uploadWork, books, uploadBook }}>
+        <BookuploadContext.Provider value={{ works, uploadWork }}>
           {children}
         </BookuploadContext.Provider>
       );
