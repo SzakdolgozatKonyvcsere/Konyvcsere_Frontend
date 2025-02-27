@@ -3,10 +3,10 @@ import {useContext} from 'react'
 import { ApiContext } from '../../contexts/ApiContext';
 
 export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {    
+  //console.log("cim:" + tHeadLabels + "\ntartalom:" + tBodyContent + "\neditfgv:" + editFn + "\ndelfgv:" + removeFn)
   return (
     <div className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       <table className="table table_admin">
-        
         <thead>
             <tr className='table_admin-row_head'>
                 {

@@ -2,7 +2,7 @@ import useApiContext from "../contexts/ApiContext";
 import UserTableAdmin from "../components/AdminTables/UserTableAdmin";
 
 export default function UsersTableAdminPage() {
-     const { userLista } = useApiContext(); 
+    const { userLista } = useApiContext(); 
 
     return (
         <main>

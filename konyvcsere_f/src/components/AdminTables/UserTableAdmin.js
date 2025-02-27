@@ -6,7 +6,6 @@ import TableAdminCreate from './TableAdminCreate'
 export default function UserTableAdmin({users}) { // destructuring, this saves a line of const users = props.users
   return (
     <>
-    
       <TableAdminCreate
         tHeadLabels={
           {
@@ -24,7 +23,7 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
             updated_at:"Utolsó módosítás:"
           }
         }
-        tBodyContent={users} // CALL VIEW AS ENDPOINT
+        tBodyContent={users}
         editFn={(row) => console.log("Editing:", row)}
         removeFn={(row) => console.log("Removing:", row)}
       />
