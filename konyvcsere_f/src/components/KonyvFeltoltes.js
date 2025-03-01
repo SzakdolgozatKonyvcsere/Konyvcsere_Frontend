@@ -8,23 +8,25 @@ export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
-  const [genres, setGenres] = useState([]); // Műfajok listája
-  const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
 
   //const navigate = useNavigate();
-  
+
+  //műfajok:
+  const [genres, setGenres] = useState([]); // Műfajok listája
+  const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
+  //sima:
   const [user, setUser] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication_year, setYear] = useState("");
-  const [genre, setGenre] = useState("");
   const [language, setLanguage] = useState("");
   const [quality, setQuality] = useState("");
   //const [image, setImage] = useState(null);
-
+  
+  // műfaj lekérése: 
   useEffect(() => {    
     myAxios.get("/api/genres")
     .then(response => {
@@ -41,9 +43,8 @@ export default function Konyvfeltoltes() {
     }
   }, [authUser]);
 
-  //könyv adatainak lekérése: 
 
-  //fetch?
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,8 +60,8 @@ export default function Konyvfeltoltes() {
       quality,
     };
     console.log("Feltöltött könyv", konyvAdat);
-    uploadWork( konyvAdat, "/api/mufeltoltes")
-    //uploadBook(konyvAdat, "/api/konyvfeltoltes");
+    //uploadWork( konyvAdat, "/api/mufeltoltes")
+    uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
   /*try {
     const result = await uploadBook(konyvAdat);
@@ -81,14 +82,6 @@ export default function Konyvfeltoltes() {
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
       <form onSubmit={handleSubmit}>
-        {/*<div className="mb-3">
-          <label htmlFor="id" className="form-label">id</label>
-          <input type="text" value={id} onChange={(e) => setId(e.target.value)} className="form-control" id="id" name="id" required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="user" className="form-label">felh</label>
-          <input type="text" value={user} onChange={(e) => setUser(e.target.value)} className="form-control" id="user" name="user" disabled />
-        </div>*/}
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
           <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
@@ -107,21 +100,22 @@ export default function Konyvfeltoltes() {
         </div>
         <div className="mb-3">
           <label htmlFor="genre" className="form-label">Műfaj</label>
-          <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />
-        </div>
-      {/*id="genre"
+          
+          {/*<input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />*/}
+          <select
+          id="genre"
         value={selectedGenre}
         onChange={(e) => setSelectedGenre(e.target.value)}
         required
       >
         <option value="">-- Válassz műfajt --</option>
-        {genre.map((genre) => (
+        {genres.map((genre) => (
           <option key={genre.genre_id} value={genre.genre_id}>
             {genre.genre_name}
           </option>
-        ))} 
-      </select>
-        </div> */}
+          ))} 
+          </select>
+        </div>
         <div className="mb-3">
           <label htmlFor="language" className="form-label">Nyelv</label>
           <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} className="form-control" id="language" name="language" required />

@@ -8,10 +8,31 @@ export const BookuploadProvider = ({ children }) => {
 
     //const [loading, setLoading] = useState(false);
     //const [error, setError] = useState(null);
-    //const [books, setBooks] = useState([]);
-    const [works, setWorks] = useState([]);
+    const [books, setBooks] = useState([]);
+    //const [works, setWorks] = useState([]);
 
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+
+
+    const uploadBook = async ({...adat}, vegpont) => {
+      await csrf();
+      console.log(adat, vegpont);
+    try {
+        await myAxios.post(vegpont, adat);
+        console.log("Sikeres könyvfeltöltés:", adat);
+        
+    }catch (err) {
+        console.error("Hiba a könyv feltöltése közben:", err);
+        if (err.response) {
+            console.error("Szerver válasza:", err.response.data);
+        }
+    }
+  }
+    return (
+      <BookuploadContext.Provider value={{ books, uploadBook }}>
+        {children}
+      </BookuploadContext.Provider>
+    );
 
 
      /*const uploadWork = async (e) => {
@@ -28,7 +49,7 @@ export const BookuploadProvider = ({ children }) => {
             console.error("Szerver válasza:", err.response.data);
         }
     }
-    }*/
+    }
  const uploadWork = async ({...adat}, vegpont) => {
   await csrf();
     try {
@@ -41,24 +62,11 @@ export const BookuploadProvider = ({ children }) => {
           console.error("Szerver válasza:", err.response.data);
       }
   }
-  }
+  }*/
 
-    /*const uploadBook = async ({...adat}, vegpont) => {
+  
 
-        await csrf();
-    console.log(adat, vegpont);
-    try {
-        await myAxios.post(vegpont, adat);
-        console.log("Sikeres könyvfeltöltés:", adat);
-        
-    }catch (err) {
-        console.error("Hiba a könyv feltöltése közben:", err);
-        if (err.response) {
-            console.error("Szerver válasza:", err.response.data);
-        }
-    }
-
-     
+   /*  
     const uploadBook = async (bookData) => {
         //setLoading(true);
         //setError(null);
@@ -76,11 +84,7 @@ export const BookuploadProvider = ({ children }) => {
         }
       };*/
 
-      return (
-        <BookuploadContext.Provider value={{ works, uploadWork }}>
-          {children}
-        </BookuploadContext.Provider>
-      );
+     
 
 }
 
