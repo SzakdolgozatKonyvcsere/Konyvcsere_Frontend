@@ -36,8 +36,10 @@ export default function NavigacioUser() {
 
                 </ul>
                 <div className="navbar-profile">
+                    <Link className="nav-link" to="/bejelentkezettuser">
                     <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
                     <a><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"} ></img></a>
+                    </Link>
                 </div>
             </div>
         </nav>

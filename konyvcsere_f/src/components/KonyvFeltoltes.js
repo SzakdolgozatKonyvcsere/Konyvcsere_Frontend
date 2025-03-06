@@ -82,14 +82,15 @@ export default function Konyvfeltoltes() {
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
       <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+          <label htmlFor="title" className="form-label">Cím</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />
+        </div>
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
           <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
         </div>
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">Cím</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />
-        </div>
+        {/*több szerző gomb?*/} 
         <div className="mb-3">
           <label htmlFor="publisher" className="form-label">Kiadó</label>
           <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} className="form-control" id="publisher" name="publisher" required />
