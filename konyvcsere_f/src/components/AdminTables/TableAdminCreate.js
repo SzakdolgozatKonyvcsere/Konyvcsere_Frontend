@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import {useContext} from 'react'
-import { ApiContext } from '../../contexts/ApiContext';
+import React from 'react'
 
 export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {    
   //console.log("cim:" + tHeadLabels + "\ntartalom:" + tBodyContent + "\neditfgv:" + editFn + "\ndelfgv:" + removeFn)
@@ -40,7 +38,7 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
               <tr className='table_admin-row' key={rowInd}>
                 {
                   Object.values(row).map((col, colInd) => (
-                  <td scope="col" key={colInd} className={col.length >= 50 ? "table_admin-row--longText" : ""}>
+                  <td key={colInd} className={col.length >= 50 ? "table_admin-row--longText" : ""}>
                     {col} 
                   </td>
                   )

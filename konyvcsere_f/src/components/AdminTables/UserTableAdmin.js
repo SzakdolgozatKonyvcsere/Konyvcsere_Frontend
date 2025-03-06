@@ -4,6 +4,12 @@ import TableAdminCreate from './TableAdminCreate'
 
 
 export default function UserTableAdmin({users}) { // destructuring, this saves a line of const users = props.users
+  const excludedKeys = ['remember_token', 'email_verified_at'];
+  const filteredUsers = users.map(user =>
+    Object.fromEntries(
+      Object.entries(user).filter(([key]) => !excludedKeys.includes(key))
+    )
+  );
   return (
     <>
       <TableAdminCreate
@@ -18,12 +24,11 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
             role:"Szerep:",
             online_status:"Státusz:",
             img_url:"Kép:",
-            remember_token:"Token:",
             created_at:"Létrehozás dátuma:",
             updated_at:"Utolsó módosítás:"
           }
         }
-        tBodyContent={users}
+        tBodyContent={filteredUsers}
         editFn={(row) => console.log("Editing:", row)}
         removeFn={(row) => console.log("Removing:", row)}
       />
