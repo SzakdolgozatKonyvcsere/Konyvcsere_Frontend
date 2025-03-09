@@ -58,6 +58,7 @@ export default function Konyvfeltoltes() {
       genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
       language,
       quality,
+      img_url:null,
     };
     console.log("Feltöltött könyv", konyvAdat);
     //uploadWork( konyvAdat, "/api/mufeltoltes")
@@ -82,14 +83,15 @@ export default function Konyvfeltoltes() {
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
       <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+          <label htmlFor="title" className="form-label">Cím</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />
+        </div>
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
           <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
         </div>
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">Cím</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />
-        </div>
+        {/*több szerző gomb?*/} 
         <div className="mb-3">
           <label htmlFor="publisher" className="form-label">Kiadó</label>
           <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} className="form-control" id="publisher" name="publisher" required />
@@ -124,6 +126,16 @@ export default function Konyvfeltoltes() {
           <label htmlFor="quality" className="form-label">Minőség 1-5 </label>
           <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
+
+        <Form.Group controlId="img_url">
+        <Form.Label>Kép</Form.Label>
+        <Form.Control
+          type="file"
+          name="img_url"
+          //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
+          onChange={handleChange}
+        />
+      </Form.Group>
         
         <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
       </form>

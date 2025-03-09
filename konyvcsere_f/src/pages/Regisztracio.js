@@ -40,7 +40,7 @@ export default function Regisztracio(){
             full_name:full_name,
             city:city,
             tel:tel,
-            //img_url:img_url,
+            img_url:null,
         };
         console.log(adat);
         loginReg(adat, "/register");
@@ -99,6 +99,16 @@ export default function Regisztracio(){
               {errors.tel && (<span className="text-danger">{errors.tel[0]}</span>)}
             </div>
           </div>
+
+          <Form.Group controlId="img_url">
+        <Form.Label>Kép</Form.Label>
+        <Form.Control
+          type="file"
+          name="img_url"
+          //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
+          onChange={handleChange}
+        />
+      </Form.Group>
           
   
           <button type="submit" className="btn btn-primary w-100">Regisztrálok</button>
