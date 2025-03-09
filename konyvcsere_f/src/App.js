@@ -21,7 +21,10 @@ const KonyvekMegjelenit = React.lazy(() => import("./components/KonyvekMegjeleni
 
 function App() {
   const { user } = useAuthContext();
-  
+  const { loading } = useAuthContext();
+
+  if (loading) return <Loader />;
+
   return (
     <Suspense fallback={<Loader/>}>
       <Routes>
@@ -39,7 +42,7 @@ function App() {
           <Route path="/" element={<Kezdolap />} />
           <Route path="osszesuser" element={<UsersTableAdminPage />} />
           <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
-          <Route path="tartalom-szerk" element={<EditContentPage />} />
+          <Route path="tartalomszerk" element={<EditContentPage />} />
         </Route>}
 
         {/* User specifikus útvonalak */}

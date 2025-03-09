@@ -15,7 +15,7 @@ export default function NavigacioAdmin() {
                         </Link>
                     </li>
                     <li className="navbar-item">
-                        <Link className="nav-link" to="/tartalom-szerk">
+                        <Link className="nav-link" to="/tartalomszerk">
                             Tartalom szerkesztése
                         </Link>
                     </li>

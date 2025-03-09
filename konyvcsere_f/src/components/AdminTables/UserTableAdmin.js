@@ -4,6 +4,7 @@ import TableAdminCreate from './TableAdminCreate'
 
 
 export default function UserTableAdmin({users}) { // destructuring, this saves a line of const users = props.users
+  
   const excludedKeys = ['remember_token', 'email_verified_at'];
   const filteredUsers = users.map(user =>
     Object.fromEntries(

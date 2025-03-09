@@ -1,12 +1,12 @@
-import React from 'react'
-import UsersTableAdminPage from './UsersTableAdminPage'
-import { Link } from 'react-router'
+import React from "react";
+import UsersTableAdminPage from "./UsersTableAdminPage";
+import { Link } from "react-router-dom";
 
 function EditContentPage() {
   return (
     <>
-      <div className='content-edit'>
-        <div className='content-edit--selection'>
+      <div className="content-edit">
+        <div className="content-edit--selection">
           <Link className="content-edit--selection__item" to="/osszesuser">
             Felhasználók
           </Link>
@@ -16,7 +16,7 @@ function EditContentPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default EditContentPage
+export default EditContentPage;

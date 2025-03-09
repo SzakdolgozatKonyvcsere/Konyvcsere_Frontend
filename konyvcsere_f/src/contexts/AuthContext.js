@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 export const AuthContext = createContext();
 
@@ -45,18 +46,18 @@ export const AuthProvider = ({ children }) => {
 
   //bejelentkezett felhasználó adatainak lekérdezése
 
-  const getUser = async () => { 
+  const getUser = useCallback(async () => { 
     try {
       const { data } = await myAxios.get("/api/user");
       setUser(data); 
     } catch (error) { 
         if (error.response && error.response.status !== 401) { 
-          console.log("Hiba! " + error.message); 
+          navigate("/bejelentkezes");
         } 
       } finally { 
         setLoading(false); // Stop loading after fetching user 
       } 
-    };
+    }, [navigate]);
 
   const logout = async () => {
     await csrf();
@@ -74,14 +75,13 @@ export const AuthProvider = ({ children }) => {
 
     try {
       await myAxios.post(vegpont, adat);
-      console.log("siker");
+      //console.log("siker");
       //sikeres bejelentkezés/regisztráció esetén
       //Lekérdezzük a usert
       //await getUser();
       //elmegyünk a kezdőlapra
-      await getUser()
+      await getUser();
       navigate("/");
-      
     } catch (error) {
       console.log(error);
       if (error.response.status === 422) {
@@ -92,11 +92,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     //getAdat("/api/osszes-konyv", setKonyvekLista)
-    if (!user) {
-      getUser()
-    } 
+    getUser()
   }, [])
-  
 
   return (
     <AuthContext.Provider value={{ logout, loginReg, errors, getUser, user }}>
