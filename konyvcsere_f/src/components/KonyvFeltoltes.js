@@ -58,7 +58,7 @@ export default function Konyvfeltoltes() {
       genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
       language,
       quality,
-      img_url:null,
+      //img_url:null,
     };
     console.log("Feltöltött könyv", konyvAdat);
     //uploadWork( konyvAdat, "/api/mufeltoltes")
@@ -127,7 +127,7 @@ export default function Konyvfeltoltes() {
           <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
 
-        <Form.Group controlId="img_url">
+        {/*<Form.Group controlId="img_url">
         <Form.Label>Kép</Form.Label>
         <Form.Control
           type="file"
@@ -135,7 +135,7 @@ export default function Konyvfeltoltes() {
           //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
           onChange={handleChange}
         />
-      </Form.Group>
+      </Form.Group>*/}
         
         <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
       </form>
