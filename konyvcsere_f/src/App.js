@@ -6,6 +6,7 @@ import useAuthContext from "./contexts/AuthContext";
 import React, { Suspense } from "react";
 import Loader from "./components/Loader";
 import { BookuploadContext } from "./contexts/BookuploadContext";
+import KonyvKereses from "./components/KonyvKereses";
 
 
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/" element={<KezdolapUser />} />
           <Route path="feltoltottkonyvek" element={<KonyvekMegjelenit />} />
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
+          <Route path="konyvkereses" element={<KonyvKereses />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
         </Route>}
       </Routes>
