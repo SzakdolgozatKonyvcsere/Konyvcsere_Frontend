@@ -13,7 +13,8 @@ export const ApiProvider = ({ children }) => {
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
-  
+  const [availableBookLista, setAvailableBookLista] = useState([]);
+
   //Users
   const getUsers = async (vegpont, callbackfv) => {
     try{
@@ -73,20 +74,37 @@ export const ApiProvider = ({ children }) => {
     }
   };
 
+  const getAllAvailableOfferedBooks = async () => {
+    try {
+      const { data } = await myAxios.get("/api/all-available-books");
+      console.log("Kapott adatok:", data);
+      setAvailableBookLista(data);
+      //setFilteredBooks(data); // Alapértelmezésben az összes könyv látszik
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      }
+    } finally{
+      setLoading(false); // Stop loading after fetching books
+    }
+  }
+  
 
   useEffect(()=>{
     //if (user.role === 0) {
       getUsers("/api/users", setUserLista)
       getBooks("/api/book-offers", setBookLista)
+      getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
     //} 
     //getBookDemands("/api/book-demands", setBookDemandLista)
     //postWorks("/api/work-upload")
     //postBooks("/api/book-offer-upload")
+   
   },[])
 
 
   return (
-    <ApiContext.Provider value={{ userLista, bookLista, bookDemandLista, getUsers, postUsers, getBooks, postBooks, getBookDemands }}>
+    <ApiContext.Provider value={{ userLista, bookLista, bookDemandLista, availableBookLista, getUsers, postUsers, getBooks, postBooks, getBookDemands, getAllAvailableOfferedBooks }}>
       {children}
     </ApiContext.Provider>
   );
