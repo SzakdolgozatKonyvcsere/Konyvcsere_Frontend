@@ -2,6 +2,7 @@
 @import 'variables';
 @import 'components/navbar.scss';
 @import 'components/loader.scss';
+@import 'components/book_upload_form.scss';
 @import 'components/admin_table.scss';
 @import 'components/admin_content.scss';
 $assetPath: "/assets/kepek/";
@@ -78,6 +79,10 @@ body {
                 }
             }
         }
+    }
+    
+    .card {
+        max-width: 1200px;
     }
 }
             
