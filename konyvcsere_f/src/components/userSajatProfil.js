@@ -4,7 +4,7 @@ import useAuthContext from "../contexts/AuthContext";
 import { BookuploadContext } from "../contexts/BookuploadContext";
 import { myAxios } from "../api/axios";
 
-export default function userProfil(props) {
+export default function userSajatProfil(props) {
     
     
 
@@ -18,14 +18,14 @@ return(
           <button className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Edit</button>
         </div>
         <div className="flex items-center gap-4">
-          <img src={props.profilePic} alt="Profile" className="w-20 h-20 rounded-full border" />
+          {/*<img src={props.profilePic} alt="Profile" className="w-20 h-20 rounded-full border" />*/}
           <h2 className="text-2xl font-semibold text-gray-800">{props.user.fullName}</h2>
         </div>
         <div className="mt-4 space-y-2">
           <p><strong>Név:</strong> {props.user.name}</p>
           <p><strong>Email:</strong> {props.user.email}</p>
-          <p><strong>Telefon:</strong> {props..phone}</p>
-          <p><strong>Város:</strong> {userData.city}</p>
+          <p><strong>Telefon:</strong> {props.user.tel}</p>
+          <p><strong>Város:</strong> {props.user.city}</p>
         </div>
       </div>
     </div>
