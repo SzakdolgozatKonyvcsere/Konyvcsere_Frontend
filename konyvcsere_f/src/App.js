@@ -7,6 +7,7 @@ import React, { Suspense } from "react";
 import Loader from "./components/Loader";
 import { BookuploadContext } from "./contexts/BookuploadContext";
 import KonyvKereses from "./components/KonyvKereses";
+import UserOwnProfile from "./pages/UserOwnProfile";
 
 
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           <Route path="konyvkereses" element={<KonyvKereses />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
+          <Route path="profil" element={<UserOwnProfile />} />
         </Route>}
       </Routes>
     </Suspense>

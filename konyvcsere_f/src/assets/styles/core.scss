@@ -5,6 +5,7 @@
 @import 'components/book_upload_form.scss';
 @import 'components/admin_table.scss';
 @import 'components/admin_content.scss';
+@import 'components/user_profile.scss';
 $assetPath: "/assets/kepek/";
 
 
@@ -29,7 +30,7 @@ body {
         flex-direction: column;
         align-items: center;
         padding: 20px;
-        height: 50vh;
+        min-height: 50vh;
 
     }
 

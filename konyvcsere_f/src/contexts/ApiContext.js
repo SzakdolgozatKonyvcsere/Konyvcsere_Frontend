@@ -15,12 +15,16 @@ export const ApiProvider = ({ children }) => {
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
 
+
+  const [userProfileInfoLista, setUserProfileInfoList] = useState([]); 
+  
   //Users
-  const getUsers = async (vegpont, callbackfv) => {
+  const getUsers = async (vegpont) => {
+    setLoading(true);
     try{
       //console.log("getusers");
-      const response = await myAxios.get(vegpont);
-      callbackfv(response.data)
+      const {data} = await myAxios.get(vegpont);
+      setUserLista(data);
     } catch (error) {
         console.log("Hiba:", error);
     }finally{
@@ -28,6 +32,7 @@ export const ApiProvider = ({ children }) => {
     }
   }
   const postUsers = async(vegpont,adat)=>{
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -38,9 +43,10 @@ export const ApiProvider = ({ children }) => {
   }
 
   //Books
-  const getBooks = async () => {
+  const getBooks = async (vegpont) => {
+    setLoading(true);
     try {
-      const { data } = await myAxios.get("/api/book-offers");
+      const { data } = await myAxios.get(vegpont);
       setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
@@ -51,6 +57,7 @@ export const ApiProvider = ({ children }) => {
     }
   };
   const postBooks = async(vegpont,adat)=>{
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -62,6 +69,7 @@ export const ApiProvider = ({ children }) => {
 
   //Book demands
   const getBookDemands = async () => {
+    setLoading(true);
     try {
       const { data } = await myAxios.get("/api/book-demands");
       setBookDemandLista(data);
@@ -90,11 +98,28 @@ export const ApiProvider = ({ children }) => {
   }
   
 
+  //user profile + book stuff by user
+  const getUserProfileInfo = async (user_id) => {
+    setLoading(true);
+    try {
+      const {data} = await myAxios.get(`/api/user-profile-info/${user_id}`);
+      setUserProfileInfoList(data);
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      } 
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(()=>{
     //if (user.role === 0) {
       getUsers("/api/users", setUserLista)
       getBooks("/api/book-offers", setBookLista)
       getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
+      //getUsers("/api/users", setUserLista)
+      //getBooks("/api/book-offers", setBookLista)
     //} 
     //getBookDemands("/api/book-demands", setBookDemandLista)
     //postWorks("/api/work-upload")
@@ -104,7 +129,13 @@ export const ApiProvider = ({ children }) => {
 
 
   return (
-    <ApiContext.Provider value={{ userLista, bookLista, bookDemandLista, availableBookLista, getUsers, postUsers, getBooks, postBooks, getBookDemands, getAllAvailableOfferedBooks }}>
+    <ApiContext.Provider value={
+      { 
+        userLista, bookLista, bookDemandLista,
+        getUsers, postUsers, getBooks, postBooks, getBookDemands,
+        userProfileInfoLista, getUserProfileInfo, availableBookLista, getAllAvailableOfferedBooks
+        }
+      }>
       {children}
     </ApiContext.Provider>
   );

@@ -1,0 +1,22 @@
+.user-own-profile {
+  &--details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    background-color: white;
+    border-radius: 5px;
+    &-right {
+      padding: 10px;
+      &_image {
+
+      }
+    }
+    &-left {
+      padding: 10px;
+      font-size: 1.5rem;
+    }
+  }
+}
