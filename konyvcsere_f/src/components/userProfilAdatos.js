@@ -1,28 +1,33 @@
-const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
+import { useState, useEffect } from "react";
+import useAuthContext from "../contexts/AuthContext";
 
-    const [user, setUser] = useState("");
-    const {name, getName} = useState();
-    const {email, getEmail} = useState();
-    const {full_name, getFullName} = useState();
-    const {city, getCity} = useState();
-    const {tel, getTel} = useState();
-    const {img_url, getImgUrl} = useState();
+export default function UserProfilAdatos() {
+  /* const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó
 
-    useEffect(() => {
-        if (authUser) {
-          setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
-        }
-      }, [authUser]);
+  // Összes adat egy objektumban
+  const [userData, setUserData] = useState({
+    id: "",
+    name: "",
+    email: "",
+    full_name: "",
+    city: "",
+    tel: "",
+    img_url: "",
+  });
 
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        const konyvAdat = {
-          user,
-          name,
-          email,
-          full_name,
-          city,
-          tel,
-          img_url,
-        };
+  useEffect(() => {
+    if (authUser) {
+      setUserData({
+        id: authUser.id || "",
+        name: authUser.name || "",
+        email: authUser.email || "",
+        full_name: authUser.full_name || "",
+        city: authUser.city || "",
+        tel: authUser.tel || "",
+        img_url: authUser.img_url || "",
+      });
+    }
+  }, [authUser]);
+
+  return <UserProfil userData={userData} />; */
+}

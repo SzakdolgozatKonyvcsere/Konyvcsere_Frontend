@@ -100,7 +100,7 @@ export default function Regisztracio(){
             </div>
           </div>
 
-          <Form.Group controlId="img_url">
+          {/*<Form.Group controlId="img_url">
         <Form.Label>Kép</Form.Label>
         <Form.Control
           type="file"
@@ -108,7 +108,7 @@ export default function Regisztracio(){
           //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
           onChange={handleChange}
         />
-      </Form.Group>
+      </Form.Group>*/}
           
   
           <button type="submit" className="btn btn-primary w-100">Regisztrálok</button>
