@@ -109,7 +109,7 @@ export default function Regisztracio(){
           //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
           onChange={handleChange}
         />
-      </Form.Group>*/}
+      </Form.Group>
           
       </Form.Group>
           */}

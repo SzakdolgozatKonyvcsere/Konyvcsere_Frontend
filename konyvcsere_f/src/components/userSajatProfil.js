@@ -1,6 +1,6 @@
 export default function UserProfil({ userData }) {
-  return (
- /*    <div className="flex justify-center p-6 bg-gray-100 min-h-screen">
+  /*return (
+     <div className="flex justify-center p-6 bg-gray-100 min-h-screen">
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
@@ -36,7 +36,7 @@ return(
           <p><strong>Telefon:</strong> {userData.tel}</p>
           <p><strong>Város:</strong> {userData.city}</p>
           {/*<img src={props.profilePic} alt="Profile" className="w-20 h-20 rounded-full border" />*/}
-          <h2 className="text-2xl font-semibold text-gray-800">{props.user.fullName}</h2>
+          {/*<h2 className="text-2xl font-semibold text-gray-800">{props.user.fullName}</h2>
         </div>
         <div className="mt-4 space-y-2">
           <p><strong>Név:</strong> {props.user.name}</p>
