@@ -1,12 +1,12 @@
 
 
-
+/*
 export default function KonyvKeresKartyak(props) {
 
     return (
         <>
             <div class="card" style="width: 18rem;">
-                {/*<img src="..." class="card-img-top" alt="...">*/}
+                {/*<img src="..." class="card-img-top" alt="...">}
                 <div class="card-body">
                     <h5 class="card-title">{props.book.title}</h5>
 
@@ -21,4 +21,4 @@ export default function KonyvKeresKartyak(props) {
         </>
 
     )
-}
+}*/
