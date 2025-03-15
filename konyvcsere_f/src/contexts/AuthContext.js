@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
     myAxios.post("/logout").then((resp) => {
       setUser(null);
-      console.log(resp); 
+      navigate("/"); 
     });
   };
 

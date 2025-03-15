@@ -7,7 +7,7 @@ import React, { Suspense } from "react";
 import Loader from "./components/Loader";
 import { BookuploadContext } from "./contexts/BookuploadContext";
 import KonyvKereses from "./components/KonyvKereses";
-import UserOwnProfile from "./pages/UserOwnProfile";
+import UserOwnInfo from "./pages/UserOwnInfo";
 
 
 
@@ -45,6 +45,7 @@ function App() {
           <Route path="osszesuser" element={<UsersTableAdminPage />} />
           <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
           <Route path="tartalomszerk" element={<EditContentPage />} />
+          <Route path="profil" element={<UserOwnInfo />} />
         </Route>}
 
         {/* User specifikus útvonalak */}
@@ -54,7 +55,7 @@ function App() {
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           <Route path="konyvkereses" element={<KonyvKereses />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
-          <Route path="profil" element={<UserOwnProfile />} />
+          <Route path="profil" element={<UserOwnInfo />} />
         </Route>}
       </Routes>
     </Suspense>

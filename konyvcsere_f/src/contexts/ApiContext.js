@@ -14,8 +14,9 @@ export const ApiProvider = ({ children }) => {
   const [bookLista, setBookLista] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
 
-  const [userProfileInfoLista, setUserProfileInfoList] = useState([]); 
-  
+  const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
+  const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
+
   //Users
   const getUsers = async (vegpont) => {
     setLoading(true);
@@ -95,6 +96,22 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   }
+  const getUserBookOffersInfo = async (vegpont) => {
+    try {
+      const {data} = await myAxios.get(vegpont);
+      setUserBookOffersInfo(data);
+    } catch (error) {
+        console.log("Hiba:" + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
+  //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
+  //meghivhatunk tehat lehetne ezt egysegesiteni
+
+
 
   useEffect(()=>{
     //if (user.role === 0) {
@@ -112,7 +129,7 @@ export const ApiProvider = ({ children }) => {
       { 
         userLista, bookLista, bookDemandLista,
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
-        userProfileInfoLista, getUserProfileInfo 
+        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo 
         }
       }>
       {children}
