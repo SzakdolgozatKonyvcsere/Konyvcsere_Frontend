@@ -85,6 +85,37 @@ body {
     .card {
         max-width: 1200px;
     }
+
+    #register-form {
+        margin-bottom: 5vh;
+    }
+
+    form {
+        .login-form__link {      
+            transition: all 0.2s;  
+            color: $primary-color !important;
+            &:hover {
+                color: $button-color !important;
+            }
+        }
+        .form-control {
+            transition: all 0.2s;
+            &:focus {
+                border-color: rgb(113, 113, 113);
+                box-shadow: 0 0 0 .1rem rgba(113, 113, 113, 0.25);
+            }
+        }
+    }
+    .btn-primary {
+        transition: all 0.2s;
+        background-color: $button-color;
+        border: 1px solid gray;
+        &:hover {
+            background-color: $primary-color;
+            border: 1px solid rgb(113, 113, 113);
+        }
+    }
+  
 }
             
 .main-container {
@@ -156,4 +187,5 @@ ul {
     text-align: center;
     margin-top: 20px;
 }
+
 

@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useAuthContext from '../contexts/AuthContext'
+import UserProfilePictureUpdateForm from './UserProfilePictureUpdateForm';
 
 function UserOwnProfileInfo() {
   const {user} = useAuthContext();
+  const [isPFPUpdateVisible, setPFPUpdateVisible] = useState(false);
+
+  const togglePFPUpdateVisibility = () => {
+    setPFPUpdateVisible(!isPFPUpdateVisible);
+  };
 
   return (
     <div className='user-own-profile'>
       <div className='user-own-profile__details'>
         <div className='user-own-profile__details-top'>
-          <img className='user-own-profile__details-top__image' src={user.img_url}></img>
+          <div className="user-own-profile__details-top__edit-image" onClick={togglePFPUpdateVisibility}>
+            <img className='user-own-profile__details-top__image' src={user.img_url}></img>
+            <span>szerkesztés</span>
+          </div>
         </div>
         <div className='user-own-profile__details-bottom'>
           <p className='user-own-profile__details-bottom__text'>Felhasználónév: <span className='--value'>{user.name}</span></p>
@@ -18,7 +27,15 @@ function UserOwnProfileInfo() {
           <p className='user-own-profile__details-bottom__text'>Telefonszám: <span className='--value'>{user.tel}</span></p>
         </div>   
       </div>
-    </div>
+      {isPFPUpdateVisible && (
+        <>
+          <div onClick={togglePFPUpdateVisibility} className='popup-form__background'>
+            <UserProfilePictureUpdateForm/>
+          </div>          
+        </>        
+      )}
+      
+    </div> 
   )
 }
 

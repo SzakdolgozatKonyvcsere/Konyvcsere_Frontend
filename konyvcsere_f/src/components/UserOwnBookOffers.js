@@ -14,7 +14,6 @@ function UserOwnBookOffers() {
 
   return (
     <>
-    {console.log("Szar = " + userBookOffersInfo)}
       {userBookOffersInfo.map((book, index) => (
         <div key={index} className='user-book-offers'>
           <div className='user-book-offers__details-left'>

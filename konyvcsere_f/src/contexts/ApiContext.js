@@ -14,7 +14,7 @@ export const ApiProvider = ({ children }) => {
   const [bookLista, setBookLista] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
-
+ 
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
@@ -65,6 +65,7 @@ export const ApiProvider = ({ children }) => {
     }catch(error){
         console.log("Hiba",error);
     }finally{
+      setLoading(false);
     }
   }
 
@@ -124,6 +125,18 @@ export const ApiProvider = ({ children }) => {
     }
   }
 
+  const patchUserPFP = async (vegpont, adat) => {
+    setLoading(true);
+    try {
+      await myAxios.patch(vegpont, adat, {headers: {
+      }});
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false);
+    }
+  }
+
   //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
   //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
   //meghivhatunk tehat lehetne ezt egysegesiteni
@@ -150,7 +163,9 @@ export const ApiProvider = ({ children }) => {
       { 
         userLista, bookLista, bookDemandLista,
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
-        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, availableBookLista, getAllAvailableOfferedBooks
+        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo,
+        availableBookLista, getAllAvailableOfferedBooks,
+        patchUserPFP
         }
       }>
       {children}
