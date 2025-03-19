@@ -3,12 +3,16 @@ import useApiContext from '../contexts/ApiContext'
 
 function UserProfilePictureUpdateForm() {
   const {patchUserPFP, selectedImage, setSelectedImage} = useApiContext();
-  
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleImageChange = (event) => { //Ha van kiv. file, beállítja a statet
     const file = event.target.files[0];
     if (file) {
       setSelectedImage(file);
+      
+      //Url preview-nek
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
     }
   };
 
@@ -38,13 +42,17 @@ function UserProfilePictureUpdateForm() {
   return (
     <div className='popup-form__container' onClick={(e) => e.stopPropagation()}> 
       <label htmlFor='img_url'>Kép kiválasztása:</label>
+      { selectedImage?
+        <div className='popup-form__container__image-preview'>
+          <img src={imagePreview} alt='uploaded img preview'></img>
+        </div> : null }
       <input
         type='file'
         name='img_url'
         accept='.png, .svg, .jpg, .jpeg, .gif'
         id='user-pfp-update__input'
         onChange={handleImageChange}
-      ></input>
+      />
       <button onClick={handleSubmit}>kép cserélése</button>
     </div>
   )
