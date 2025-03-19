@@ -86,6 +86,7 @@ export const ApiProvider = ({ children }) => {
 
   const getAllAvailableOfferedBooks = async () => {
     try {
+      console.log("Fetching data from backend..."); // Debug log before request
       const { data } = await myAxios.get("/api/all-available-books");
       console.log("Kapott adatok:", data);
       setAvailableBookLista(data);

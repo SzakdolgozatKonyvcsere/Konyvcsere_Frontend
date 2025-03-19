@@ -6,11 +6,15 @@ export default function KonyvKereses() {
 
     const { availableBookLista } = useApiContext();
     const [szurtLista, setSzurtLista] = useState([...availableBookLista]);
-    const [szuroertek, setSzuroErtek] = useState();
+    const [szuroertek, setSzuroErtek] = useState("");
 
     function handleSearch(e) {
+        console.log(availableBookLista)
+        //const ujszuroertek = e.target.value; 
+        //setSzuroErtek(ujszuroertek);
+
         setSzuroErtek(e.target.value)
-        let atmeneti = availableBookLista.filter((book) => {
+        const atmeneti = availableBookLista.filter((book) => {
 
             return book.title.includes(szuroertek);
         }
@@ -36,7 +40,16 @@ export default function KonyvKereses() {
 
             
 {/* végigmenni a szurtLista-n  */}
-
+<div className='user-book-offers'>
+          <div className='user-book-offers__details-left'>
+            <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
+          </div>
+            
+                {szurtLista.map((book)=>{
+                        return <KonyvKeresKartyak book={book} key={book.id} />
+                    })}
+            </div>
+            
         </div>
     )
 }
