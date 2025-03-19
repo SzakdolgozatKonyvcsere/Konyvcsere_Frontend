@@ -116,7 +116,6 @@
     z-index: 100;
     align-items: anchor-center;
     justify-content: center;
-    
   }
   &__container {
     display: flex;
@@ -128,5 +127,14 @@
     z-index: 101;
     align-items: anchor-center;
     justify-content: center;
-  }
+    > * {
+      font-size: large;
+      padding: 1vh;
+    }
+    &__image-preview {
+      > * {
+        width: 100px;
+      }
+    }
+  }  
 }

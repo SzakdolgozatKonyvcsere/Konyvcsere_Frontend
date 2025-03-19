@@ -7,14 +7,14 @@ export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  const user = useAuthContext();
+  const {user, crsf} = useAuthContext();
   
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
- 
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
@@ -128,9 +128,10 @@ export const ApiProvider = ({ children }) => {
 
   const patchUserPFP = async (vegpont, adat) => {
     setLoading(true);
+    console.log("Sending data to:", vegpont);
+    console.log("FormData content:", adat.get('img_url'));
     try {
-      await myAxios.patch(vegpont, adat, {headers: {
-      }});
+      await myAxios.post(vegpont, adat);      
     } catch (error) {
       console.log(error.message)
     } finally {
@@ -166,7 +167,7 @@ export const ApiProvider = ({ children }) => {
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
         userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP
+        patchUserPFP, selectedImage, setSelectedImage
         }
       }>
       {children}
