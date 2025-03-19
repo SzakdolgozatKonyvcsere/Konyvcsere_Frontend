@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useAuthContext from '../contexts/AuthContext'
 import UserProfilePictureUpdateForm from './UserProfilePictureUpdateForm';
+import { useNavigate } from 'react-router-dom';
 
 function UserOwnProfileInfo() {
   const {user} = useAuthContext();
@@ -15,7 +16,7 @@ function UserOwnProfileInfo() {
       <div className='user-own-profile__details'>
         <div className='user-own-profile__details-top'>
           <div className="user-own-profile__details-top__edit-image" onClick={togglePFPUpdateVisibility}>
-            <img className='user-own-profile__details-top__image' src={user.img_url}></img>
+            <img className='user-own-profile__details-top__image' src={`http://localhost:8000/${user.img_url}`}></img>
             <span>szerkesztés</span>
           </div>
         </div>
