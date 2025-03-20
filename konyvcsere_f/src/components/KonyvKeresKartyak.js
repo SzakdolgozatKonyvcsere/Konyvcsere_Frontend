@@ -13,19 +13,24 @@ export default function KonyvKeresKartyak(props) {
 
     return(
         
+        <div className="card all-available-books" style={{ width: "18rem" }}>
+        <img className='all-available-books__image' src={'/basic_book.png'}></img>
+                <div className="card-body all-available-books">
+                    <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{props.book.title}</h5>
 
-        <div className="card" style={{ width: "18rem" }}>
-        <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
-                <div className="card-body">
-                    <h5 className="card-title">{props.book.title}</h5>
-
-                    <ul className="list-group list-group-flush">
-                        <li className="list-group-item">{props.book.author_name ? `${props.book.author_name}` : "ismeretlen szerző"}</li>
-                        <li className="list-group-item">{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</li>
+                    <ul className="list-group list-group-flush all-available-books">
+                        <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small class="text-muted -adat" >{props.book.author_name ? `${props.book.author_name}` : "ismeretlen szerző"}</small></li>
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small class="text-muted -adat" >{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</small></li>
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small class="text-muted -adat" >{props.book.language}</small></li>
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small class="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"}</small></li>
+                        {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0" }}>{props.book.quality}</li>*/}
                     </ul>
-                    <a href="#" className="btn btn-primary">Részletek</a>
+                    <a href="#" className="btn btn-primary all-available-books">Részletek</a>
                 </div>
             </div>
+        
+        
+        
         
         
         
@@ -33,19 +38,19 @@ export default function KonyvKeresKartyak(props) {
 
 }
 
-       /*<div className='user-book-offers'>
-          <div className='user-book-offers__details-left'>
-            <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
+       /*<div className='all-available-books'>
+          <div className='all-available-books__details-left'>
+            <img className='all-available-books__details-left__image' src={'/basic_book.png'}></img>
           </div>
-          <div className='user-book-offers__details-right'>
-            <p className='user-book-offers__details-right__text'>cím: <span className='--value'>{props.book.title}</span></p>
-            <p className='user-book-offers__details-right__text'>kiadó: <span className='--value'>{props.book.publisher_name ?  props.book.publisher_name : "ismeretlen kiadó"}</span></p>
-            <p className='user-book-offers__details-right__text'>műfaj: <span className='--value'>{props.book.author_name ? `${props.book.author_name}` : "ismeretlen szerző"}</span></p>
-            <p className='user-book-offers__details-right__text'>nyelv: <span className='--value'>{props.book.language}</span></p>
-            <p className='user-book-offers__details-right__text'>kiadás éve: <span className='--value'>{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</span></p>
-            <p className='user-book-offers__details-right__text'>minőség: <span className='--value'>{props.book.quality}</span></p>
+          <div className='all-available-books__details-right'>
+            <p className='all-available-books__details-right__text'><span className='--value'>{props.book.title}</span></p>
+            <p className='all-available-books__details-right__text'>kiadó: <span className='--value'>{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"}</span></p>
+            <p className='all-available-books__details-right__text'>műfaj: <span className='--value'>{props.book.author_name ? `${props.book.author_name}` : "ismeretlen szerző"}</span></p>
+            <p className='all-available-books__details-right__text'>nyelv: <span className='--value'>{props.book.language}</span></p>
+            <p className='all-available-books__details-right__text'>kiadás éve: <span className='--value'>{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</span></p>
+            <p className='all-available-books__details-right__text'>minőség: <span className='--value'>{props.book.quality}</span></p>
           </div> 
           <div>
-          <a href="#" className="btn btn-primary">Részletek</a>
+          <a href="#" className="btn btn-primary">Megtekintés</a>
           </div>
         </div>*/

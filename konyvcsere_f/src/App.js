@@ -8,6 +8,7 @@ import Loader from "./components/Loader";
 import { BookuploadContext } from "./contexts/BookuploadContext";
 import KonyvKereses from "./components/KonyvKereses";
 import UserOwnInfo from "./pages/UserOwnInfo";
+import AllAvailableBooks from "./pages/AllAvailabelBooks";
 
 
 
@@ -53,7 +54,7 @@ function App() {
           <Route path="/" element={<KezdolapUser />} />
           <Route path="konyvek-sajat" element={<KonyvInfoSajat />} />
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
-          <Route path="konyvkereses" element={<KonyvKereses />} />
+          <Route path="konyvkereses" element={<AllAvailableBooks />} />
           <Route path="profil" element={<UserOwnInfo />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
