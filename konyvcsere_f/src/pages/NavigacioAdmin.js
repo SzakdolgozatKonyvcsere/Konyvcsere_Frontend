@@ -6,30 +6,24 @@ export default function NavigacioAdmin() {
     const { user, logout } = useAuthContext();
 
     return (
-        <nav className="navbar navbar-expand-sm bg-light">
+        <nav className="navbar navbar-admin">
             <div className="container-fluid">
                 <ul className="navbar-nav">
                     <li className="navbar-item">
-                        <Link className="nav-link" to="/">
-                            Kezdőlap
-                        </Link>
+                        <Link className="nav-link" to="/">Kezdőlap</Link>
                     </li>
                     <li className="navbar-item">
-                        <Link className="nav-link" to="/tartalomszerk">
-                            Tartalom szerkesztése
-                        </Link>
+                        <Link className="nav-link" to="/tartalomszerk">Tartalom szerkesztése</Link>
                     </li>
                     <li className="navbar-item">
-                        <button className="nav-link" onClick={() => { logout() }}>
-                            Kijelentkezés
-                        </button>
+                        <button className="nav-link" onClick={() => { logout() }}>Kijelentkezés</button>
                     </li>
-
-
                 </ul>
                 <div className="navbar-profile">
-                    <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
-                    <a href="#"><img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"basic_pfp.png"}></img></a>
+                    <p className="user--name">{user !== null ? user.full_name : "Vendég"}</p>
+                    <a href="#">
+                        <img className="user--profile-picture" alt="felhasználó profilképe" src={user !== null ? user.img_url : "basic_pfp.png"} />
+                    </a>
                 </div>
             </div>
         </nav>
