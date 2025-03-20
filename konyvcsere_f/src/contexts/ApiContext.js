@@ -7,19 +7,25 @@ export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  const user = useAuthContext();
+  const {user, crsf} = useAuthContext();
   
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
-  
+  const [availableBookLista, setAvailableBookLista] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
+  const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
+
   //Users
-  const getUsers = async (vegpont, callbackfv) => {
+  const getUsers = async (vegpont) => {
+    setLoading(true);
     try{
       //console.log("getusers");
-      const response = await myAxios.get(vegpont);
-      callbackfv(response.data)
+      const {data} = await myAxios.get(vegpont);
+      setUserLista(data);
     } catch (error) {
         console.log("Hiba:", error);
     }finally{
@@ -27,6 +33,7 @@ export const ApiProvider = ({ children }) => {
     }
   }
   const postUsers = async(vegpont,adat)=>{
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -37,9 +44,10 @@ export const ApiProvider = ({ children }) => {
   }
 
   //Books
-  const getBooks = async () => {
+  const getBooks = async (vegpont) => {
+    setLoading(true);
     try {
-      const { data } = await myAxios.get("/api/book-offers");
+      const { data } = await myAxios.get(vegpont);
       setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
@@ -50,17 +58,20 @@ export const ApiProvider = ({ children }) => {
     }
   };
   const postBooks = async(vegpont,adat)=>{
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
     }catch(error){
         console.log("Hiba",error);
     }finally{
+      setLoading(false);
     }
   }
 
   //Book demands
   const getBookDemands = async () => {
+    setLoading(true);
     try {
       const { data } = await myAxios.get("/api/book-demands");
       setBookDemandLista(data);
@@ -73,20 +84,92 @@ export const ApiProvider = ({ children }) => {
     }
   };
 
+  const getAllAvailableOfferedBooks = async () => {
+    try {
+      console.log("Fetching data from backend..."); // Debug log before request
+      const { data } = await myAxios.get("/api/all-available-books");
+      console.log("Kapott adatok:", data);
+      setAvailableBookLista(data);
+      //setFilteredBooks(data); // Alapértelmezésben az összes könyv látszik
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      }
+    } finally{
+      setLoading(false); // Stop loading after fetching books
+    }
+  }
+  
+
+  //user profile + book stuff by user
+  const getUserProfileInfo = async (user_id) => {
+    setLoading(true);
+    try {
+      const {data} = await myAxios.get(`/api/user-profile-info/${user_id}`);
+      setUserProfileInfoList(data);
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      } 
+    } finally {
+      setLoading(false);
+    }
+  }
+  const getUserBookOffersInfo = async (vegpont) => {
+    try {
+      const {data} = await myAxios.get(vegpont);
+      setUserBookOffersInfo(data);
+    } catch (error) {
+        console.log("Hiba:" + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const patchUserPFP = async (vegpont, adat) => {
+    setLoading(true);
+    console.log("Sending data to:", vegpont);
+    console.log("FormData content:", adat.get('img_url'));
+    try {
+      await myAxios.post(vegpont, adat);      
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
+  //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
+  //meghivhatunk tehat lehetne ezt egysegesiteni
+
+
 
   useEffect(()=>{
     //if (user.role === 0) {
       getUsers("/api/users", setUserLista)
       getBooks("/api/book-offers", setBookLista)
+      getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
+      //getUsers("/api/users", setUserLista)
+      //getBooks("/api/book-offers", setBookLista)
     //} 
     //getBookDemands("/api/book-demands", setBookDemandLista)
     //postWorks("/api/work-upload")
     //postBooks("/api/book-offer-upload")
+   
   },[])
 
 
   return (
-    <ApiContext.Provider value={{ userLista, bookLista, bookDemandLista, getUsers, postUsers, getBooks, postBooks, getBookDemands }}>
+    <ApiContext.Provider value={
+      { 
+        userLista, bookLista, bookDemandLista,
+        getUsers, postUsers, getBooks, postBooks, getBookDemands,
+        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo,
+        availableBookLista, getAllAvailableOfferedBooks,
+        patchUserPFP, selectedImage, setSelectedImage
+        }
+      }>
       {children}
     </ApiContext.Provider>
   );

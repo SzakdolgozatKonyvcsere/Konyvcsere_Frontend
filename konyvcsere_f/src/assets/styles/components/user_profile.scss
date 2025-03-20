@@ -1,0 +1,140 @@
+.user-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  //max-width: 1200px;
+  justify-self: center;
+  justify-content: center;
+  .user-own-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25vw;
+    height: fit-content;
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px;
+    &__details {    
+      &-top {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        &__image {
+          width: 15vw;
+          height: 15vw;
+          border-radius: 999px;
+          border: 3px black outset;
+        }        
+        &__edit-image {
+          position: relative;
+          border-radius: 999px;
+          z-index: 5;
+          padding: 10px;
+          &:hover {
+            cursor: pointer;
+          }
+          span {
+            position: absolute;
+            bottom: 12.5%;
+            background: rgba(0, 0, 0, 0.30);
+            padding: 2.5px 25px;
+            border-radius: 100px;
+            color: white;
+            justify-self: anchor-center;
+          }
+        }
+      }
+      &-bottom {
+        &__text {
+          padding: 10px;
+          font-size: 1.25rem;
+          .--value {
+            font-weight: bold;
+            transform: translateY(-10px);
+          }
+        }      
+      }
+    }
+  }
+  
+  .book-offers-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50vw;
+    background-color: $secondary-color;
+    border-radius: 5px;
+    margin: 10px;
+    
+    .user-book-offers {  
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      padding: 10px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.493);
+      
+      &__details {
+        &-left {
+          display: flex;
+          align-items: center;
+          &__image {
+            width: 20vw;
+          }
+        }
+        &-right {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          margin-left: 10px;
+          background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 100%;
+          &__text {
+            font-size: 1rem;
+            .--value {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.popup-form {
+  &__background {
+    display: flex;
+    background-color: rgba(16, 16, 16, 0.5);
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0%;
+    right: 0%;
+    z-index: 100;
+    align-items: anchor-center;
+    justify-content: center;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+    width: 70vh;
+    height: 50vh;
+    z-index: 101;
+    align-items: anchor-center;
+    justify-content: center;
+    > * {
+      font-size: large;
+      padding: 1vh;
+    }
+    &__image-preview {
+      > * {
+        width: 100px;
+      }
+    }
+  }  
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function UserProfilAdatos() {
-  /* const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó
+  /*const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó
 
   // Összes adat egy objektumban
   const [userData, setUserData] = useState({
@@ -29,5 +29,5 @@ export default function UserProfilAdatos() {
     }
   }, [authUser]);
 
-  return <UserProfil userData={userData} />; */
+  return <UserProfil userData={userData} />;*/
 }

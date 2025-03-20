@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TableAdminCreate from './TableAdminCreate'
+import useApiContext from '../../contexts/ApiContext';
 //const TableAdminCreate = React.lazy(() => import('./TableAdminCreate'));
 
 
 export default function UserTableAdmin({users}) { // destructuring, this saves a line of const users = props.users
+  const {getUsers, setUserLista} = useApiContext();
+  useEffect (()=>{
+    getUsers("/api/users", setUserLista)
+  }, []);
+
   
+
   const excludedKeys = ['remember_token', 'email_verified_at'];
   const filteredUsers = users.map(user =>
     Object.fromEntries(

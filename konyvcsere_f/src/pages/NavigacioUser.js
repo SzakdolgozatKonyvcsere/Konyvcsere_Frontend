@@ -57,6 +57,9 @@ export default function NavigacioUser() {
                     <Link className="nav-link" to="/bejelentkezettuser">
                         <p className="user--name">{user !== null ? user.full_name : "Vendég"}</p>
                         <img className="user--profile-picture" alt="felhasználó profilképe" src={user !== null ? user.img_url : "basic_pfp.png"} />
+                    <Link className="nav-link" to="/profil">
+                        <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
+                        <img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?`http://localhost:8000/${user.img_url}`:"user_basic_pfp.jpg"} ></img>
                     </Link>
                 </div>
             </div>

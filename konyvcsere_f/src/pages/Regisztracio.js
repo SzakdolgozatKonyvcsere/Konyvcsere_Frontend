@@ -48,10 +48,10 @@ export default function Regisztracio(){
     return(
         <div className=" m-auto" style={{ maxWidth: "400px" }}>
         <h1 className="text-center">Regisztráció</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="register-form">
           <div className="mb-3 mt-3">
             <label htmlFor="name" className="form-label">Felhaszálónév:</label>
-            <input type="text" value={name} onChange={(e) => {setName(e.target.value);}} className="form-control" id="name" placeholder="Felhaszálónév" name="name"/>
+            <input type="text" value={name} onChange={(e) => {setName(e.target.value);}} className="form-control" id="name" placeholder="felhaszálónév" name="name"/>
             <div>
               {errors.name && (<span className="text-danger">{errors.name[0]}</span>)}
             </div>
@@ -80,21 +80,21 @@ export default function Regisztracio(){
           </div>
           <div className="mb-3 mt-3">
             <label htmlFor="full_name" className="form-label">Név:</label>
-            <input type="text" value={full_name} onChange={(e) => {setFullName(e.target.value);}} className="form-control" id="full_name" placeholder="Név" name="full_name"/>
+            <input type="text" value={full_name} onChange={(e) => {setFullName(e.target.value);}} className="form-control" id="full_name" placeholder="teljes név" name="full_name"/>
             <div>
               {errors.full_name && (<span className="text-danger">{errors.full_name[0]}</span>)}
             </div>
           </div>
           <div className="mb-3 mt-3">
             <label htmlFor="city" className="form-label">Város:</label>
-            <input type="text" value={city} onChange={(e) => {setCity(e.target.value);}} className="form-control" id="city" placeholder="Város" name="city"/>
+            <input type="text" value={city} onChange={(e) => {setCity(e.target.value);}} className="form-control" id="city" placeholder="város" name="city"/>
             <div>
               {errors.city && (<span className="text-danger">{errors.city[0]}</span>)}
             </div>
           </div>
           <div className="mb-3 mt-3">
             <label htmlFor="tel" className="form-label">Telefonszám:</label>
-            <input type="text" value={tel} onChange={(e) => {setTel(e.target.value);}} className="form-control" id="tel" placeholder="Telefonszám" name="tel"/>
+            <input type="text" value={tel} onChange={(e) => {setTel(e.target.value);}} className="form-control" id="tel" placeholder="telefonszám" name="tel"/>
             <div>
               {errors.tel && (<span className="text-danger">{errors.tel[0]}</span>)}
             </div>
@@ -114,7 +114,7 @@ export default function Regisztracio(){
       </Form.Group>
           */}
   
-          <button type="submit" className="btn btn-primary w-100">Regisztrálok</button>
+          <button type="submit" className="btn btn-primary w-100 register-form__submit">Regisztrálok</button>
         </form>
       </div>
     );

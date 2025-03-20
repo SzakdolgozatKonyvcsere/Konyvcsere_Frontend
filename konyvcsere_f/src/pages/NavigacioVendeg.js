@@ -32,6 +32,10 @@ export default function NavigacioVendeg() {
                     <a href="#">
                         <img className="user--profile-picture" alt="felhasználó profilképe" src={user !== null ? user.img_url : "basic_pfp.png"} />
                     </a>
+                    <Link className="nav-link" to={"/bejelentkezes"}>
+                        <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
+                        <img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"user_basic_pfp.jpg"}></img>
+                    </Link>
                 </div>
             </div>
         </nav>
