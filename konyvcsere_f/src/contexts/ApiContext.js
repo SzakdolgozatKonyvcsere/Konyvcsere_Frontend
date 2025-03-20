@@ -84,7 +84,7 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching
     }
   };
-//osszes elerheto konyv
+//osszes elerheto (s) konyv
   const getAllAvailableOfferedBooks = async () => {
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
