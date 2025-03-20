@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useApiContext from '../contexts/ApiContext';
 import KonyvKeresKartyak from './KonyvKeresKartyak';
 
@@ -8,22 +8,26 @@ export default function KonyvKereses() {
     const [szurtLista, setSzurtLista] = useState([...availableBookLista]);
     const [szuroertek, setSzuroErtek] = useState("");
 
+    useEffect(() => {
+        setSzurtLista(availableBookLista);
+    }, [availableBookLista]);
+
     function handleSearch(e) {
         //console.log(availableBookLista)
-        //const ujszuroertek = e.target.value; 
-        //setSzuroErtek(ujszuroertek);
+        const ujszuroertek = e.target.value; 
+        setSzuroErtek(ujszuroertek);
 
-        setSzuroErtek(e.target.value)
+        //setSzuroErtek(e.target.value)
 
         //console.log("🔍 Search Term:", szuroertek);
     //console.log("📚 Available Books Before Filter:", availableBookLista);
         const atmeneti = availableBookLista.filter((book) => {
 
-            return book.title.includes(szuroertek);
+            return book.title.toLowerCase().includes(ujszuroertek.toLowerCase());
         }
 
         );
-        console.log(atmeneti)
+        //console.log(atmeneti)
         setSzurtLista([...atmeneti])
         console.log(szurtLista)
     }
@@ -31,6 +35,8 @@ export default function KonyvKereses() {
 
 
     return (
+
+        
       
         <div>
             <h1>Könyvek keresése</h1>
@@ -50,10 +56,10 @@ export default function KonyvKereses() {
             <div className='user-book-offers__details-left'>
               <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
             </div>*/}
-            
-                {szurtLista.map((book)=>{
+                {szurtLista.length > 0 ? (
+                    szurtLista.map((book)=>{
                         return <KonyvKeresKartyak book={book} key={book.id} />
-                    })}
+                    })) : (<p>Nincs találat.</p>)}
           
             
         </div>
