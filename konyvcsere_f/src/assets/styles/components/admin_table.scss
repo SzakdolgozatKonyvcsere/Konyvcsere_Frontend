@@ -1,7 +1,8 @@
 .table_admin {
   &-row {
     background-color: white;
-
+    text-wrap: wrap;
+    word-wrap: break-word;
     &>td {
       max-width: 10vw;
       max-height: 20px;
@@ -15,6 +16,7 @@
       font-size: 0.60rem;
       text-align: center;
       overflow: hidden;
+      
     }
     
     &--button {
