@@ -18,6 +18,7 @@ export const ApiProvider = ({ children }) => {
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
+  const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
 
   //Users
   const getUsers = async (vegpont) => {
@@ -101,7 +102,7 @@ export const ApiProvider = ({ children }) => {
   }
   
 
-  //user profile + book stuff by user
+  //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
     try {
@@ -119,6 +120,16 @@ export const ApiProvider = ({ children }) => {
     try {
       const {data} = await myAxios.get(vegpont);
       setUserBookOffersInfo(data);
+    } catch (error) {
+        console.log("Hiba:" + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+  const getUserBookDemandsInfo = async (vegpont) => {
+    try {
+      const {data} = await myAxios.get(vegpont);
+      setUserBookDemandsInfo(data);
     } catch (error) {
         console.log("Hiba:" + error.message);
     } finally {
@@ -165,7 +176,7 @@ export const ApiProvider = ({ children }) => {
       { 
         userLista, bookLista, bookDemandLista,
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
-        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo,
+        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
         patchUserPFP, selectedImage, setSelectedImage
         }
