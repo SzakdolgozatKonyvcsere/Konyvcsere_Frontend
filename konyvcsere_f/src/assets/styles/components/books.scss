@@ -1,0 +1,49 @@
+#root {
+  .book-offers-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: $secondary-color;
+    border-radius: 5px;
+    margin: 10px;
+    
+    .user-book-offers {  
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      margin: 15px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.871);
+      border-radius: 5px;
+      &__details {
+        &-left {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &__image {
+            width: 40vh;
+          }
+        }
+        &-right {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          margin-left: 10px;
+          padding: 15px;
+          width: 100%;
+          align-self: center;
+          &__text {
+            font-size: 1rem;
+            word-wrap: break-word;
+            text-wrap: wrap;
+            .--value {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
+}

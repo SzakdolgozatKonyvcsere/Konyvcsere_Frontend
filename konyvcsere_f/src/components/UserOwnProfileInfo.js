@@ -17,7 +17,7 @@ function UserOwnProfileInfo() {
         <div className='user-own-profile__details-top'>
           <div className="user-own-profile__details-top__edit-image" onClick={togglePFPUpdateVisibility}>
             <img className='user-own-profile__details-top__image' src={`http://localhost:8000/${user.img_url}`}></img>
-            <span>szerkesztés</span>
+            <span>kép cserélése</span>
           </div>
         </div>
         <div className='user-own-profile__details-bottom'>

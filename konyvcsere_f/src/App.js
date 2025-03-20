@@ -19,7 +19,7 @@ const EditContentPage = React.lazy(() => import("./pages/EditContentPage"));
 const UsersTableAdminPage = React.lazy(() => import("./pages/UsersTableAdminPage"));
 const BooksTableAdminPage = React.lazy(() => import("./pages/BooksTableAdminPage")) ;
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
-const KonyvekMegjelenit = React.lazy(() => import("./components/KonyvekMegjelenit"));
+const KonyvInfoSajat = React.lazy(() => import("./pages/UserOwnBooksInfo"));
 
 function App() {
   const { user } = useAuthContext();
@@ -51,11 +51,11 @@ function App() {
         {/* User specifikus útvonalak */}
         {user && user.role === 1 && <Route element={<UserLayout />}>
           <Route path="/" element={<KezdolapUser />} />
-          <Route path="feltoltottkonyvek" element={<KonyvekMegjelenit />} />
+          <Route path="konyvek-sajat" element={<KonyvInfoSajat />} />
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           <Route path="konyvkereses" element={<KonyvKereses />} />
-          {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}
           <Route path="profil" element={<UserOwnInfo />} />
+          {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
       </Routes>
     </Suspense>
