@@ -1,4 +1,5 @@
 #root {
+    
     .book-search {
       display: flex;
       flex-direction: row;
@@ -16,6 +17,8 @@
         gap: 5px;
         
       }
+      
+      
       .card{
         background-color: antiquewhite;
       }

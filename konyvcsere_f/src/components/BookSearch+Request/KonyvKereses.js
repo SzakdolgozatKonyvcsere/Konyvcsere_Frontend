@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import useApiContext from '../contexts/ApiContext';
+import useApiContext from '../../contexts/ApiContext';
 import KonyvKeresKartyak from './KonyvKeresKartyak';
+
 
 
 export default function KonyvKereses() {
@@ -18,9 +19,7 @@ export default function KonyvKereses() {
         setSzurtLista(availableBookLista);
     }, [availableBookLista]);
 
-    function keres(){
-
-    }
+    
 
     function handleSearch(e) {
         //console.log(availableBookLista)
@@ -81,7 +80,7 @@ export default function KonyvKereses() {
                 onChange={(e) => handleSearch(e)}
                 style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
             />
-            <button onClick={keres} className='btn btn-primary'>További feltételek</button>
+            <button className='btn btn-primary'>További feltételek</button>
          {/* Debugging Output 
     <p>📢 Szűrt lista hossza: {szurtLista.length}</p>
     <pre>{JSON.stringify(szurtLista, null, 2)}</pre>*/}

@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { createContext, useState } from "react";
-import { myAxios } from "../api/axios";
-import useApiContext from '../contexts/ApiContext';
+import { myAxios } from "../../api/axios";
+import useApiContext from '../../contexts/ApiContext';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import KonyvKeresKartyak from './KonyvKeresKartyak';
+import KonyvKeresKartyak from '../KonyvKeresKartyak';
 
 export default function KonyvKereses() {
   const { getAllAvailableOfferedBooks, availableBookLista, setAvailableBookLista } = useApiContext();

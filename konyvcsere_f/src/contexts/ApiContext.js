@@ -100,6 +100,20 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching books
     }
   }
+//csere tortenet valtoztatasa elso kerelemmel
+  const postExchangeRequest = async (adat) => {
+    try {
+      const response = await myAxios.post('/api/exchange-request', adat)
+      console.log("cseretortenet", adat);
+      if (response.status === 201) {
+        alert('Sikeresen elküldted a kérést!'); // Success message
+      }
+    } catch (error) {
+      console.error('Hiba történt a kérés során:', error);
+      alert('Hiba történt, próbáld újra!');
+    }
+  };
+
   
 
   //Mindet at lehete irni nem parameteresre
@@ -178,7 +192,7 @@ export const ApiProvider = ({ children }) => {
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
         userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage
+        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest
         }
       }>
       {children}

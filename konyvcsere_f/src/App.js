@@ -6,7 +6,6 @@ import useAuthContext from "./contexts/AuthContext";
 import React, { Suspense } from "react";
 import Loader from "./components/Loader";
 import { BookuploadContext } from "./contexts/BookuploadContext";
-import KonyvKereses from "./components/KonyvKereses";
 import UserOwnInfo from "./pages/UserOwnInfo";
 import AllAvailableBooks from "./pages/AllAvailabelBooks";
 

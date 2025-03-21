@@ -1,6 +1,9 @@
 import React from 'react'
+import { useState } from 'react';
+import KonyvKeresModal from './KonyvKeresModal';
 
-
+//a keresés funkcióhoz az összes elérhető könyv megmutatása
+//modal, tehát a felugró ablak gomb általi mutatása, könvek részleteinek kiirása
 export default function KonyvKeresKartyak(props) {
 
 
@@ -10,6 +13,14 @@ export default function KonyvKeresKartyak(props) {
         console.error("❌ Hiba: book prop hiányzik!");
         return <p>❌ Hiba történt a könyv betöltésekor.</p>;
     }*/
+
+        const [modalShow, setModalShow] = useState(false);
+        const [selectedBookTitle, setSelectedBookTitle] = useState("");
+
+        const handleShowModal = () => {
+          setSelectedBookTitle(props.book.title || "Nincs cím");
+          setModalShow(true);
+      };
 
     return(
         
@@ -25,18 +36,20 @@ export default function KonyvKeresKartyak(props) {
                         <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small class="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"}</small></li>
                         {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0" }}>{props.book.quality}</li>*/}
                     </ul>
-                    <a href="#" className="btn btn-primary all-available-books">Részletek</a>
+                    <button className="btn btn-primary all-available-books" variant="primary" onClick={handleShowModal}>Részletek</button>
+                     {/* Pass the selected book title to the modal */}
+                <KonyvKeresModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    title={selectedBookTitle} 
+                />
                 </div>
-            </div>
-        
-        
-        
-        
-        
-        
+            </div>      
     )
 
 }
+
+
 
        /*<div className='all-available-books'>
           <div className='all-available-books__details-left'>
