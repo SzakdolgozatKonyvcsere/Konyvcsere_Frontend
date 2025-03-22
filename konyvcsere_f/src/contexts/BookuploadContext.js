@@ -23,6 +23,7 @@ export const BookuploadProvider = ({ children }) => {
     try {
         await myAxios.post(vegpont, adat);
         console.log("Sikeres könyvfeltöltés:", adat);
+        alert('Sikeres könyvfeltöltés!');
         
     }catch (err) {
         console.error("Hiba a könyv feltöltése közben:", err);
