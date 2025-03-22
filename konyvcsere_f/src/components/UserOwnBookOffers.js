@@ -2,15 +2,16 @@ import React, { useEffect } from 'react'
 import useApiContext from '../contexts/ApiContext'
 import useAuthContext from '../contexts/AuthContext';
 import Loader from './Loader';
+import { formatDistanceToNow } from "date-fns";
+import { hu } from "date-fns/locale";
 
 function UserOwnBookOffers() {
   const {userBookOffersInfo, getUserBookOffersInfo, setBookOffersInfo} = useApiContext();
   const {user} = useAuthContext();
 
   useEffect(() => {
-    getUserBookOffersInfo(`/api/user-book-offer-info/${user.id}`, setBookOffersInfo);
+    getUserBookOffersInfo(user.id, setBookOffersInfo);
   }, []);
-    
 
   return (
     <>
@@ -27,6 +28,10 @@ function UserOwnBookOffers() {
             <p className='user-book-offers__details-right__text'>kiadás éve: <span className='--value'>{book.publication_year}</span></p>
             <p className='user-book-offers__details-right__text'>minőség: <span className='--value'>{book.quality}</span></p>
             <p className='user-book-offers__details-right__text'>állapot: <span className='--value'>{book.book_status}</span></p>
+            <p className='user-book-offers__details-right__text'>feltöltve: <span className='--value'>{
+              formatDistanceToNow(new Date(book.updated_at), { addSuffix: true, locale: hu })
+              }</span>
+            </p>
           </div> 
         </div>
       ))}

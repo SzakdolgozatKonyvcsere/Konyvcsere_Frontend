@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     background-color: $secondary-color;
     border-radius: 5px;
     margin: 10px;
@@ -38,7 +37,9 @@
             font-size: 1rem;
             word-wrap: break-word;
             text-wrap: wrap;
+            font-weight: bolder;
             .--value {
+              font-size: larger;
               font-weight: bold;
             }
           }
@@ -46,4 +47,12 @@
       }
     }
   }
+  .book-demands-area {
+    .user-book-demands {
+      &__details {
+
+      }
+    }
+  }
+  
 }

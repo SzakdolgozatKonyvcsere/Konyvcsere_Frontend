@@ -106,7 +106,7 @@ export const ApiProvider = ({ children }) => {
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
     try {
-      const {data} = await myAxios.get(`/api/user-profile-info/${user_id}`);
+      const {data} = await myAxios.get(`/api/user/${user_id}/profile-info`);
       setUserProfileInfoList(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
@@ -116,9 +116,9 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   }
-  const getUserBookOffersInfo = async (vegpont) => {
+  const getUserBookOffersInfo = async (user_id) => {
     try {
-      const {data} = await myAxios.get(vegpont);
+      const {data} = await myAxios.get(`/api/user/${user_id}/book-offer-info`);
       setUserBookOffersInfo(data);
     } catch (error) {
         console.log("Hiba:" + error.message);
@@ -126,9 +126,9 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   }
-  const getUserBookDemandsInfo = async (vegpont) => {
+  const getUserBookDemandsInfo = async (user_id) => {
     try {
-      const {data} = await myAxios.get(vegpont);
+      const {data} = await myAxios.get(`/api/user/${user_id}/book-demand-info`);
       setUserBookDemandsInfo(data);
     } catch (error) {
         console.log("Hiba:" + error.message);
