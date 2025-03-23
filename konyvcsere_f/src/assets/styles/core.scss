@@ -102,6 +102,17 @@ body {
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
         }
+        .list-group {
+            display: block !important;
+            position: absolute !important;
+            top: 50px;
+            left: 10px;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgb(255, 252, 252);
+        }
     }
 
     .card {

@@ -4,20 +4,23 @@ import useAuthContext from '../contexts/AuthContext';
 import Loader from './Loader';
 
 function UserOwnBookOffers() {
-  const {userBookOffersInfo, getUserBookOffersInfo, setBookOffersInfo} = useApiContext();
-  const {user} = useAuthContext();
+  const { userBookOffersInfo, getUserBookOffersInfo, setBookOffersInfo } = useApiContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     getUserBookOffersInfo(`/api/user-book-offer-info/${user.id}`, setBookOffersInfo);
-  }, []);
-    
+  }, [user.id]);
 
   return (
     <>
       {userBookOffersInfo.map((book, index) => (
         <div key={index} className='user-book-offers'>
           <div className='user-book-offers__details-left'>
-            <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
+            <img
+              className='user-book-offers__details-left__image'
+              src={book.img_url ? book.img_url : '/basic_book.png'}
+              alt={book.title}
+            />
           </div>
           <div className='user-book-offers__details-right'>
             <p className='user-book-offers__details-right__text'>cím: <span className='--value'>{book.title}</span></p>
@@ -27,7 +30,7 @@ function UserOwnBookOffers() {
             <p className='user-book-offers__details-right__text'>kiadás éve: <span className='--value'>{book.publication_year}</span></p>
             <p className='user-book-offers__details-right__text'>minőség: <span className='--value'>{book.quality}</span></p>
             <p className='user-book-offers__details-right__text'>állapot: <span className='--value'>{book.book_status}</span></p>
-          </div> 
+          </div>
         </div>
       ))}
     </>

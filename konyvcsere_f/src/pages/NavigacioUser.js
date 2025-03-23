@@ -13,7 +13,10 @@ export default function NavigacioUser() {
                 <button 
                     className="navbar-toggler" 
                     type="button" 
-                    onClick={() => setMenuOpen(!menuOpen)} 
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                        console.log("Menü állapot:", !menuOpen);
+                    }}
                 >
                     <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
                 </button>

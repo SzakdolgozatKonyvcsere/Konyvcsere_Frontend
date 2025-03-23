@@ -9,8 +9,6 @@ import { BookuploadContext } from "./contexts/BookuploadContext";
 import KonyvKereses from "./components/KonyvKereses";
 import UserOwnInfo from "./pages/UserOwnInfo";
 
-
-
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
