@@ -30,7 +30,7 @@ export default function NavigacioUser() {
                             <Link className="nav-link" to="/konyvfeltoltes" onClick={() => setMenuOpen(false)}>Könyv feltöltés</Link>
                         </li>
                         <li className="list-group-item border-0">
-                            <Link className="nav-link" to="/feltoltottkonyvek" onClick={() => setMenuOpen(false)}>Feltöltött könyveim</Link>
+                            <Link className="nav-link" to="/konyvek-sajat" onClick={() => setMenuOpen(false)}>Feltöltött könyveim</Link>
                         </li>
                         <li className="list-group-item border-0">
                             <Link className="nav-link" to="/konyvkereses" onClick={() => setMenuOpen(false)}>Könyv keresés</Link>

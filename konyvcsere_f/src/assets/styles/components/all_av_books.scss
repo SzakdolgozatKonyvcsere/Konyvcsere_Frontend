@@ -1,0 +1,59 @@
+#root {
+    
+    .book-search {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      background-color: $secondary-color;
+      border-radius: 5px;
+      margin: 10px;
+      padding: 10px;
+      .konyv{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+        
+      }
+      
+      
+      .card{
+        background-color: antiquewhite;
+      }
+      .list-group{
+        background-color: inherit;
+        
+      }
+      .list-group-item{
+        background-color: inherit;
+         }
+       
+      .all-available-books {  
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
+        
+        border-bottom: 1px solid rgba(128, 128, 128, 0.871);
+        border-radius: 5px;
+        &__details {
+            
+          &-left {
+            display: flex;
+            
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            &__image {
+              width: 40vh;
+            }
+          }
+        
+            
+          
+        }
+      }
+    }
+  }

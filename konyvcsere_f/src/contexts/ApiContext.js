@@ -18,6 +18,7 @@ export const ApiProvider = ({ children }) => {
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
+  const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
 
   //Users
   const getUsers = async (vegpont) => {
@@ -83,7 +84,7 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching
     }
   };
-//osszes elerheto konyv
+//osszes elerheto (s) konyv
   const getAllAvailableOfferedBooks = async () => {
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
@@ -99,13 +100,27 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching books
     }
   }
+//csere tortenet valtoztatasa elso kerelemmel
+  const postExchangeRequest = async (adat) => {
+    try {
+      const response = await myAxios.post('/api/exchange-request', adat)
+      console.log("cseretortenet", adat);
+      if (response.status === 201) {
+        alert('Sikeresen elküldted a kérést!'); // Success message
+      }
+    } catch (error) {
+      console.error('Hiba történt a kérés során:', error);
+      alert('Hiba történt, próbáld újra!');
+    }
+  };
+
   
 
-  //user profile + book stuff by user
+  //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
     try {
-      const {data} = await myAxios.get(`/api/user-profile-info/${user_id}`);
+      const {data} = await myAxios.get(`/api/user/${user_id}/profile-info`);
       setUserProfileInfoList(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
@@ -115,10 +130,20 @@ export const ApiProvider = ({ children }) => {
       setLoading(false);
     }
   }
-  const getUserBookOffersInfo = async (vegpont) => {
+  const getUserBookOffersInfo = async (user_id) => {
     try {
-      const {data} = await myAxios.get(vegpont);
+      const {data} = await myAxios.get(`/api/user/${user_id}/book-offer-info`);
       setUserBookOffersInfo(data);
+    } catch (error) {
+        console.log("Hiba:" + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+  const getUserBookDemandsInfo = async (user_id) => {
+    try {
+      const {data} = await myAxios.get(`/api/user/${user_id}/book-demand-info`);
+      setUserBookDemandsInfo(data);
     } catch (error) {
         console.log("Hiba:" + error.message);
     } finally {
@@ -165,9 +190,9 @@ export const ApiProvider = ({ children }) => {
       { 
         userLista, bookLista, bookDemandLista,
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
-        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo,
+        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage
+        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest
         }
       }>
       {children}
