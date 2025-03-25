@@ -36,17 +36,12 @@ function UserOwnBookOffers() {
           </div>
             <p className='user-book-offers__details-right__text'>feltöltve: <span className='--value'>{
               formatDistanceToNow(new Date(book.updated_at), { addSuffix: true, locale: hu })}
-              </span>
-              </p>
-          </div> 
-        ))}
-         </>
-      );
-    }
-        
+                    </span>
+          </p>
+        </div>
       ))}
     </>
-  )
+  );
 }
 
 export default UserOwnBookOffers;
