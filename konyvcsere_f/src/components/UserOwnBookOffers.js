@@ -10,10 +10,8 @@ function UserOwnBookOffers() {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    getUserBookOffersInfo(`/api/user-book-offer-info/${user.id}`, setBookOffersInfo);
-  }, [user.id]);
     getUserBookOffersInfo(user.id, setBookOffersInfo);
-  }, []);
+  }, [user.id]);
 
   return (
     <>
@@ -36,14 +34,13 @@ function UserOwnBookOffers() {
             <p className='user-book-offers__details-right__text'>állapot: <span className='--value'>{book.book_status}</span></p>
           </div>
             <p className='user-book-offers__details-right__text'>feltöltve: <span className='--value'>{
-              formatDistanceToNow(new Date(book.updated_at), { addSuffix: true, locale: hu })
-              }</span>
-            </p>
+              formatDistanceToNow(new Date(book.updated_at), { addSuffix: true, locale: hu })}
+              </span>
+              </p>
           </div> 
-        </div>
-      ))}
-    </>
-  )
-}
+        ))}
+         </>
+      );
+    }
 
-export default UserOwnBookOffers
+export default UserOwnBookOffers;
