@@ -12,6 +12,7 @@ function UserOwnBookOffers() {
   useEffect(() => {
     getUserBookOffersInfo(user.id, setBookOffersInfo);
   }, [user.id]);
+    
 
   return (
     <>
@@ -42,5 +43,10 @@ function UserOwnBookOffers() {
          </>
       );
     }
+        
+      ))}
+    </>
+  )
+}
 
 export default UserOwnBookOffers;

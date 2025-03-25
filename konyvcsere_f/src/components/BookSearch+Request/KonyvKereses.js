@@ -6,7 +6,7 @@ import KonyvKeresKartyak from './KonyvKeresKartyak';
 
 export default function KonyvKereses() {
 
-    const { availableBookLista } = useApiContext();
+    const { availableBookLista, getAllAvailableOfferedBooks, setAvailableBookLista } = useApiContext();
     const [szurtLista, setSzurtLista] = useState([...availableBookLista]);
     const [szuroertek, setSzuroErtek] = useState("");
     const [szerzo, setSzerzo] = useState(""); // Author
