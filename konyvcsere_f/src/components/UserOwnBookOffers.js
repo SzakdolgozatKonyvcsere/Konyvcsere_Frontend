@@ -13,7 +13,7 @@ function UserOwnBookOffers() {
     getUserBookOffersInfo(`/api/user-book-offer-info/${user.id}`, setBookOffersInfo);
   }, [user.id]);
     getUserBookOffersInfo(user.id, setBookOffersInfo);
-  }, []);
+    
 
   return (
     <>
@@ -40,7 +40,7 @@ function UserOwnBookOffers() {
               }</span>
             </p>
           </div> 
-        </div>
+        
       ))}
     </>
   )
