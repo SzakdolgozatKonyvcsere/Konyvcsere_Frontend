@@ -46,12 +46,12 @@ export default function NavigacioVendeg() {
                 )}
 
                 <div className="navbar-profile">
-                    <Link className="nav-link" to="/profil" onClick={() => setMenuOpen(false)}>
+                    <Link className="nav-link" to="/bejelentkezes" onClick={() => setMenuOpen(false)}>
                         <p className="user--name">{user ? user.full_name : "Vendég"}</p>
                         <img
                             className="user--profile-picture"
                             alt="Profilkép"
-                            src={user ? user.img_url : "user_basic_pfp.jpg"}
+                            src={user ? user.img_url : "/user_basic_pfp.jpg"}
                         />
                     </Link>
                 </div>

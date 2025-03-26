@@ -24,16 +24,16 @@ function UserOwnBookDemands() {
     <>
       <div className='user-book-demands'>
         <table>
-          <thead>
+          <thead className='user-book-demands__table-head'>
             <tr>
-              {headLabels.map((item, key) => {
-                <th key={key}>{item}</th>
-              })}
+              {headLabels.map((item, key) => (
+                <th key={key} className='user-book-demands__table-head_element'>{item}</th>
+              ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className='user-book-demands__table-body'>
             {userBookDemandsInfo.map((book, index) => (
-                <tr key={index}>
+                <tr key={index} className='user-book-demands__table-body_element'>
                   {Object.values(book).map((col, colInd) => (
                       <td key={colInd}>{col}</td>
                     )
