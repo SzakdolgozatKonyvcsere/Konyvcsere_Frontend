@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
@@ -6,6 +6,22 @@ import useAuthContext from "../contexts/AuthContext";
 export default function NavigacioUser() {
     const { user, logout } = useAuthContext();
     const [menuOpen, setMenuOpen] = useState(false);
+
+    //cim navban:
+    const [showTitle, setShowTitle] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {  // 100px után a cím bekerül a navbarba
+        setShowTitle(true);
+      } else {
+        setShowTitle(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  //cim navban vege
+
 
     return (
         <nav className="navbar navbar-user">
@@ -18,6 +34,9 @@ export default function NavigacioUser() {
                 >
                     <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
                 </button>
+                {/* egy sor a navban címért*/}
+                {showTitle && <div className="title-in-navbar">Könyvek keresése</div>}
+
 
                 
                 {menuOpen && (
