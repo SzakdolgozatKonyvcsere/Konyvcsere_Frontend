@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useApiContext from '../contexts/ApiContext'
+import useApiContext from '../../contexts/ApiContext'
 
 function UserProfilePictureUpdateForm() {
   const {patchUserPFP, selectedImage, setSelectedImage} = useApiContext();

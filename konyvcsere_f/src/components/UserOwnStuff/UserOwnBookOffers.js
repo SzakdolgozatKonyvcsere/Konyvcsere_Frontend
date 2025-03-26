@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import useApiContext from '../contexts/ApiContext'
-import useAuthContext from '../contexts/AuthContext';
-import Loader from './Loader';
+import useApiContext from '../../contexts/ApiContext'
+import useAuthContext from '../../contexts/AuthContext';
+import Loader from '../Loader';
 import { formatDistanceToNow } from "date-fns";
 import { hu } from "date-fns/locale";
 

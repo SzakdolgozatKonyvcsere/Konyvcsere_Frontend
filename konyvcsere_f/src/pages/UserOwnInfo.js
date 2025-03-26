@@ -1,5 +1,5 @@
 import React from 'react'
-import UserOwnProfileInfo from '../components/UserOwnProfileInfo'
+import UserOwnProfileInfo from '../components/UserOwnStuff/UserOwnProfileInfo'
 
 function UserOwnInfo() {
   return (
