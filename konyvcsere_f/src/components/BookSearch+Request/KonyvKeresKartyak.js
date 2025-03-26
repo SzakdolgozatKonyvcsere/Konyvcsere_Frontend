@@ -15,11 +15,14 @@ export default function KonyvKeresKartyak(props) {
     }*/
 
         const [modalShow, setModalShow] = useState(false);
-        const [selectedBookTitle, setSelectedBookTitle] = useState("");
+        const [selectedBook, setSelectedBook] = useState(null);
 
         const handleShowModal = (book) => {
-          setSelectedBookTitle(book);
-          setModalShow(true);
+          if (book){
+            setSelectedBook(book);
+            setModalShow(true);
+          }
+          
       };
 
     return( 
@@ -31,16 +34,16 @@ export default function KonyvKeresKartyak(props) {
                     <ul className="list-group list-group-flush all-available-books">
                         <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.authors ? `${props.book.authors}` : "ismeretlen szerző"}</small></li>
                         <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</small></li>
-                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language}</small></li>
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language ? `${props.book.language}` : "nincs nyelv"}</small></li>
                         <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"} Kiadó</small></li>
                         {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0" }}>{props.book.quality}</li>*/}
                     </ul>
-                    <button className="btn btn-primary all-available-books" variant="primary" onClick={handleShowModal}>Részletek</button>
+                    <button className="btn btn-primary all-available-books" variant="primary"  onClick={() => handleShowModal(props.book)}>Részletek</button>
                      {/* Pass the selected book title to the modal */}
                 <KonyvKeresModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
-                    title={selectedBookTitle} 
+                    book={selectedBook} 
                 />
                 </div>
             </div>      

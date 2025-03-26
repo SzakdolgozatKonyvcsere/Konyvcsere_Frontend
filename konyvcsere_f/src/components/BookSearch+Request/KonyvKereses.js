@@ -16,6 +16,7 @@ export default function KonyvKereses() {
   const [filters, setFilters] = useState({
     author: "",
     publisher: "",
+    language: "",
     minYear: 1930,
     maxYear: new Date().getFullYear(),
   });
@@ -56,6 +57,7 @@ export default function KonyvKereses() {
         const bookAuthors = book.authors ? book.authors.toLowerCase() : "";
         const bookPublisher = book.publisher_name ? book.publisher_name.toLowerCase() : "";
         const bookYear = book.publication_year ? parseInt(book.publication_year) : null;
+        
 
         const filterAuthor = filters.author ? filters.author.toLowerCase() : "";
         const filterPublisher = filters.publisher ? filters.publisher.toLowerCase() : "";
@@ -121,9 +123,9 @@ export default function KonyvKereses() {
         </div>
         <div style={{ margin:"40px" }}>
           <KonyvKeresRange
-  range={[filters.minYear, filters.maxYear]}
-  setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
-/>
+          range={[filters.minYear, filters.maxYear]}
+          setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
+        />
           
         </div>
         

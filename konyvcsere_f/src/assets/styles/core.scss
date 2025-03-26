@@ -18,7 +18,16 @@ $assetPath: "/assets/kepek/";
 
 body {
     background-color: $background-color;
-    font-family: 'Cormorant Garamond', serif;
+    //font-family: 'Cormorant Garamond', serif;
+    .fraunces-font {
+    font-family: "Fraunces", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+      "SOFT" 400,
+      "WONK" 500;
+    }
     color: $text-color;
     margin: 0;
     padding: 0;
