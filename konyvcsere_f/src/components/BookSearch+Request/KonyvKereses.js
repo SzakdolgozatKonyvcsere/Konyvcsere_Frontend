@@ -17,6 +17,7 @@ export default function KonyvKereses() {
     author: "",
     publisher: "",
     language: "",
+    genre_name:"",
     minYear: 1930,
     maxYear: new Date().getFullYear(),
   });
@@ -57,7 +58,7 @@ export default function KonyvKereses() {
         const bookAuthors = book.authors ? book.authors.toLowerCase() : "";
         const bookPublisher = book.publisher_name ? book.publisher_name.toLowerCase() : "";
         const bookYear = book.publication_year ? parseInt(book.publication_year) : null;
-        
+
 
         const filterAuthor = filters.author ? filters.author.toLowerCase() : "";
         const filterPublisher = filters.publisher ? filters.publisher.toLowerCase() : "";

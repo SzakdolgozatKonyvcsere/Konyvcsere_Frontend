@@ -40,6 +40,9 @@ export const BookuploadProvider = ({ children }) => {
               },
           });
           console.log("Sikeres könyvfeltöltés:", response.data);
+          if (response.status === 201) {
+            alert('Sikeresen feltöltötted a könyvet!'); // Success message
+          }
       } catch (err) {
           console.error("Hiba a könyv feltöltése közben:", err);
           if (err.response) {
