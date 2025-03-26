@@ -1,7 +1,9 @@
 import useAuthContext from "../contexts/AuthContext";
 import { useState, useEffect } from "react";
-import konyvVideo from "../assets/video/konyv.mp4";
+//import konyvVideo from "../assets/video/konyv.mp4";
 import { myAxios } from "../api/axios";
+import LegujabbKonyvAjanlat from "../components/LegujabbKonyvAjanlat";
+
 
 export default function Kezdolap() {
     const { user } = useAuthContext();
@@ -16,18 +18,6 @@ export default function Kezdolap() {
         }
     }, [user]);
 
-    const [latestBooks, setLatestBooks] = useState([]); // Legújabb könyvek tárolása
-
-    useEffect(() => {
-        // API hívás a legújabb könyvek lekérdezéséhez
-        myAxios.get("/api/konyvek/latest")  // A backend endpoint lehet pl.: `/api/konyvek/latest`
-            .then(response => {
-                setLatestBooks(response.data); // Állapot beállítása
-            })
-            .catch(error => {
-                console.error("Hiba a legújabb könyvek lekérésekor:", error);
-            });
-    }, []); 
 
     //ellenőrizzük van-e bejelentkezett felhasználó
     return (
@@ -67,26 +57,7 @@ export default function Kezdolap() {
                         <li>Cserélj, fedezz fel és ossz meg könyveket, hogy egy szorosabb, olvasásra épülő közösséget építhessünk együtt!</li>
                     </ul>
                 </aside>
-
-                {/* 🔹 Legújabb ajánlatok szekció */}
-                <div className="ajanlas">
-                    <h5>Legújabb ajánlatok:</h5>
-                    <ul>
-                        {latestBooks.length > 0 ? (
-                            latestBooks.map((book) => (
-                                <li key={book.id} className="book-item">
-                                    <img src={book.img_url} alt={book.title} className="book-cover" />
-                                    <div>
-                                        <h6>{book.title}</h6>
-                                        <p>{book.author}</p>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <p>Még nincsenek elérhető könyvek.</p>
-                        )}
-                    </ul>
-                </div>
+                <LegujabbKonyvAjanlat />
             </section>
             {/*
             <div className="body__main">

@@ -224,6 +224,7 @@ body {
         text-align: center;
         color: $secondary-text-color;
         white-space: normal;
+        margin: 5px 0;
     }
 
     ul {
@@ -240,7 +241,35 @@ body {
         text-align: center;
         margin-top: 20px;
     }
+    .ajanlas ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
     
+    .book-item {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center; 
+    }
+
+    .book-cover {
+        width: 100px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    h6 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+    
+
     
     @media (max-width: 768px) {
         .navbar {
@@ -272,20 +301,5 @@ body {
     object-fit: contain;
     object-position: center center; 
 } */
-
-.book-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.book-cover {
-    width: 50px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 5px;
-}
 
 }
