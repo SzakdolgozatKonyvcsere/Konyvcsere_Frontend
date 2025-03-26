@@ -3,9 +3,7 @@ import useApiContext from "../../contexts/ApiContext";
 import KonyvKeresKartyak from "./KonyvKeresKartyak";
 import { KonyvKeresModal } from "./KonyvKeresModal";
 import KonyvKeresRange from "./KonyvKeresRange";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
+
 
 export default function KonyvKereses() {
   const {
