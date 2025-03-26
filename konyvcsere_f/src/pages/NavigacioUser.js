@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
+
 export default function NavigacioUser() {
     const { user, logout } = useAuthContext();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -13,14 +14,12 @@ export default function NavigacioUser() {
                 <button 
                     className="navbar-toggler" 
                     type="button" 
-                    onClick={() => {
-                        setMenuOpen(!menuOpen);
-                        console.log("Menü állapot:", !menuOpen);
-                    }}
+                    onClick={() => setMenuOpen(!menuOpen)}
                 >
                     <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
                 </button>
 
+                
                 {menuOpen && (
                     <ul className="list-group position-absolute mt-2 bg-white shadow rounded p-2">
                         <li className="list-group-item border-0">

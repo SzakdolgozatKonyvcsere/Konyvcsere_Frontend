@@ -22,8 +22,7 @@ export default function KonyvKeresKartyak(props) {
           setModalShow(true);
       };
 
-    return(
-        
+    return( 
         <div className="card all-available-books" style={{ width: "18rem" }}>
         <img className='all-available-books__image' src={'/basic_book.png'}></img>
                 <div className="card-body all-available-books">
