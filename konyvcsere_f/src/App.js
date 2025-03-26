@@ -9,8 +9,6 @@ import { BookuploadContext } from "./contexts/BookuploadContext";
 import UserOwnInfo from "./pages/UserOwnInfo";
 import AllAvailableBooks from "./pages/AllAvailabelBooks";
 
-
-
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
@@ -34,7 +32,7 @@ function App() {
         {!user && (
           <Route element={<VendegLayout />}>        
               <Route path="/" element={<Kezdolap/>} />
-              <Route path="bejelentkezes" element={<Bejelentkezes />} />
+              <Route path="/bejelentkezes" element={<Bejelentkezes />} />
               <Route path="regisztracio" element={<Regisztracio />} />          
           </Route>  
         )}

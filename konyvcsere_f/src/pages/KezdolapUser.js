@@ -1,3 +1,4 @@
+import LegujabbKonyvAjanlat from "../components/LegujabbKonyvAjanlat";
 import useAuthContext from "../contexts/AuthContext";
 
 export default function KezdolapUser() {
@@ -23,11 +24,7 @@ export default function KezdolapUser() {
         </ul>
                 </aside>
 
-                <div className="ajanlas">
-                    <h5>Legújabb ajánlatok:</h5>
-
-
-                </div>
+                <LegujabbKonyvAjanlat />
                 {/*<p id="authorized-username">{user!==null?user.full_name:"Vendég"}</p>*/}
 
             </section>

@@ -1,40 +1,58 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
+
 
 export default function NavigacioVendeg() {
     const { user, logout } = useAuthContext();
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     return (
-        <nav className="navbar navbar-vendeg">
+        <nav className="navbar navbar-user">
             <div className="container-fluid">
-                <ul className="navbar-nav">
-                    <li className="navbar-item">
-                        <Link className="nav-link" to="/">Kezdőlap</Link>
-                    </li>
-                    {user ? (
-                        <li className="navbar-item">
-                            <button className="nav-link" onClick={() => { logout() }}>Kijelentkezés</button>
+
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                        console.log("Menü állapot:", !menuOpen);
+                    }}
+                >
+                    <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
+                </button>
+
+                {menuOpen && (
+                    <ul className="list-group position-absolute mt-2 bg-white shadow rounded p-2">
+                        <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/" onClick={() => setMenuOpen(false)}>Kezdőlap</Link>
                         </li>
-                    ) : (
-                        <>
-                            <li className="navbar-item">
-                                <Link className="nav-link" to="/bejelentkezes">Bejelentkezés</Link>
-                            </li>
-                            <li className="navbar-item">
-                                <Link className="nav-link" to="/regisztracio">Regisztráció</Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
+                        {/*
+                        <li className="list-group-item border-0">
+                            <button className="nav-link btn btn-link" onClick={() => { logout(); setMenuOpen(false); }}>
+                                Kijelentkezés
+                            </button>
+                        </li>*/}
+                        <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/bejelentkezes" onClick={() => setMenuOpen(false)}>Bejelentkezés</Link>
+                        </li>
+
+                        <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/regisztracio" onClick={() => setMenuOpen(false)}>Regisztráció</Link>
+                        </li>
+
+                    </ul>
+                )}
+
                 <div className="navbar-profile">
-                    <p className="user--name">{user !== null ? user.full_name : "Vendég"}</p>
-                    <a href="#">
-                        <img className="user--profile-picture" alt="felhasználó profilképe" src={user !== null ? user.img_url : "basic_pfp.png"} />
-                    </a>
-                    <Link className="nav-link" to={"/bejelentkezes"}>
-                        <p className="user--name">{user!==null?user.full_name:"Vendég"}</p>
-                        <img className="user--profile-picture" alt="felhasználó profilképe" src={user!==null?user.img_url:"user_basic_pfp.jpg"}></img>
+                    <Link className="nav-link" to="/profil" onClick={() => setMenuOpen(false)}>
+                        <p className="user--name">{user ? user.full_name : "Vendég"}</p>
+                        <img
+                            className="user--profile-picture"
+                            alt="Profilkép"
+                            src={user ? user.img_url : "user_basic_pfp.jpg"}
+                        />
                     </Link>
                 </div>
             </div>

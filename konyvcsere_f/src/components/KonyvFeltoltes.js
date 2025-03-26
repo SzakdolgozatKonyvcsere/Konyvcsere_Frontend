@@ -11,7 +11,7 @@ export default function Konyvfeltoltes() {
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
@@ -24,6 +24,7 @@ export default function Konyvfeltoltes() {
   const [publication_year, setYear] = useState("");
   const [language, setLanguage] = useState("");
   const [quality, setQuality] = useState("");
+  const [img_url, setImg_url] = useState(null);
   //const [image, setImage] = useState(null);
   
   // műfaj lekérése: 
@@ -43,12 +44,55 @@ export default function Konyvfeltoltes() {
     }
   }, [authUser]);
 
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  const allowdTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+if (file && !allowdTypes.includes(file.type)){
+  alert('Csak jpg, png, gif, jpeg, vagy svg képfájlokat tölthetsz fel.');
+  return;
+}
+setImg_url(file);
+}
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const konyvAdat = new FormData();
+  konyvAdat.append('user', user);
+  konyvAdat.append('author', author);
+  konyvAdat.append('title', title);
+  konyvAdat.append('publisher', publisher);
+  konyvAdat.append('publication_year', publication_year);
+  konyvAdat.append('genre_id', selectedGenre);
+  konyvAdat.append('language', language);
+  konyvAdat.append('quality', quality);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (img_url) {
+    konyvAdat.append('img_url', img_url);
+  }
 
+  try {
+    const response = await myAxios.post("/api/konyvfeltoltes", konyvAdat, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    console.log("Sikeres feltöltés:", response.data);
+
+    // Kép URL frissítése
+    if (response.data.img_url) {
+      setImg_url(response.data.img_url);
+    }
+
+    // Átirányítás a sikeres feltöltés után
+    navigate("/feltoltottkonyvek");
+
+  } catch (err) {
+    console.error("Feltöltési hiba:", err.response?.data || err);
+    alert("Hiba történt a könyv feltöltésekor!");
+  }
+};
+      //useNavigate=("/feltoltottkonyvek"); /ezzel van a baja!!
+    
     const konyvAdat = {
       user,
       author,
@@ -62,7 +106,7 @@ export default function Konyvfeltoltes() {
     };
     console.log("Feltöltött könyv", konyvAdat);
     //uploadWork( konyvAdat, "/api/mufeltoltes")
-    uploadBook(konyvAdat, "/api/konyvfeltoltes");
+   // uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
   /*try {
     const result = await uploadBook(konyvAdat);
@@ -77,7 +121,6 @@ export default function Konyvfeltoltes() {
     await uploadBook(konyvAdat); // Könyv elküldése Contexten keresztül
     navigate("/feltoltottkonyvek"); // Átirányítás a könyvlistához
     */
-}
 
   return (
     <div className="card max-w-lg mx-auto mt-10 p-5">
@@ -126,22 +169,29 @@ export default function Konyvfeltoltes() {
           <label htmlFor="quality" className="form-label">Minőség 1-5 </label>
           <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
-
-        {/*<Form.Group controlId="img_url">
+          <div className="mb-3">
+          <label htmlFor="image" className="form-label">Kép</label>
+          <input type="file" onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml"/>
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
+          </form>
+        </div>
+          /*<Form.Group controlId="img_url">
         <Form.Label>Kép</Form.Label>
         <Form.Control
           type="file"
           name="img_url"
-          //accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
+          accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
           onChange={handleChange}
         />
-      </Form.Group>*/}
-        
-        <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
-      </form>
-    </div>
+      </Form.Group>*/
+
   );
 }  
+          
+          
+        
+     
 
 
 /*import { useEffect, useState } from "react";
