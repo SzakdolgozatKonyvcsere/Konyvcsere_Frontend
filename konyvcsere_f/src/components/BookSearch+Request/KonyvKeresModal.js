@@ -1,19 +1,28 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { ApiContext } from '../../contexts/ApiContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import useAuthContext from '../../contexts/AuthContext';
 
 
 //modal, tehát felugró ablak kinézete, összeállítása, könyv részletei
 //cserélés elindítása gomb
-export default function KonyvKeresModal(props) {
+export default function KonyvKeresModal({book, ...props}) {
 
     const { postExchangeRequest } = useContext(ApiContext);
+    const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
+    const [user, setUser] = useState("");
+    useEffect(() => {
+        if (authUser) {
+          setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
+        }
+      }, [authUser]);
+    
   
     const handleExchangeRequest = async () => {
         const exchangeReqest = {
-            interested_user: props.user, // Logged-in user ID
-            desired_item: props.offer_id, // The book that the user is interested in
+            interested_user: user, // Logged-in user ID
+            desired_item: book.offer_id, // The book that the user is interested in
             exchange_status: 'k' // Example status ('P' = Pending)
             
           };
@@ -23,7 +32,6 @@ export default function KonyvKeresModal(props) {
 
     }
 
-    
 
     return (
       <Modal
@@ -38,7 +46,7 @@ export default function KonyvKeresModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h4 style={{ textAlign: "center" }}>{props.title}</h4>
+        <h4 style={{ textAlign: "center" }}>{book?.title}</h4>
   
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <img
@@ -52,20 +60,20 @@ export default function KonyvKeresModal(props) {
           {/* Book details with proper tags */}
           <p style={{ textAlign: "center" }}>
             <small className="text-muted -adat">
-              {props.author_name ? props.author_name : "Ismeretlen szerző"}
+              {book?.authors ? book.authors : "Ismeretlen szerző"}
             </small>
           </p>
           <p style={{ textAlign: "center" }}>
             <small className="text-muted -adat">
-              {props.publication_year ? props.publication_year : "Nincs dátum"}
+              {book?.publication_year ? book.publication_year : "Nincs dátum"}
             </small>
           </p>
           <p style={{ textAlign: "center" }}>
-            <small className="text-muted -adat">{props.language}</small>
+            <small className="text-muted -adat">{book?.language ? book.language : "Nincs nyelv"}</small>
           </p>
           <p style={{ textAlign: "center" }}>
             <small className="text-muted -adat">
-              {props.publisher_name ? props.publisher_name : "Ismeretlen kiadó"}
+              {book?.publisher_name ? book.publisher_name : "Ismeretlen kiadó"}
             </small>
           </p>
         </Modal.Body>

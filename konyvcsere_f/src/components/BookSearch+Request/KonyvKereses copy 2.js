@@ -4,34 +4,37 @@ import KonyvKeresKartyak from "./KonyvKeresKartyak";
 import { KonyvKeresModal } from "./KonyvKeresModal";
 import KonyvKeresRange from "./KonyvKeresRange";
 
-
 export default function KonyvKereses() {
   const {
     availableBookLista,
+    getAllAvailableOfferedBooks,
+    setAvailableBookLista,
   } = useApiContext();
   const [szurtLista, setSzurtLista] = useState([...availableBookLista]);
   const [szuroertek, setSzuroErtek] = useState("");
-  //const [finalFilteredBooks, setFinalFilteredBooks] = useState([...availableBookLista]);
 
   const [filters, setFilters] = useState({
     author: "",
     publisher: "",
-    language: "",
-    minYear: 1930,
+    minYear: 1900,
     maxYear: new Date().getFullYear(),
   });
   //const [filteredBooks, setFilteredBooks] = useState([...availableBookLista]);
   
   useEffect(() => {
     setSzurtLista(availableBookLista);
-    
-  }, [availableBookLista]);
+    console.log("📢 Szűrt lista frissült:", szurtLista);
+  }, [availableBookLista, szurtLista]);
 
   function handleSearch(e) {
     //console.log(availableBookLista)
     const ujszuroertek = e.target.value.toLowerCase();
     setSzuroErtek(ujszuroertek);
 
+    //setSzuroErtek(e.target.value)
+
+    //console.log("🔍 Search Term:", szuroertek);
+    //console.log("📚 Available Books Before Filter:", availableBookLista);
     const atmeneti = availableBookLista.filter((book) => {
         console.log("Ellenőrzés: ", book);
         return book.title.toLowerCase().includes(szuroertek);
@@ -42,13 +45,10 @@ export default function KonyvKereses() {
     console.log(szurtLista);
   }
 
-
-
-
   function handleFilterApply() {
-    console.log("handleFilterApply lefutott");
-    console.log("elérhető könyvek a szűrés előtt:", availableBookLista);
-    console.log("szűrési feltételek:", filters);
+    console.log("🎯 handleFilterApply lefutott!");
+    console.log("Elérhető könyvek a szűrés előtt:", availableBookLista); // Debugging log
+    console.log("🚀 Szűrési feltételek:", filters);
   
 
     const finalFilteredBooks = availableBookLista.filter((book) => {
@@ -56,22 +56,31 @@ export default function KonyvKereses() {
         // Alapértelmezett üres értékekkel védekezünk az undefined ellen
         const bookAuthors = book.authors ? book.authors.toLowerCase() : "";
         const bookPublisher = book.publisher_name ? book.publisher_name.toLowerCase() : "";
-        const bookYear = book.publication_year ? parseInt(book.publication_year) : null;
+        const bookYear = parseInt(book.publication_year, 10) || 0; // Biztosítsuk, hogy szám legyen
         
-
         const filterAuthor = filters.author ? filters.author.toLowerCase() : "";
         const filterPublisher = filters.publisher ? filters.publisher.toLowerCase() : "";
 
         const megfelel = (
             (!filterAuthor || bookAuthors.includes(filterAuthor)) &&
-            (!filterPublisher || bookPublisher.includes(filterPublisher)) &&
-            (bookYear === null || (bookYear >= filters.minYear && bookYear <= filters.maxYear))
-        );
+            (bookYear >= filters.minYear) &&
+            (bookYear <= filters.maxYear) &&
+            (!filterPublisher || bookPublisher.includes(filterPublisher))
+    
+        /*(!filters.author === "" ||
+          book.authors && book.authors.toLowerCase().includes(filters.author.toLowerCase())) &&
+        (bookYear >= filters.minYear) &&
+        (bookYear <= filters.maxYear) &&
+        (!filters.publisher === "" ||
+          book.publisher_name && book.publisher_name
+            .toLowerCase()
+            .includes(filters.publisher.toLowerCase()))
+      */);
       console.log("✅ Megfelel?", megfelel);
 
     return megfelel;
     });
-
+    
     console.log("Szűrt könyvek:", finalFilteredBooks); // Debug log
     setSzurtLista([...finalFilteredBooks]);
     
@@ -121,20 +130,51 @@ export default function KonyvKereses() {
             </div>
         </div>
         </div>
-        <div style={{ margin:"40px" }}>
+        <div>
+          Keresés évek közt:
           <KonyvKeresRange
-          range={[filters.minYear, filters.maxYear]}
-          setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
-        />
-          
+            range={[filters.minYear, filters.maxYear]} 
+            setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })} 
+          />
+          {/*<input
+            type="number"
+            placeholder="Legrégebbi"
+            value={filters.minYear}
+            onChange={(e) =>
+              setFilters({ ...filters, minYear: e.target.value })
+            }
+            min={1900}
+            max={new Date().getFullYear()}
+            style={{ padding: "5px", width: "150px" }}
+          />{" "}
+          --
+          <input
+            type="number"
+            placeholder="Legújabb"
+            value={filters.maxYear}
+            onChange={(e) =>
+              setFilters({ ...filters, maxYear: e.target.value })
+            }
+            min={1900}
+            max={new Date().getFullYear()}
+            style={{ padding: "5px", width: "150px" }}
+          />*/}
         </div>
         
       </div>
-      <button className="btn btn-primary" onClick={handleFilterApply} style={{ marginBottom: "20px" }}>
+      <button className="btn btn-primary" onClick={handleFilterApply}>
         {" "}
         Alkalmaz{" "}
       </button>
-      
+      {/* Debugging Output 
+    <p>📢 Szűrt lista hossza: {szurtLista.length}</p>
+    <pre>{JSON.stringify(szurtLista, null, 2)}</pre>*/}
+
+      {/* végigmenni a szurtLista-n  
+          <div className='user-book-offers'>
+            <div className='user-book-offers__details-left'>
+              <img className='user-book-offers__details-left__image' src={'/basic_book.png'}></img>
+            </div>*/}
         </div>
       <div className="konyv">
         {szurtLista.length > 0 ? (
