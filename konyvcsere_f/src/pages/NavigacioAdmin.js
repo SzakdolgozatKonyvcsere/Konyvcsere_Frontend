@@ -60,7 +60,7 @@ export default function NavigacioAdmin() {
                         <img 
                             className="user--profile-picture" 
                             alt="Profilkép" 
-                            src={user ? user.img_url : "user_basic_pfp.jpg"} 
+                            src={user ? `http://localhost:8000/${user.img_url}` : "/user_basic_pfp.jpg"} 
                         />
                     </Link>
                 </div>
