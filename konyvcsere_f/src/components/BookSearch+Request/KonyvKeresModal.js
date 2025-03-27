@@ -47,7 +47,7 @@ export default function KonyvKeresModal({book, ...props}) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton className='modalHeader' >
+        <Modal.Header closeButton data-bs-theme="dark" className='modalHeader' >
           <Modal.Title id="contained-modal-title-vcenter">
             Könyv részletei
           </Modal.Title>

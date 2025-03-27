@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 
 
@@ -8,6 +8,7 @@ export default function NavigacioUser() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     //cim navban:
+    const location = useLocation();  // A jelenlegi URL lekérése
     const [showTitle, setShowTitle] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,21 @@ export default function NavigacioUser() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  // Dinamikusan állítjuk be a címet az URL alapján
+  const getTitle = () => {
+    switch (location.pathname) {
+        case '/konyvfeltoltes':
+            return 'Könyvfeltöltés';
+        case '/konyvek-sajat':
+            return 'Feltöltött Könyveim';
+        case '/konyvkereses':
+            return 'Könyvek keresése';
+        case '/':
+            return 'Kezdőlap';
+        default:
+            return 'Adok-Kapok'; // alapértelmezett cím
+    }
+};
   //cim navban vege
 
 
@@ -35,7 +51,7 @@ export default function NavigacioUser() {
                     <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
                 </button>
                 {/* egy sor a navban címért*/}
-                {showTitle && <div className="title-in-navbar">Könyvek keresése</div>}
+                {showTitle && <div className="title-in-navbar mx-auto">{getTitle()}</div>}
 
 
                 
