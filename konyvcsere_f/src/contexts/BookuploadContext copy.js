@@ -16,36 +16,46 @@ export const BookuploadProvider = ({ children }) => {
 
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
-   
+
     const uploadBook = async ({...adat}, vegpont) => {
       await csrf();
-      console.log("Küldött adat:", adat);
-      try{
-        const response = await myAxios.post(vegpont, adat,{
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-       console.log("Sikeres könyvfeltöltés:", response.data);
-      
-  } catch (err) {
-      console.error("Hiba a könyv feltöltése közben:", err);
-      if (err.response) {
-          console.error("Szerver válasza:", err.response.data);
+      console.log("Küldött adat:", adat);  // Ellenőrizzük, hogy mi lett küldve
+      try {
+          /*const formData = new FormData();
+          formData.append("genre_id", adat.genre_id);
+          formData.append("title", adat.title);
+          formData.append("publisher", adat.publisher);
+          formData.append("author", adat.author);
+          formData.append("user", adat.user);
+          formData.append("language", adat.language);
+          formData.append("publication_year", adat.publication_year);
+          formData.append("quality", adat.quality);
+          if (adat.img_url) {
+              formData.append("img_url", adat.img_url);
+          }
+
+          const response = await myAxios.post(vegpont, formData, {
+              headers: {
+                  "Content-Type": "multipart/form-data",
+              },
+          });*/
+          await myAxios.post(vegpont, adat, {
+            headers: {
+              "Content-Type": "multipart/form-data", // 🔹 Fontos a fájlfeltöltéshez!
+            },
+          });
+          console.log("Sikeres könyvfeltöltés:", adat);
+          alert('Sikeresen feltöltötted a könyvet!'); // Success message
+          
+      } catch (err) {
+          console.error("Hiba a könyv feltöltése közben:", err);
+          if (err.response) {
+              console.error("Szerver válasza:", err.response.data);
+          }
       }
-  }
-};
+  };
 
-
-return (
-  <BookuploadContext.Provider value={{ books, uploadBook }}>
-    {children}
-  </BookuploadContext.Provider>
-);
-};
-
-
-  /* const uploadWork = async ({ ...adat }, vegpont) => {
+  /*const uploadWork = async ({ ...adat }, vegpont) => {
     await csrf();
     try {
       const response = await myAxios.post(vegpont, adat);
@@ -56,10 +66,14 @@ return (
         console.error("Szerver válasza:", err.response.data);
       }
     }
-  };
- */
+  };*/
 
-
+  return (
+    <BookuploadContext.Provider value={{ books, uploadBook }}>
+      {children}
+    </BookuploadContext.Provider>
+  );
+};
 
     /*try {
         await myAxios.post(vegpont, adat);
@@ -115,3 +129,5 @@ return (
             throw err;
         }
       };*/
+
+
