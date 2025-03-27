@@ -7,7 +7,7 @@ function LegujabbKonyvAjanlat() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchBooks = async () => {
+        const loadNewBooks = async () => {
             try {
                 const response = await myAxios.get("/api/new-book-offers");
                 setNewBooks(response.data);
@@ -18,7 +18,7 @@ function LegujabbKonyvAjanlat() {
             }
         };
 
-        fetchBooks();
+        loadNewBooks();
     }, []);
 
     return (
@@ -32,10 +32,10 @@ function LegujabbKonyvAjanlat() {
                     {newBooks.length > 0 ? (
                         newBooks.map((book) => (
                             <li key={book.id} className="book-item">
-                            <img src={book.img_url || "default.jpg"} alt={book.title} loading="lazy" />
+                            <img src={book.img_url} alt={book.title} loading="lazy" />
                                 <h6>Cím: {book.title}</h6>
                                 <p>Szerző: {book.author_name}</p>
-                                <p>Megjelent: {new Date(book.created_at).toLocaleDateString()}</p>
+                                <p>Feltöltve: {new Date(book.created_at).toLocaleDateString()}</p>
                             </li>
                         ))
                     ) : (
