@@ -46,8 +46,8 @@ export default function Konyvfeltoltes() {
 
 const handleImageChange = (e) => {
   const file = e.target.files[0];
-  const allowdTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
-if (file && !allowdTypes.includes(file.type)){
+  const types = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+if (file && ! types.includes(file.type)){
   alert('Csak jpg, png, gif, jpeg, vagy svg képfájlokat tölthetsz fel.');
   return;
 }
@@ -57,8 +57,34 @@ setImg_url(file);
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  const konyvAdat = {
+    user,
+    author,
+    title,
+    publisher,
+    publication_year,
+    genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
+    language,
+    quality,
+    img_url,
+  };
+  console.log("Feltöltött könyv", konyvAdat);
+  
+    //uploadWork( konyvAdat, "/api/mufeltoltes")
+    uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
-  const konyvAdat = new FormData();
+    // Kép URL frissítése
+    /*if (response.data.img_url) {
+      setImg_url(response.data.img_url);
+    }*/
+
+    // Átirányítás a sikeres feltöltés után
+    navigate("/feltoltottkonyvek");
+
+ 
+};
+    
+  /*  const konyvAdat = new FormData();
   konyvAdat.append('user', user);
   konyvAdat.append('author', author);
   konyvAdat.append('title', title);
@@ -71,43 +97,7 @@ const handleSubmit = async (e) => {
   if (img_url) {
     konyvAdat.append('img_url', img_url);
   }
-
-  try {
-    const response = await myAxios.post("/api/konyvfeltoltes", konyvAdat, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    console.log("Sikeres feltöltés:", response.data);
-    uploadWork( konyvAdat, "/api/mufeltoltes")
-    uploadBook(konyvAdat, "/api/konyvfeltoltes");
-
-    // Kép URL frissítése
-    if (response.data.img_url) {
-      setImg_url(response.data.img_url);
-    }
-
-    // Átirányítás a sikeres feltöltés után
-    navigate("/feltoltottkonyvek");
-
-  } catch (err) {
-    console.error("Feltöltési hiba:", err.response?.data || err);
-    alert("Hiba történt a könyv feltöltésekor!");
-  }
-};
-      //useNavigate=("/feltoltottkonyvek"); /ezzel van a baja!!
-    
-    const konyvAdat = {
-      user,
-      author,
-      title,
-      publisher,
-      publication_year,
-      genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
-      language,
-      quality,
-      img_url:null,
-    };
-    console.log("Feltöltött könyv", konyvAdat);
+  */
     
 
   /*try {
