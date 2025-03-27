@@ -7,41 +7,38 @@ import KonyvKeresModal from './KonyvKeresModal';
 export default function KonyvKeresKartyak(props) {
 
 
-    //console.log("📖 Megjelenő könyv:", props.book); // Check if book exists
-
-    /*if (!props.book) {
-        console.error("❌ Hiba: book prop hiányzik!");
-        return <p>❌ Hiba történt a könyv betöltésekor.</p>;
-    }*/
-
+  
         const [modalShow, setModalShow] = useState(false);
-        const [selectedBookTitle, setSelectedBookTitle] = useState("");
+        const [selectedBook, setSelectedBook] = useState(null);
 
-        const handleShowModal = () => {
-          setSelectedBookTitle(props.book.title || "Nincs cím");
-          setModalShow(true);
+        const handleShowModal = (book) => {
+          if (book){
+            setSelectedBook(book);
+            setModalShow(true);
+            
+          }
+          
       };
 
-    return(
-        
+    return( 
         <div className="card all-available-books" style={{ width: "18rem" }}>
         <img className='all-available-books__image' src={'/basic_book.png'}></img>
                 <div className="card-body all-available-books">
-                    <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{props.book.title}</h5>
+                    <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{props.book.title || "Nincs cím"}</h5>
 
                     <ul className="list-group list-group-flush all-available-books">
                         <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.authors ? `${props.book.authors}` : "ismeretlen szerző"}</small></li>
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"} Kiadó</small></li>
                         <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</small></li>
-                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language}</small></li>
-                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"}</small></li>
-                        {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0" }}>{props.book.quality}</li>*/}
+                        {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language ? `${props.book.language}` : "nincs nyelv"}</small></li>*/}
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.genre_name ? `${props.book.genre_name}` : "nincs műfaj"}</small></li>
                     </ul>
-                    <button className="btn btn-primary all-available-books" variant="primary" onClick={handleShowModal}>Részletek</button>
-                     {/* Pass the selected book title to the modal */}
+                    <button className="btn btn-primary all-available-books" variant="primary"  onClick={() => handleShowModal(props.book)}>Részletek</button>
+                      {/*Pass the selected book title to the modal */}
                 <KonyvKeresModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
-                    title={selectedBookTitle} 
+                    book={selectedBook} 
                 />
                 </div>
             </div>      

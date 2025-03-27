@@ -1,58 +1,88 @@
 #root {
-  .book-offers-area {
+  .user-books {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: $secondary-color;
-    border-radius: 5px;
-    margin: 10px;
-    
-    .user-book-offers {  
+    margin-top: 5vh;
+    .trigger-area {
       display: flex;
       flex-direction: row;
-      width: 80%;
-      background-color: rgb(255, 255, 255);
-      padding: 10px;
-      margin: 15px;
-      border-bottom: 1px solid rgba(128, 128, 128, 0.871);
+      align-self: center;
+      .books-trigger {
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px;
+        font-size: 1.5rem;
+      }
+    }
+    .book-offers-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $secondary-color;
       border-radius: 5px;
-      &__details {
-        &-left {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          &__image {
-            width: 40vh;
+      margin: 10px;
+      width: 60%;
+      align-self: anchor-center;
+      .user-book-offers {  
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+        margin: 15px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.871);
+        border-radius: 5px;
+        &__details {
+          &-left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &__image {
+              width: 40vh;
+            }
           }
-        }
-        &-right {
-          display: flex;
-          flex-direction: column;
-          flex-wrap: wrap;
-          margin-left: 10px;
-          padding: 15px;
-          width: 100%;
-          align-self: center;
-          &__text {
-            font-size: 1rem;
-            word-wrap: break-word;
-            text-wrap: wrap;
-            font-weight: bolder;
-            .--value {
-              font-size: larger;
-              font-weight: bold;
+          &-right {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-left: 10px;
+            padding: 15px;
+            width: 100%;
+            align-self: center;
+            &__text {
+              font-size: 1rem;
+              word-wrap: break-word;
+              text-wrap: wrap;
+              font-weight: bolder;
+              .--value {
+                font-size: larger;
+                font-weight: bold;
+              }
             }
           }
         }
       }
     }
-  }
-  .book-demands-area {
-    .user-book-demands {
-      &__details {
+    .book-demands-area {
+      width: 60%;
+      align-self: anchor-center;
+      .user-book-demands {
+        &__table {
+          &-head {
+            border-bottom: 1px solid black;
+            &_element {
+              text-align: center;
+            }
+          }
+          &-body {
+            &_element {
 
+            }
+          }
+        }
+        
       }
     }
-  }
-  
+  }  
 }

@@ -25,31 +25,22 @@ export default function KonyvKereses() {
   
   useEffect(() => {
     setSzurtLista(availableBookLista);
-    console.log("📢 Szűrt lista frissült:", szurtLista);
+    
   }, [availableBookLista]);
-
-  function handleReset() {
-    setSzuroErtek(""); // Visszaállítja a keresési értéket üresre
-    setSzurtLista([...availableBookLista]); // Visszaállítja a könyvlistát az eredeti listára
-}
 
   function handleSearch(e) {
     //console.log(availableBookLista)
     const ujszuroertek = e.target.value.toLowerCase();
     setSzuroErtek(ujszuroertek);
-    console.log("ujszuroertek: ", ujszuroertek)
-    console.log("szuroertek: ", szuroertek)
 
     const atmeneti = availableBookLista.filter((book) => {
         console.log("Ellenőrzés: ", book);
         return book.title.toLowerCase().includes(szuroertek);
-        
+      
     });
     //console.log(atmeneti)
     setSzurtLista([...atmeneti]);
-    console.log("atmeneti: ", atmeneti);
-    console.log("szurtlista: ", szurtLista);
-    
+    console.log(szurtLista);
   }
 
 
@@ -144,18 +135,16 @@ export default function KonyvKereses() {
         {" "}
         Alkalmaz{" "}
       </button>
-      <button className="btn btn-primary" onClick={handleReset} style={{ marginBottom: "20px" }}>
-      {" "}
-      Reset{" "}
-      </button>
       
         </div>
       <div className="konyv">
-        {
+        {szurtLista.length > 0 ? (
           szurtLista.map((book) => {
             return <KonyvKeresKartyak book={book} key={book.offer_id} />;
           })
-        }
+        ) : (
+          <p>Nincs találat.</p>
+        )}
       </div>
     </div>
   );

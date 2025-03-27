@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useApiContext from '../contexts/ApiContext'
+import useApiContext from '../../contexts/ApiContext'
 
 function UserProfilePictureUpdateForm() {
   const {patchUserPFP, selectedImage, setSelectedImage} = useApiContext();
@@ -51,9 +51,11 @@ function UserProfilePictureUpdateForm() {
         name='img_url'
         accept='.png, .svg, .jpg, .jpeg, .gif'
         id='user-pfp-update__input'
+        className='form-control'
         onChange={handleImageChange}
       />
-      <button onClick={handleSubmit}>kép cserélése</button>
+      
+      <button className='btn-primary' onClick={handleSubmit}>kép cserélése</button>
     </div>
   )
 }

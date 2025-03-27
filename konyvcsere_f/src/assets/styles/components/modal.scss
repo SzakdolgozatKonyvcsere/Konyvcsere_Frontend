@@ -1,0 +1,124 @@
+.modal-header .btn-close {
+  
+    opacity: 1 !important;  /* Biztosítja, hogy ne legyen áttetsző */
+}
+
+
+    .modal-content {
+        
+        
+        .modalHeader {
+        background-color: $text-color;
+        color: $secondary-color;
+        
+        
+        
+        }
+        .modalBodyFenn{
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background-color: $button-color;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            transition: 0.3s ease-in-out, transform 0.2s;
+    
+            &:hover {
+                background-color: $primary-color;
+                transform: scale(1.05);
+            }
+        
+        }
+        .modalBody{
+            
+            padding: 20px;
+            background-color: $primary-background-color;
+            .modalAlahuzas{
+                font-style: italic;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 5px;
+            }
+        }
+        .modalBodyRendezes{
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Bal oldalon a kép (1 rész), jobb oldalon a szöveg (2 rész) */
+            gap: 20px;
+            align-items: center;
+        }
+        .modalImage img {
+            width: 100%;
+            //max-width: 150px;
+            display: block;
+          }
+        /* Jobb oldali szöveges adatok */
+        .modalDetails {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .modalDetails p {
+            margin: 0;
+            text-align: left;
+            font-size: 14px;
+          }
+    }
+
+
+    .kisProfil{
+        
+        
+        .feltoltoUser {
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;           
+            align-items: center;
+        }
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;           
+        align-items: center;
+    
+        .user--profile-picture{
+            
+                width: 50px;
+                height: 50px;
+                padding: 1px;
+                border-radius: 999px;
+                background-color: white;
+                border: 1.2px solid black;
+            
+        .userProfileName {
+                color: #FFFFFF;
+                margin: 0;
+                font-size: 1rem;
+                text-align: center;
+            }
+        }
+    }
+
+    .modalProfilos{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;           
+        align-items: center;
+        margin-right: auto; /* A bal oldalra tolja az elemet */
+    }
+
+
+    .modalFooter{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    
+
+
+    
+
+
