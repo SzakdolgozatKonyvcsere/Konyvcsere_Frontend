@@ -57,13 +57,14 @@ setImg_url(file);
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+
   const konyvAdat = new FormData();
   konyvAdat.append('user', user);
   konyvAdat.append('author', author);
   konyvAdat.append('title', title);
   konyvAdat.append('publisher', publisher);
   konyvAdat.append('publication_year', publication_year);
-  konyvAdat.append('genre_id', selectedGenre);
+  konyvAdat.append('genre_id', Number(selectedGenre));
   konyvAdat.append('language', language);
   konyvAdat.append('quality', quality);
 
@@ -77,6 +78,8 @@ const handleSubmit = async (e) => {
     });
 
     console.log("Sikeres feltöltés:", response.data);
+    uploadWork( konyvAdat, "/api/mufeltoltes")
+    uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
     // Kép URL frissítése
     if (response.data.img_url) {
@@ -105,8 +108,7 @@ const handleSubmit = async (e) => {
       img_url:null,
     };
     console.log("Feltöltött könyv", konyvAdat);
-    //uploadWork( konyvAdat, "/api/mufeltoltes")
-   // uploadBook(konyvAdat, "/api/konyvfeltoltes");
+    
 
   /*try {
     const result = await uploadBook(konyvAdat);

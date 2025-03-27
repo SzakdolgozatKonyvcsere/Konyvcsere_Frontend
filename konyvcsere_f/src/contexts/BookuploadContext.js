@@ -48,8 +48,21 @@ export const BookuploadProvider = ({ children }) => {
       }
   };
 
+  const uploadWork = async ({ ...adat }, vegpont) => {
+    await csrf();
+    try {
+      const response = await myAxios.post(vegpont, adat);
+      console.log("Sikeres műfeltöltés:", response.data);
+    } catch (err) {
+      console.error("Hiba a mű feltöltése közben:", err);
+      if (err.response) {
+        console.error("Szerver válasza:", err.response.data);
+      }
+    }
+  };
+
   return (
-    <BookuploadContext.Provider value={{ books, uploadBook }}>
+    <BookuploadContext.Provider value={{ books, uploadBook, uploadWork }}>
       {children}
     </BookuploadContext.Provider>
   );
@@ -76,7 +89,7 @@ export const BookuploadProvider = ({ children }) => {
     );
 
 
-     /*const uploadWork = async (e) => {
+     const uploadWork = async (e) => {
       e.preventDefault();
       try {
         
@@ -90,23 +103,8 @@ export const BookuploadProvider = ({ children }) => {
             console.error("Szerver válasza:", err.response.data);
         }
     }
-    }
- const uploadWork = async ({...adat}, vegpont) => {
-  await csrf();
-    try {
-      await myAxios.post(vegpont, adat);
-      console.log("Sikeres műfeltöltés:", adat);
-      //Navigate("/feltoltottkonyvek");
-  }catch (err) {
-      console.error("Hiba a mű feltöltése közben:", err);
-      if (err.response) {
-          console.error("Szerver válasza:", err.response.data);
-      }
-  }
-  }*/
-
-  
-
+    }*/
+    
    /*  
     const uploadBook = async (bookData) => {
         //setLoading(true);
