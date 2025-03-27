@@ -5,62 +5,8 @@ import { BookuploadContext } from "../contexts/BookuploadContext";
 import { myAxios } from "../api/axios";
 
 export default function Konyvfeltoltes() {
+
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
-  const { uploadBook, uploadWork } = useContext(BookuploadContext);
- 
-  //műfajok:
-  const [genres, setGenres] = useState([]); // Műfajok listája
-  const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
-  //sima:
-  const [user, setUser] = useState("");
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [publication_year, setYear] = useState("");
-  const [language, setLanguage] = useState("");
-  const [quality, setQuality] = useState("");
-  //const [image, setImage] = useState(null);
-  
-  // műfaj lekérése: 
-  useEffect(() => {    
-    myAxios.get("/api/genres")
-    .then(response => {
-      setGenres(response.data); // Beállítjuk a műfajokat
-    })
-    .catch(error => {
-      console.error("Hiba a műfajok lekérése közben:", error);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (authUser) {
-      setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
-    }
-  }, [authUser]);
-
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const konyvAdat = {
-      user,
-      author,
-      title,
-      publisher,
-      publication_year,
-      genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
-      language,
-      quality,
-    };
-    console.log("Feltöltött könyv", konyvAdat);
-  
-    uploadBook(konyvAdat, "/api/konyvfeltoltes");
-
-}
-
- /* const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
@@ -98,11 +44,7 @@ export default function Konyvfeltoltes() {
     }
   }, [authUser]);
 
-  const handleImageChange = (e) => {
-    setImg_url(e.target.files[0]); // 🔹 Kiválasztott kép mentése state-be
-  };
-
-/*const handleImageChange = (e) => {
+const handleImageChange = (e) => {
   const file = e.target.files[0];
   const allowdTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
 if (file && !allowdTypes.includes(file.type)){
@@ -110,40 +52,62 @@ if (file && !allowdTypes.includes(file.type)){
   return;
 }
 setImg_url(file);
-};*/
+}
 
 const handleSubmit = async (e) => {
   e.preventDefault();
 
 
   const konyvAdat = new FormData();
-  konyvAdat.append('user', Number(user));
+  konyvAdat.append('user', user);
   konyvAdat.append('author', author);
   konyvAdat.append('title', title);
   konyvAdat.append('publisher', publisher);
-  konyvAdat.append('publication_year', Number(publication_year));
+  konyvAdat.append('publication_year', publication_year);
   konyvAdat.append('genre_id', Number(selectedGenre));
   konyvAdat.append('language', language);
-  konyvAdat.append('quality', Number(quality));
+  konyvAdat.append('quality', quality);
 
   if (img_url) {
     konyvAdat.append('img_url', img_url);
   }
-  console.log("feltoltott konyv: ", konyvAdat)
-  await uploadBook(konyvAdat, "/api/konyvfeltoltes");
+
+  try {
+    const response = await myAxios.post("/api/konyvfeltoltes", konyvAdat, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    console.log("Sikeres feltöltés:", response.data);
+    uploadWork( konyvAdat, "/api/mufeltoltes")
+    uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
     // Kép URL frissítése
-    /*if (response.data.img_url) {
+    if (response.data.img_url) {
       setImg_url(response.data.img_url);
-    }*/
+    }
 
     // Átirányítás a sikeres feltöltés után
-    //navigate("/feltoltottkonyvek");
+    navigate("/feltoltottkonyvek");
 
-  
+  } catch (err) {
+    console.error("Feltöltési hiba:", err.response?.data || err);
+    alert("Hiba történt a könyv feltöltésekor!");
+  }
 };
-
       //useNavigate=("/feltoltottkonyvek"); /ezzel van a baja!!
+    
+    const konyvAdat = {
+      user,
+      author,
+      title,
+      publisher,
+      publication_year,
+      genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
+      language,
+      quality,
+      img_url:null,
+    };
+    console.log("Feltöltött könyv", konyvAdat);
     
 
   /*try {
@@ -207,10 +171,10 @@ const handleSubmit = async (e) => {
           <label htmlFor="quality" className="form-label">Minőség 1-5 </label>
           <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
-          {/*<div className="mb-3">
+          <div className="mb-3">
           <label htmlFor="image" className="form-label">Kép</label>
           <input type="file" onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml"/>
-          </div>*/}
+          </div>
           <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
           </form>
         </div>

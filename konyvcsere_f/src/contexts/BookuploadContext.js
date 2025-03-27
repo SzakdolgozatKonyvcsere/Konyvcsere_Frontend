@@ -10,42 +10,6 @@ export const BookuploadProvider = ({ children }) => {
     //const [error, setError] = useState(null);
     const [books, setBooks] = useState([]);
     //const [works, setWorks] = useState([]);
-    
-    const csrf = () => myAxios.get("/sanctum/csrf-cookie");
-
-
-    const uploadBook = async ({...adat}, vegpont) => {
-      await csrf();
-      console.log("Küldött adat:", adat, vegpont);  // Ellenőrizzük, hogy mi lett küldve
-      try {
-        await myAxios.post(vegpont, adat);
-        console.log("Sikeres könyvfeltöltés:", adat);  
-        alert('Sikeresen feltöltötted a könyvet!'); // Success message
-          
-      } catch (err) {
-          console.error("Hiba a könyv feltöltése közben:", err);
-          if (err.response) {
-              console.error("Szerver válasza:", err.response.data);
-          }
-      }
-  };
-
-  return (
-    <BookuploadContext.Provider value={{ books, uploadBook }}>
-      {children}
-    </BookuploadContext.Provider>
-  );
-}
-
-
-
-
-/*export const BookuploadProvider = ({ children }) => {
-
-    //const [loading, setLoading] = useState(false);
-    //const [error, setError] = useState(null);
-    const [books, setBooks] = useState([]);
-    //const [works, setWorks] = useState([]);
     const [filters, setFilters] = useState({
             author: "",
         });
@@ -55,9 +19,9 @@ export const BookuploadProvider = ({ children }) => {
 
     const uploadBook = async ({...adat}, vegpont) => {
       await csrf();
-      console.log("Küldött adat:", adat, vegpont);  // Ellenőrizzük, hogy mi lett küldve
+      console.log("Küldött adat:", adat);  // Ellenőrizzük, hogy mi lett küldve
       try {
-          /*const formData = new FormData();
+          const formData = new FormData();
           formData.append("genre_id", adat.genre_id);
           formData.append("title", adat.title);
           formData.append("publisher", adat.publisher);
@@ -74,15 +38,11 @@ export const BookuploadProvider = ({ children }) => {
               headers: {
                   "Content-Type": "multipart/form-data",
               },
-          });*/
-          await myAxios.post(vegpont, adat, {
-            headers: {
-              "Content-Type": "multipart/form-data", // 🔹 Fontos a fájlfeltöltéshez!
-            },
           });
-          console.log("Sikeres könyvfeltöltés:", adat);
-          alert('Sikeresen feltöltötted a könyvet!'); // Success message
-          
+          console.log("Sikeres könyvfeltöltés:", response.data);
+          if (response.status === 201) {
+            alert('Sikeresen feltöltötted a könyvet!'); // Success message
+          }
       } catch (err) {
           console.error("Hiba a könyv feltöltése közben:", err);
           if (err.response) {
@@ -91,7 +51,7 @@ export const BookuploadProvider = ({ children }) => {
       }
   };
 
-  /*const uploadWork = async ({ ...adat }, vegpont) => {
+  const uploadWork = async ({ ...adat }, vegpont) => {
     await csrf();
     try {
       const response = await myAxios.post(vegpont, adat);
@@ -102,14 +62,14 @@ export const BookuploadProvider = ({ children }) => {
         console.error("Szerver válasza:", err.response.data);
       }
     }
-  };*/
+  };
 
   return (
-    <BookuploadContext.Provider value={{ books, uploadBook }}>
+    <BookuploadContext.Provider value={{ books, uploadBook, uploadWork }}>
       {children}
     </BookuploadContext.Provider>
   );
-};*/
+};
 
     /*try {
         await myAxios.post(vegpont, adat);
@@ -165,5 +125,3 @@ export const BookuploadProvider = ({ children }) => {
             throw err;
         }
       };*/
-
-
