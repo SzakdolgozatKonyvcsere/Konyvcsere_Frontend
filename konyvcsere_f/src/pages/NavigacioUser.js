@@ -52,6 +52,7 @@ export default function NavigacioUser() {
                 </button>
                 {/* egy sor a navban címért*/}
                 {showTitle && <div className="title-in-navbar mx-auto">{getTitle()}</div>}
+                {!showTitle && <div className="title-in-navbar mx-auto">Adok - Kapok</div>}
 
 
                 
