@@ -65,19 +65,23 @@
       }
     }
     .book-demands-area {
-      width: 60%;
-      align-self: anchor-center;
+      width: 100%;
       .user-book-demands {
+        table {
+          width: 80%;
+          justify-self: center;
+        }
         &__table {
           &-head {
             border-bottom: 1px solid black;
             &_element {
-              text-align: center;
+              padding: 10px;
             }
           }
           &-body {
             &_element {
-
+              padding: 10px;
+              border-bottom: 1px solid rgba(0, 0, 0, 0.25);
             }
           }
         }

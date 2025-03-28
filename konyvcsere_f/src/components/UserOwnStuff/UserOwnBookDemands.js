@@ -1,18 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuthContext from '../../contexts/AuthContext';
 import useApiContext from '../../contexts/ApiContext';
+import UserOwnBookEditModal from "./UserOwnBookEditModal";
+import { data } from 'react-router-dom';
+import ModalEditBookDemand from './modals/ModalEditBookDemand';
 
 function UserOwnBookDemands() {
-  const {userBookDemandsInfo, getUserBookDemandsInfo, setBookDemandsInfo} = useApiContext();
+  const {userBookDemandsInfo, getUserBookDemandsInfo, setUserBookDemandsInfo} = useApiContext();
   const {user} = useAuthContext();
 
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editSelectedBook, setEditSelectedBook] = useState(null);
+
+  const handleShowEditModal = (book) => {
+    setEditModalVisible(!editModalVisible);
+    setEditSelectedBook(book);
+  };
+  
   useEffect(() => {
-    getUserBookDemandsInfo(user.id, setBookDemandsInfo);
+    getUserBookDemandsInfo(user.id, setUserBookDemandsInfo);
   }, []);
 
   const headLabels = [
-    "cím",
     "kiadó",
+    "cím",
     "műfaj",
     "nyelv",
     "min év",
@@ -34,16 +45,38 @@ function UserOwnBookDemands() {
           <tbody className='user-book-demands__table-body'>
             {userBookDemandsInfo.map((book, index) => (
                 <tr key={index} className='user-book-demands__table-body_element'>
-                  {Object.values(book).map((col, colInd) => (
-                      <td key={colInd}>{col}</td>
-                    )
-                  )}
+                {Object.entries(book)
+                  .filter(([key]) => !["demand_id", "name", "created_at", "updated_at"].includes(key))
+                  .map(([key, col], colInd) => (
+                    <td key={colInd}>
+                    {key === "demand_status" ? (
+                      col === "e" ? "Elcserélt" :
+                      col === "k" ? "Keres" :
+                      col === "t" ? "Talált" :
+                      "-"
+                    ) : (
+                      col ? col : "-"
+                    )}
+                    </td>
+                  )
+                )}
+                  <td className='table_admin-row--button'>
+                    <button onClick={() => handleShowEditModal(book)}>✎</button>
+                  </td>
+                  <td className='table_admin-row--button'>
+                    <button onClick={null}>🗑️</button>
+                  </td> 
                 </tr>
               )
-            )}
+            )}         
           </tbody>
         </table>
       </div>
+      {editModalVisible && <ModalEditBookDemand
+        show={editModalVisible}
+        handleClose={handleShowEditModal}
+        book={editSelectedBook}
+      />}
     </>
   )
 }
