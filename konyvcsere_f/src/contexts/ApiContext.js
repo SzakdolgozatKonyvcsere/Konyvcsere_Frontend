@@ -124,9 +124,24 @@ export const ApiProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Hiba történt a kérés során:', error);
-      alert('Hiba történt, próbáld újra!');
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message); // backend üzenete
+      } else {
+        alert('Hiba történt, próbáld újra!'); // alapértelmezett hibaüzenet
+      }
     }
   };
+  // Egy adott felhasználó lekérése API-ból
+  const getUserById = async (adat) => {
+    try {
+        const response = await myAxios.get(`/api/user/${adat}`);
+        return response.data;
+    } catch (error) {
+        console.error("Hiba a user lekérdezésnél:", error);
+        return null;
+    }
+};
+
 
   
 
@@ -216,7 +231,7 @@ export const ApiProvider = ({ children }) => {
         genreList, getGenreList,
         userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest,
+        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest, getUserById,
         putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand
         }
       }>

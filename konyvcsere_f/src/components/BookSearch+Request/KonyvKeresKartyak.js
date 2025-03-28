@@ -7,13 +7,7 @@ import KonyvKeresModal from './KonyvKeresModal';
 export default function KonyvKeresKartyak(props) {
 
 
-    //console.log("📖 Megjelenő könyv:", props.book); // Check if book exists
-
-    /*if (!props.book) {
-        console.error("❌ Hiba: book prop hiányzik!");
-        return <p>❌ Hiba történt a könyv betöltésekor.</p>;
-    }*/
-
+  
         const [modalShow, setModalShow] = useState(false);
         const [selectedBook, setSelectedBook] = useState(null);
 
@@ -21,6 +15,7 @@ export default function KonyvKeresKartyak(props) {
           if (book){
             setSelectedBook(book);
             setModalShow(true);
+            
           }
           
       };
@@ -33,13 +28,13 @@ export default function KonyvKeresKartyak(props) {
 
                     <ul className="list-group list-group-flush all-available-books">
                         <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.authors ? `${props.book.authors}` : "ismeretlen szerző"}</small></li>
-                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</small></li>
-                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language ? `${props.book.language}` : "nincs nyelv"}</small></li>
                         <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"} Kiadó</small></li>
-                        {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0" }}>{props.book.quality}</li>*/}
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</small></li>
+                        {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{props.book.language ? `${props.book.language}` : "nincs nyelv"}</small></li>*/}
+                        <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{props.book.genre_name ? `${props.book.genre_name}` : "nincs műfaj"}</small></li>
                     </ul>
                     <button className="btn btn-primary all-available-books" variant="primary"  onClick={() => handleShowModal(props.book)}>Részletek</button>
-                     {/* Pass the selected book title to the modal */}
+                      {/*Pass the selected book title to the modal */}
                 <KonyvKeresModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}

@@ -9,6 +9,7 @@
 @import 'components/books.scss';
 @import 'components/all_av_books.scss';
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap');
+@import 'components/modal.scss';
 
 $assetPath: "/assets/kepek/";
 
@@ -19,15 +20,7 @@ $assetPath: "/assets/kepek/";
 body {
     background-color: $background-color;
     //font-family: 'Cormorant Garamond', serif;
-    .fraunces-font {
-    font-family: "Fraunces", serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-variation-settings:
-      "SOFT" 400,
-      "WONK" 500;
-    }
+    
     color: $text-color;
     margin: 0;
     padding: 0;
@@ -43,6 +36,15 @@ body {
         align-items: center;
         padding: 20px;
         height: 50vh;
+        .fraunces-font {
+            font-family: "Fraunces", serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            font-variation-settings:
+              "SOFT" 400,
+              "WONK" 500;
+            }
     }
 
     .navbar {
@@ -56,6 +58,25 @@ body {
         right: 0;
         z-index: 1000; 
         background-color: $primary-background-color; 
+        //cim navban:
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        
+        .title-in-navbar {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: $primary-color;
+          }
+          //cim navban vege
     }
 
     .navbar .list-group {
@@ -224,7 +245,7 @@ body {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         color: $primary-color;
-        margin-top: 80px;
+        margin-top: 50px;
     }
 
     .p {
