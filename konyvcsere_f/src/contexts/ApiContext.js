@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
@@ -12,9 +12,11 @@ export const ApiProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
+  const [genreList, setGenreList] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [userUpdateBookDemand, setUserUpdateBookDemand] = useState([]);
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
@@ -66,6 +68,18 @@ export const ApiProvider = ({ children }) => {
     }catch(error){
         console.log("Hiba",error);
     }finally{
+      setLoading(false);
+    }
+  }
+
+  const getGenreList = async() => {
+    setLoading(true)
+    try {
+      const response = await myAxios.get("/api/genres");
+      setGenreList(response.data);
+    } catch (error) {
+      console.error("Hiba a műfajok lekérése közben:", error);
+    } finally {
       setLoading(false);
     }
   }
@@ -153,10 +167,19 @@ export const ApiProvider = ({ children }) => {
 
   const patchUserPFP = async (vegpont, adat) => {
     setLoading(true);
-    console.log("Sending data to:", vegpont);
-    console.log("FormData content:", adat.get('img_url'));
     try {
       await myAxios.post(vegpont, adat);      
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const putUserUpdateBookDemand = async (book_demand_id, adat) => {
+    setLoading(true);
+    try {
+      await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);  
     } catch (error) {
       console.log(error.message)
     } finally {
@@ -190,9 +213,11 @@ export const ApiProvider = ({ children }) => {
       { 
         userLista, bookLista, bookDemandLista,
         getUsers, postUsers, getBooks, postBooks, getBookDemands,
+        genreList, getGenreList,
         userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest
+        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest,
+        putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand
         }
       }>
       {children}
