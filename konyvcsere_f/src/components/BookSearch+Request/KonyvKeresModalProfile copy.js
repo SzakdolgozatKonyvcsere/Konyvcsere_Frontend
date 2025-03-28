@@ -17,11 +17,11 @@ export default function KonyvKeresModalProfile({ userId }) {
 
         useEffect(() => {
             console.log("Kapott userId:", userId);
-            if (!userId) {
+            if (!userId || typeof userId !== "number") {
                 console.warn("Hibás userId:", userId);
                 return;
             }
-            
+            if (userId) {
                 getUserById(userId)
                 .then(user => {
                     if (user) {
@@ -35,29 +35,22 @@ export default function KonyvKeresModalProfile({ userId }) {
                 .catch(error => console.error("Hiba a user lekérdezésnél:", error));
                     //setFeltoltoUser(user))
                 //setFeltoltoUser(user || null);
-                console.log("Feltöltő felhasználó állapota frissült:", feltoltoUser);
+            }
             
 
-        }, [userId], [feltoltoUser]);
+        }, [userId]);
     
         if (!feltoltoUser) return <p>Feltöltő: Ismeretlen</p>;
-
-        
     
 
 return (
     <>
     <div className="kisProfil">
     {/* Feltöltő felhasználó információi */}
-    {feltoltoUser ? (
         <Link to={`/profil/${feltoltoUser.id}`} className="feltoltoUser">
             <img src={feltoltoUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" />
             <span className="userProfileName">{feltoltoUser.full_name}</span>
         </Link>
-    ) : (
-        <p>Feltöltő: ISmeretlen</p>
-    )}
-        
     </div>
     </>
 );

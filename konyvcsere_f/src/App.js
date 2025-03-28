@@ -54,7 +54,7 @@ function App() {
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           <Route path="konyvkereses" element={<AllAvailableBooks />} />
           <Route path="profil" element={<UserOwnInfo />} />
-          <Route path="/profil/:id" component={OtherUserInfo} />
+          <Route path="/profil/:id" element={<OtherUserInfo />} />
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
       </Routes>

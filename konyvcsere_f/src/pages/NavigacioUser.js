@@ -33,7 +33,7 @@ export default function NavigacioUser() {
         case '/':
             return 'Kezdőlap';
         default:
-            return 'Adok-Kapok'; // alapértelmezett cím
+            return 'Adok - Kapok'; // alapértelmezett cím
     }
 };
   //cim navban vege

@@ -21,7 +21,6 @@ export const ApiProvider = ({ children }) => {
   const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
 
   const [userBookOffersInfo2, setUserBookOffersInfo2] = useState([]);
-  const [userGetId, setUserGetId] = useState([]);
 
   //Users
   const getUsers = async (vegpont) => {
@@ -92,7 +91,7 @@ export const ApiProvider = ({ children }) => {
   // adott felhasználó könyveinek (s + f) lekérése
 const getUserBookOffersInfo2 = async (user_id) => {
   try {
-    const {data} = await myAxios.get(`/api/user/${user_id}/book-offers`);
+    const {data} = await myAxios.get(`/api/book-offers/${user_id}`);
     console.log("Kapott user könyv adatok:", user_id);
     setUserBookOffersInfo2(data);
   } catch (error) {
@@ -137,26 +136,14 @@ const getUserBookOffersInfo2 = async (user_id) => {
     }
   };
   // Egy adott felhasználó lekérése API-ból
-  const getUserById = async (id) => {
+  const getUserById = async (adat) => {
     try {
-        const response = await myAxios.get(`/api/user/${id}/showinfo`);
+        const response = await myAxios.get(`/api/user/${adat}/showinfo`);
         return response.data;
-        //return response.data.length > 0 ? response.data[0] : null;
     } catch (error) {
         console.error("Hiba a user lekérdezésnél:", error);
         return null;
     }
-};
-// adott user legtobbet cserelt mufaja
-const getUserByIdGenre = async (id) => {
-  try {
-      const response = await myAxios.get(`/api/user/${id}/book-offers`);
-      return response.data;
-      //return response.data.length > 0 ? response.data[0] : null;
-  } catch (error) {
-      console.error("Hiba a user lekérdezésnél:", error);
-      return null;
-  }
 };
 
 
@@ -222,7 +209,6 @@ const getUserByIdGenre = async (id) => {
       getUsers("/api/users", setUserLista)
       getBooks("/api/book-offers", setBookLista)
       getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
-      //getUserById("/api/user/${adat}/showinfo", user_id)
       //getUsers("/api/users", setUserLista)
       //getBooks("/api/book-offers", setBookLista)
     //} 
@@ -242,7 +228,7 @@ const getUserByIdGenre = async (id) => {
         userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,
         userBookDemandsInfo, getUserBookDemandsInfo,
         availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest, getUserById, getUserByIdGenre
+        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest, getUserById
         }
       }>
       {children}

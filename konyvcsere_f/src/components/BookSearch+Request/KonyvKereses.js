@@ -3,6 +3,9 @@ import useApiContext from "../../contexts/ApiContext";
 import KonyvKeresKartyak from "./KonyvKeresKartyak";
 import { KonyvKeresModal } from "./KonyvKeresModal";
 import KonyvKeresRange from "./KonyvKeresRange";
+//import { Accordion } from "react-bootstrap";
+import Accordion from 'react-bootstrap/Accordion';
+
 
 
 export default function KonyvKereses() {
@@ -92,7 +95,7 @@ export default function KonyvKereses() {
     <div className="konyvkeresKezel">
       <h1>Könyvek keresése</h1>
       
-        <div class="form-floating mb-3">
+        <div className="form-floating mb-3">
             <input
             type="text" className="form-control" id="floatingTitle"
             placeholder="Keresés könyvcím alapján..."
@@ -102,48 +105,57 @@ export default function KonyvKereses() {
             <label for="floatingTitle">Keresés könyvcím alapján...</label>
       </div>
       <div>
-        <h3>További feltételek:</h3>
-        <div class="row g-2">
-            <div class="col-md">
-                <div className="form-floating">
-                    <input
-                        type="text" className="form-control" id="floatingAuthor"
-                        placeholder="Keresés szerző alapján..."
-                        value={filters.author}
-                        onChange={(e) => setFilters({ ...filters, author: e.target.value })}
-                        
-                    />
-                    <label for="floatingAuthor">Keresés szerző alapján...</label>
-                </div>
-            </div>
-        <div class="col-md">
+      <Accordion className="acc">
+      <Accordion.Item eventKey="0" className="accI">
+        <Accordion.Header className="accH"><h3>További feltételek:</h3></Accordion.Header>
+        <Accordion.Body className="accB">
+        <div className="row g-2">
+        <div className="col-md">
             <div className="form-floating">
                 <input
-                    type="text" className="form-control" id="floatingPublisher"
-                    placeholder="Keresés kiadó alapján..." 
-                    value={filters.publisher}
-                    onChange={(e) =>
-                    setFilters({ ...filters, publisher: e.target.value })
-                    }
+                    type="text" className="form-control" id="floatingAuthor"
+                    placeholder="Keresés szerző alapján..."
+                    value={filters.author}
+                    onChange={(e) => setFilters({ ...filters, author: e.target.value })}
                     
                 />
-                <label for="floatingPublisher">Keresés kiadó alapján...</label>
+                <label for="floatingAuthor">Keresés szerző alapján...</label>
             </div>
         </div>
+    <div className="col-md">
+        <div className="form-floating">
+            <input
+                type="text" className="form-control" id="floatingPublisher"
+                placeholder="Keresés kiadó alapján..." 
+                value={filters.publisher}
+                onChange={(e) =>
+                setFilters({ ...filters, publisher: e.target.value })
+                }
+                
+            />
+            <label for="floatingPublisher">Keresés kiadó alapján...</label>
         </div>
-        <div style={{ margin:"40px" }}>
-          <KonyvKeresRange
-          range={[filters.minYear, filters.maxYear]}
-          setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
-        />
-          
-        </div>
-        
-      </div>
-      <button className="btn btn-primary" onClick={handleFilterApply} style={{ marginBottom: "20px" }}>
+    </div>
+    </div>
+    <div style={{ margin:"40px" }}>
+      <KonyvKeresRange
+      range={[filters.minYear, filters.maxYear]}
+      setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
+    />
+      
+    </div>
+    <button className="btn btn-primary alkalmaz-button" onClick={handleFilterApply} style={{ marginBottom: "20px" }}>
         {" "}
         Alkalmaz{" "}
       </button>
+        
+        </Accordion.Body>
+      </Accordion.Item>
+      </Accordion>
+        
+        
+      </div>
+      
       <button className="btn btn-primary" onClick={handleReset} style={{ marginBottom: "20px" }}>
       {" "}
       Reset{" "}
