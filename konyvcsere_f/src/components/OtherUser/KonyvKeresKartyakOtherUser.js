@@ -24,7 +24,7 @@ export default function KonyvKeresKartyakOtherUser(props) {
     return( 
         <div className="card all-available-books-other">
           <div className="allofit all-available-books-other">
-          <img className='all-available-books-other__image' src={'/basic_book.png'}></img>
+          <img className='all-available-books-other__image' src={props.book.img_url ? `http://localhost:8000/${props.book.img_url}` : '/basic_book.png'}></img>
           <div className="card-body all-available-books-other">
             <div className="text-section all-available-books-other">
               <h5 className="card-title all-available-books-other__title" >{props.book.title || "Nincs cím"}</h5>

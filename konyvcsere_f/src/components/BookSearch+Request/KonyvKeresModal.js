@@ -66,7 +66,7 @@ export default function KonyvKeresModal({book, ...props}) {
           <div className='modalImage' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <img
               className='modalimg'
-              src={'/basic_book.png'}
+              src={book && book.img_url ? `http://localhost:8000/${book.img_url}` : '/basic_book.png'}
               alt="Book Cover"
               style={{ width: "40vh", display: "block", margin: "auto", alignContent: "left" }} 
             />
