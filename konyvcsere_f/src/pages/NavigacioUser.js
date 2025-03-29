@@ -71,6 +71,9 @@ export default function NavigacioUser() {
                             <Link className="nav-link" to="/konyvkereses" onClick={() => setMenuOpen(false)}>Könyv keresés</Link>
                         </li>
                         <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/konyvcserek" onClick={() => setMenuOpen(false)}>Csere-történetek</Link>
+                        </li>
+                        <li className="list-group-item border-0">
                             <button className="nav-link btn btn-link" onClick={() => { logout(); setMenuOpen(false); }}>
                                 Kijelentkezés
                             </button>

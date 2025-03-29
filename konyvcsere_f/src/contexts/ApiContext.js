@@ -172,6 +172,17 @@ const getUserByIdGenre = async (id) => {
       return null;
   }
 };
+// adott userhez kapcsolodo osszes exchange
+const getExchangeByUser = async (userId) => {
+  try {
+      const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
+      return response.data;
+      //return response.data.length > 0 ? response.data[0] : null;
+  } catch (error) {
+      console.error("Hiba az exchange by user lekérdezésnél:", error);
+      return null;
+  }
+};
 
 
 
@@ -268,7 +279,8 @@ const getUserByIdGenre = async (id) => {
         patchUserPFP, selectedImage, setSelectedImage,  
         postExchangeRequest, getUserById, getUserByIdGenre,  
         genreList, getGenreList,  
-        putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand  
+        putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
+        getExchangeByUser  
         }
       }>
       {children}

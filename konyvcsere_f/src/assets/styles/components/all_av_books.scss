@@ -6,7 +6,7 @@
       flex-wrap: wrap;
       align-items: center;
       width: 95%;
-      background-color: $secondary-color;
+      //background-color: $secondary-color;
       border-radius: 5px;
       margin: 10px auto;
       padding: 10px;
@@ -16,6 +16,8 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 5px;
+        background-color: $secondary-color;
+        padding: 20px;
         
       }
       .konyvkeresKezel{

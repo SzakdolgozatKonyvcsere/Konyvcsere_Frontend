@@ -21,7 +21,7 @@ function UserOwnBookOffers() {
           <div className='user-book-offers__details-left'>
             <img
               className='user-book-offers__details-left__image'
-              src={book.img_url ? book.img_url : '/basic_book.png'}
+              src={book && book.img_url ? `http://localhost:8000/${book.img_url}` : '/basic_book.png'}
               alt={book.title}
             />
           </div>

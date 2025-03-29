@@ -55,7 +55,7 @@ return (
             <span className="userProfileName">{feltoltoUser.full_name}</span>
         </Link>
     ) : (
-        <p>Feltöltő: ISmeretlen</p>
+        <p>Feltöltő: Ismeretlen</p>
     )}
         
     </div>
