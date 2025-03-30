@@ -16,6 +16,7 @@ export default function Konyvfeltoltes() {
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
+  
   //sima:
   const [user, setUser] = useState("");
   const [author, setAuthor] = useState("");
@@ -57,21 +58,23 @@ setImg_url(file);
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const konyvAdat = {
-    user,
-    author,
-    title,
-    publisher,
-    publication_year,
-    genre_id: Number(selectedGenre), // A kiválasztott műfaj az ID alapján
-    language,
-    quality,
-    img_url,
-  };
+  const konyvAdat = new FormData();
+    konyvAdat.append("user",user);
+    konyvAdat.append("author",author);
+    konyvAdat.append("title",title);
+    konyvAdat.append("publisher",publisher);
+    konyvAdat.append("publication_year",publication_year);
+    konyvAdat.append("genre_id", Number(selectedGenre)); // A kiválasztott műfaj az ID alapján
+    konyvAdat.append("language",language);
+    konyvAdat.append("quality",quality);
+
+    if(img_url){
+      konyvAdat.append("img_url",img_url);
+  }
   console.log("Feltöltött könyv", konyvAdat);
   
     //uploadWork( konyvAdat, "/api/mufeltoltes")
-    uploadBook(konyvAdat, "/api/konyvfeltoltes");
+  await uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
     // Kép URL frissítése
     /*if (response.data.img_url) {

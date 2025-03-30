@@ -17,7 +17,7 @@ export const BookuploadProvider = ({ children }) => {
     const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
    
-    const uploadBook = async ({...adat}, vegpont) => {
+    const uploadBook = async (adat, vegpont) => {
       await csrf();
       console.log("Küldött adat:", adat);
       try{
@@ -25,6 +25,7 @@ export const BookuploadProvider = ({ children }) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true, 
         });
        console.log("Sikeres könyvfeltöltés:", response.data);
       
