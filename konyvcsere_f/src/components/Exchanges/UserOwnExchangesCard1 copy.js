@@ -47,27 +47,20 @@ export default function UserOwnExchangesCard1(props) {
             if (!props.exchange?.desired_book_id) return;
             try {
                 const userInterestedData = await getUserById(props.exchange.interested_user_id);
-                const bookDesiredData = await getBookByIdForExchange(props.exchange.desired_book_id);
-                const userDesiredBookOwnerData = await getUserById(props.exchange.desired_book_owner_id);
-                const bookOfferedData = await getBookByIdForExchange(props.exchange.offered_book_id);
+                const bookData = await getBookByIdForExchange(props.exchange.desired_book_id);
 
-                console.log("Kapott user interested:", userInterestedData);
-                console.log("Kapott könyvek desired:", bookDesiredData, props.exchange.exchange_id);
-                console.log("Kapott user desired book owner:", userDesiredBookOwnerData);
-                console.log("Kapott könyvek offered:", bookOfferedData, props.exchange.exchange_id);
+                console.log("Kapott user:", userInterestedData);
+                console.log("Kapott könyvek:", bookData, props.exchange.exchange_id);
                 
 
                 setInterestedUser(userInterestedData || null);
-                setDesiredBook(bookDesiredData || null);
-                //setDesiredBookOwnerUser(userDesiredBookOwnerData || null);
-                //setOfferedBook(bookOfferedData || null);
-                
+                setDesiredBook(bookData || null);
             } catch (error) {
                 console.error("Hiba az adatok lekérésekor:", error);
             }
         }
         fetchData();
-    }, [props.exchange?.desired_book_id, props.exchange]);
+    }, [props.exchange?.desired_book_id]);
 
     // 1. patch kérés
     const handleExchangeRequest = async () => {
@@ -78,13 +71,9 @@ export default function UserOwnExchangesCard1(props) {
         console.log("Kérelem frissítési adatok:", exchangeRequest);
 
         // PATCH kérés küldése a backendnek
-        patchAcceptExchange(exchangeId);
+        patchAcceptExchange(exchangeId, exchangeRequest);
     
     }
-    useEffect(() => {
-        console.log("Frissült az exchanges állapot:", props.exchange);
-        // Ez minden alkalommal lefut, amikor az exchanges változik.
-    }, [props.exchange]); // Ha az exchanges változik, akkor ez a blokk fut le
 
     
 
@@ -149,7 +138,7 @@ export default function UserOwnExchangesCard1(props) {
                             <div className="plusIcon">
                                 <FaPlus />
                             </div>
-                            {/*<span className="exchange-books__title">{desiredBook.title}</span>*/}
+                            <span className="exchange-books__title">{desiredBook.title}</span>
 
                         
                         </div>

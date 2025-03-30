@@ -22,36 +22,64 @@
     .card{
         display: flex;
         justify-content: space-between;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
-        gap: 10px;
-        max-width: 400px;
+        //gap: 10px;
+        max-width: 500px;
         width: 100%;
         justify-content: center;
         align-items: center;
         //position: absolute;
         overflow-wrap: break-word;
         white-space: normal;
-        max-height: 400px;
+        max-height: 500px;
         margin: 10px;
-        .user--profile-picture{
-            flex: 3;
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            max-width: 100px;
-            transition: all 0.2s;
-            border-radius: 999px;
-            box-shadow: 2px 5px 10px black;
+
+        .card-header{
+            width: 100%;
+        }
+        .card-body{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: wrap;
+            //gap: 10px;
+            max-width: 500px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            //position: absolute;
+            overflow-wrap: break-word;
+            white-space: normal;
+            max-height: 400px;
+            //margin: 10px;
+
+            .incomingProfile{
+                text-align: center;
+
+                .user--profile-picture{
+                    flex: 3;
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    object-fit: cover;
+                    max-width: 100px;
+                    transition: all 0.2s;
+                    border-radius: 999px;
+                    box-shadow: 2px 5px 10px black;
+                
+                    .userProfileName {
+                            color: #FFFFFF;
+                            margin: 0;
+                            font-size: 1rem;
+                            text-align:unset;
+                        }
+            }
         
-            .userProfileName {
-                    color: #FFFFFF;
-                    margin: 0;
-                    font-size: 1rem;
-                    text-align:unset;
-                }
-    }
+                
+            }
+       
+        
 
         
         .wantedBook2{
@@ -59,6 +87,7 @@
             white-space: normal;
             width: 150px;
             max-height: 600px;
+            text-align: center;
             .exchange-books__image{
                 flex: 3;
                 text-align: center;
@@ -84,6 +113,10 @@
             text-align: center;
         }
     }
+    .card-footer{
+        width: 100%;
+    }
+}
     
 
 }
