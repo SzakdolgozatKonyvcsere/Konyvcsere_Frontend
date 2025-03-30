@@ -287,7 +287,12 @@ body {
         border: 1px solid #ccc;
         padding: 10px;
         text-align: center; 
+
+        .kezdolapBooks{
+            width: 40vh; // csak normalis meretu lesz a konyv az oldalon
+        }
     }
+    
 
     .book-cover {
         width: 100px;

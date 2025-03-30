@@ -32,7 +32,8 @@ function LegujabbKonyvAjanlat() {
                     {newBooks.length > 0 ? (
                         newBooks.map((book) => (
                             <li key={book.id} className="book-item">
-                            <img src={book.img_url} alt={book.title} loading="lazy" />
+                            {/* ez ugyanaz amivel a tobbi kepet is megjelenitjuk: (megnezi h van e, belerakja egy urlbe, ha nincs, akkor a basicet rakja) */}
+                            <img className='kezdolapBooks' src={book.img_url ? `http://localhost:8000/${book.img_url}` : '/basic_book.png'} alt={book.title} loading="lazy"  />
                                 <h6>Cím: {book.title}</h6>
                                 <p>Szerző: {book.author_name}</p>
                                 <p>Feltöltve: {new Date(book.created_at).toLocaleDateString()}</p>

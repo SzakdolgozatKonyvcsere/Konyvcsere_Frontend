@@ -35,6 +35,9 @@ export default function UserOwnExchanges() {
     }, []);
 
 
+    // !!!!
+    // 2 oszlop/ 2 FÜL!! - bejovo, valaszra var..
+
     return(
         <div className="exchangesBig">
             <h1>Csere történeteim: </h1>

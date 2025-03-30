@@ -35,40 +35,6 @@ export default function UserOwnExchangesCard1(props) {
     }, [props.exchange?.desired_book_id]);
 
     
-        //const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
-            /* const [user, setUser] = useState("");
-            
-            //feltoltoUser=getUsers('/user/{id}')
-    
-            useEffect(() => {
-                console.log("Kapott userId:", userId);
-                if (!userId) {
-                    console.warn("Hibás userId:", userId);
-                    return;
-                }
-                
-                    getUserById(userId)
-                    .then(user => {
-                        if (user) {
-                            console.log("Lekért felhasználó:", user);
-                            setFeltoltoUser(user);
-                        } else {
-                            console.warn("Felhasználó nem található!");
-                        }
-                    })
-                        
-                    .catch(error => console.error("Hiba a user lekérdezésnél:", error));
-                        //setFeltoltoUser(user))
-                    //setFeltoltoUser(user || null);
-                    console.log("Feltöltő felhasználó állapota frissült:", feltoltoUser);
-                
-    
-            }, [userId], [feltoltoUser]);
-        
-            if (!feltoltoUser) return <p>Feltöltő: Ismeretlen</p>;
-    
-
- */
 
     return(
         <div className="exchangesStage1">
@@ -77,7 +43,7 @@ export default function UserOwnExchangesCard1(props) {
                     <span>Érdeklődő felhasználó: </span><br />
                     {interestedUser ? (
                         <Link to={`/profil/${interestedUser.id}`} className="feltoltoUser">
-                            <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" />
+                            <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" /><br />
                             <span className="userProfileName">{interestedUser.full_name}</span>
                         </Link>
                     ) : (
@@ -88,11 +54,11 @@ export default function UserOwnExchangesCard1(props) {
                     <FaArrowRightLong />
                 </div>
                 <div className="wantedBook">
-                <span>Érdekelt könyv: </span>
+                <span>Érdekelt könyv: </span><br />
                 {desiredBook ? (
-                    <div>
-                        <span>{desiredBook.title}</span>
-                        <img className='exchange-books__image' src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'}></img>
+                    <div className="wantedBook2">
+                        <img className='exchange-books__image' src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'}></img><br />
+                        <span className="exchange-books__title">{desiredBook.title}</span>
                     </div>
                 ) : (
                     <p>Érdekelt könyv: Ismeretlen</p>
