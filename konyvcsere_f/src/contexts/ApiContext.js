@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
@@ -12,13 +12,19 @@ export const ApiProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
+  const [genreList, setGenreList] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [userUpdateBookDemand, setUserUpdateBookDemand] = useState([]);
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
   const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
+
+  const [userBookOffersInfo2, setUserBookOffersInfo2] = useState([]);
+  const [userGetId, setUserGetId] = useState([]);
+  //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
 
   //Users
   const getUsers = async (vegpont) => {
@@ -70,6 +76,18 @@ export const ApiProvider = ({ children }) => {
     }
   }
 
+  const getGenreList = async() => {
+    setLoading(true)
+    try {
+      const response = await myAxios.get("/api/genres");
+      setGenreList(response.data);
+    } catch (error) {
+      console.error("Hiba a műfajok lekérése közben:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   //Book demands
   const getBookDemands = async () => {
     setLoading(true);
@@ -84,12 +102,28 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching
     }
   };
+
+
+  // adott felhasználó könyveinek (s + f) lekérése
+const getUserBookOffersInfo2 = async (user_id) => {
+  try {
+    const {data} = await myAxios.get(`/api/user/${user_id}/book-offers`);
+    console.log("Kapott user könyv adatok:", user_id);
+    setUserBookOffersInfo2(data);
+  } catch (error) {
+    if (error.response && error.response.status !== 401) {
+      console.log("Hiba:" + error.message);
+    }
+  } finally {
+    setLoading(false);
+  }
+}
 //osszes elerheto (s + f) konyv
   const getAllAvailableOfferedBooks = async () => {
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
       const { data } = await myAxios.get("/api/all-available-books");
-      console.log("Kapott adatok:", data);
+      console.log("Kapott available konyv adatok:", data);
       setAvailableBookLista(data);
       //setFilteredBooks(data); // Alapértelmezésben az összes könyv látszik
     } catch (error) {
@@ -118,15 +152,52 @@ export const ApiProvider = ({ children }) => {
     }
   };
   // Egy adott felhasználó lekérése API-ból
-  const getUserById = async (adat) => {
+  const getUserById = async (id) => {
     try {
-        const response = await myAxios.get(`/api/user/${adat}`);
+        const response = await myAxios.get(`/api/user/${id}/showinfo`);
         return response.data;
+        //return response.data.length > 0 ? response.data[0] : null;
     } catch (error) {
         console.error("Hiba a user lekérdezésnél:", error);
         return null;
     }
 };
+// adott user legtobbet cserelt mufaja
+const getUserByIdGenre = async (id) => {
+  try {
+      const response = await myAxios.get(`/api/user/${id}/book-offers`);
+      return response.data;
+      //return response.data.length > 0 ? response.data[0] : null;
+  } catch (error) {
+      console.error("Hiba a user lekérdezésnél:", error);
+      return null;
+  }
+};
+// adott userhez kapcsolodo osszes exchange
+const getExchangeByUser = async (userId) => {
+  try {
+      const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
+      console.log("csere api 1: ", response.data)
+      return response.data;
+      //return response.data.length > 0 ? response.data[0] : null;
+  } catch (error) {
+      console.error("Hiba az exchange by user lekérdezésnél:", error);
+      return null;
+  }
+};
+// adott konyv lekerese az exchange kiirashoz
+const getBookByIdForExchange = async (id) => {
+  try {
+    const response = await myAxios.get(`/api/user/${id}/book-by-id`);
+    return response.data;
+    //return response.data.length > 0 ? response.data[0] : null;
+} catch (error) {
+    console.error("Hiba a user lekérdezésnél:", error);
+    return null;
+}
+};
+
+
 
 
   
@@ -168,10 +239,19 @@ export const ApiProvider = ({ children }) => {
 
   const patchUserPFP = async (vegpont, adat) => {
     setLoading(true);
-    console.log("Sending data to:", vegpont);
-    console.log("FormData content:", adat.get('img_url'));
     try {
       await myAxios.post(vegpont, adat);      
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const putUserUpdateBookDemand = async (book_demand_id, adat) => {
+    setLoading(true);
+    try {
+      await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);  
     } catch (error) {
       console.log(error.message)
     } finally {
@@ -190,6 +270,7 @@ export const ApiProvider = ({ children }) => {
       getUsers("/api/users", setUserLista)
       getBooks("/api/book-offers", setBookLista)
       getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
+      //getUserById("/api/user/${adat}/showinfo", user_id)
       //getUsers("/api/users", setUserLista)
       //getBooks("/api/book-offers", setBookLista)
     //} 
@@ -203,11 +284,18 @@ export const ApiProvider = ({ children }) => {
   return (
     <ApiContext.Provider value={
       { 
-        userLista, bookLista, bookDemandLista,
-        getUsers, postUsers, getBooks, postBooks, getBookDemands,
-        userProfileInfoList, getUserProfileInfo, userBookOffersInfo, getUserBookOffersInfo, userBookDemandsInfo, getUserBookDemandsInfo,
-        availableBookLista, getAllAvailableOfferedBooks,
-        patchUserPFP, selectedImage, setSelectedImage, postExchangeRequest, getUserById
+        userLista, bookLista, bookDemandLista,  
+        getUsers, postUsers, getBooks, postBooks, getBookDemands,  
+        userProfileInfoList, getUserProfileInfo,  
+        userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
+        userBookDemandsInfo, getUserBookDemandsInfo,  
+        availableBookLista, getAllAvailableOfferedBooks,  
+        patchUserPFP, selectedImage, setSelectedImage,  
+        postExchangeRequest, getUserById, getUserByIdGenre,  
+        genreList, getGenreList,  
+        putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
+        getExchangeByUser,  
+        getBookByIdForExchange
         }
       }>
       {children}

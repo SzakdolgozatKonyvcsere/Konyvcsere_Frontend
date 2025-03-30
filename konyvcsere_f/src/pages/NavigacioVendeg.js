@@ -22,6 +22,7 @@ export default function NavigacioVendeg() {
                 >
                     <i className="bi bi-list" style={{ fontSize: "1.8rem" }}></i>
                 </button>
+                {<div className="title-in-navbar mx-auto">Adok - Kapok</div>}
 
                 {menuOpen && (
                     <ul className="list-group position-absolute mt-2 bg-white shadow rounded p-2">

@@ -22,7 +22,7 @@ export default function KonyvKeresKartyak(props) {
 
     return( 
         <div className="card all-available-books" style={{ width: "18rem" }}>
-        <img className='all-available-books__image' src={'/basic_book.png'}></img>
+        <img className='all-available-books__image' src={props.book.img_url ? `http://localhost:8000/${props.book.img_url}` : '/basic_book.png'}></img>
                 <div className="card-body all-available-books">
                     <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{props.book.title || "Nincs cím"}</h5>
 

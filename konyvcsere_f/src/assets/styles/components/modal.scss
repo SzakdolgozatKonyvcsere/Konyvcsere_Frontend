@@ -1,4 +1,5 @@
-.modal-header .btn-close {
+//modal
+.modal-content .modal-header .btn-close {
   
     opacity: 1 !important;  /* Biztosítja, hogy ne legyen áttetsző */
 }
@@ -8,7 +9,7 @@
         
         
         .modalHeader {
-        background-color: $text-color;
+        background-color: $button-color;
         color: $secondary-color;
         
         
@@ -25,6 +26,7 @@
             border-radius: 8px;
             border: none;
             transition: 0.3s ease-in-out, transform 0.2s;
+            
     
             &:hover {
                 background-color: $primary-color;
@@ -67,7 +69,7 @@
     }
 
 
-    .kisProfil{
+    .modal-content .kisProfil{
         
         
         .feltoltoUser {
@@ -101,20 +103,23 @@
         }
     }
 
-    .modalProfilos{
+    .modal-content .modalProfilos{
         display: flex;
         flex-direction: row;
         gap: 10px;           
         align-items: center;
         margin-right: auto; /* A bal oldalra tolja az elemet */
+        
     }
 
 
-    .modalFooter{
+    .modal-content .modalFooter{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        
     }
+
 
     
 

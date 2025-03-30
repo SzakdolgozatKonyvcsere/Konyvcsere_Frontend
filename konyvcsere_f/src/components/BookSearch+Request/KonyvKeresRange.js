@@ -3,6 +3,14 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Form, Button } from "react-bootstrap";
 
+// !!!!!!! evjarat szuro nem resetelodik
+// betumeret alkalmazkodjon az ablak merethez??
+// ---foleg a modal ablakban
+// mufaj alapjan kereses
+// pl kiado, de kiirja az osszeset, de beiras utan kiadja a dolgokat amiket talal es arra lehet kattintani
+// konyv feltolteskor kiirja ha valami nincs feltoltve, kotelezo kitoltendo mezok
+// keresonel mindketton korvonal, de ne ilyen intenziv
+
 
 const KonyvKeresRange = ({ range, setRange }) => {
     const [yearRange, setYearRange] = useState(range); 

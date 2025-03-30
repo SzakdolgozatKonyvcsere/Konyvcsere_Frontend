@@ -33,7 +33,7 @@ export default function NavigacioUser() {
         case '/':
             return 'Kezdőlap';
         default:
-            return 'Adok-Kapok'; // alapértelmezett cím
+            return 'Adok - Kapok'; // alapértelmezett cím
     }
 };
   //cim navban vege
@@ -52,6 +52,7 @@ export default function NavigacioUser() {
                 </button>
                 {/* egy sor a navban címért*/}
                 {showTitle && <div className="title-in-navbar mx-auto">{getTitle()}</div>}
+                {!showTitle && <div className="title-in-navbar mx-auto">Adok - Kapok</div>}
 
 
                 
@@ -68,6 +69,9 @@ export default function NavigacioUser() {
                         </li>
                         <li className="list-group-item border-0">
                             <Link className="nav-link" to="/konyvkereses" onClick={() => setMenuOpen(false)}>Könyv keresés</Link>
+                        </li>
+                        <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/konyvcserek" onClick={() => setMenuOpen(false)}>Csere-történetek</Link>
                         </li>
                         <li className="list-group-item border-0">
                             <button className="nav-link btn btn-link" onClick={() => { logout(); setMenuOpen(false); }}>

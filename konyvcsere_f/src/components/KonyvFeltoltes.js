@@ -143,17 +143,17 @@ const handleSubmit = async (e) => {
           
           {/*<input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />*/}
           <select
-          id="genre"
-        value={selectedGenre}
-        onChange={(e) => setSelectedGenre(e.target.value)}
-        required
-      >
-        <option value="">-- Válassz műfajt --</option>
-        {genres.map((genre) => (
-          <option key={genre.genre_id} value={genre.genre_id}>
-            {genre.genre_name}
-          </option>
-          ))} 
+            id="genre"
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            required
+          >
+          <option value="">-- Válassz műfajt --</option>
+          {genres.map((genre) => (
+            <option key={genre.genre_id} value={genre.genre_id}>
+              {genre.genre_name}
+            </option>
+            ))} 
           </select>
         </div>
         <div className="mb-3">

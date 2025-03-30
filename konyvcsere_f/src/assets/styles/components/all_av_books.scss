@@ -1,13 +1,12 @@
+//all av books
 #root {
-
-  
     .book-search {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
-      width: 100%;
-      background-color: $secondary-color;
+      width: 95%;
+      //background-color: $secondary-color;
       border-radius: 5px;
       margin: 10px auto;
       padding: 10px;
@@ -17,12 +16,62 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 5px;
+        background-color: $secondary-color;
+        padding: 20px;
+        
+      }
+      .konyvkeresKezel{
+        background-color: $primary-background-color;
+        border-radius: 5%;
+        padding: 15px;
+        margin: 20px;
+        //border: 2px solid $button-color;
+        
+        .accordion{
+          border: none; // Alapértelmezett border eltávolítása
+          background-color: transparent !important;
+          border: transparent;
+          
+        }
+        .accordion-item{
+          background-color: transparent;
+          padding-top: 0px;
+          padding-bottom: 10px;
+          border: transparent;
+        }
+        .accordion-header{
+          background-color: $primary-color;
+          border: 2px solid $button-color;
+          border-radius: 5px;
+          
+          h3{
+            margin-top: 5px !important;
+          }
+        }
+        .accordion-body{
+          display: flex;           /* A flexbox beállítás, hogy a tartalom rugalmasan igazodjon */
+          flex-direction: column;  /* Az elemek vertikálisan igazodjanak */
+          position: relative;      /* A pozicionálás alapja a flex-container */
+          padding-bottom: 10px;    /* Helyet biztosítunk az alsó gombnak */
+          
+        }
+        .accordion-collapse{
+          background-color: $primary-background-color;
+          padding-top: 10px;
+          border: 2px solid $button-color;
+        }
+        .alkalmaz-button{
+          margin-top: auto;        /* Az "auto" érték miatt a gomb a konténer aljára kerül */
+          align-self: flex-end;    /* A gombot a jobb oldalra helyezi */
+          margin-right: 10px;      /* Apró margó a jobb oldalra */
+          margin-bottom: 10px;     /* Apró margó az aljára */
+        }
         
       }
       
-      
       .card{
-        background-color: antiquewhite;
+        background-color: $primary-background-color;
+        //background-color: #dac5d3;
       }
       .list-group{
         background-color: inherit;
@@ -59,4 +108,6 @@
       }
     }
   }
+
+  
   

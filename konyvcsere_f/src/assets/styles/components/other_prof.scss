@@ -1,0 +1,173 @@
+
+
+.other-profile-page {
+    display: flex;
+    align-items: flex-start; // Igazítás a tetején
+    gap: 20px; // Távolság a profil és a könyvek között
+    padding: 20px;
+    flex-direction: row;
+    justify-content: center;
+    height: 90vh;
+
+  
+    .otherUserProfileInfo {
+      flex: 1; // A bal oldali profil egy kisebb rész
+      max-width: 300px; // Ne legyen túl széles
+      background: $primary-background-color; // Világos háttér a kiemeléshez
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px;
+      margin-left: 30px;
+      
+  
+      h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+  
+      img {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        object-fit: cover;
+        
+      }
+  
+      p {
+        font-size: 14px;
+        color: #555;
+      }
+      small {
+        text-align: center;
+        font-style: italic;
+        opacity: .5;
+        
+        display: block; 
+      }
+      span {
+        font-style: italic;
+        opacity: .5;
+      }
+      
+    }
+    
+  
+    .otherUserBooksInfo {
+        
+      
+  
+      .konyv {
+        flex: 3;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: flex-start;
+        flex-direction: column;
+        
+        .card{
+            background-color: $primary-background-color;
+            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            
+            /*display: flex; 
+            margin: 15px;
+            border-radius: 5px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.871);*/
+            .button_section{
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+            }
+            .allofit{
+                flex-direction: row;
+                flex: 1;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+            .all-available-books-other__image{
+                max-width: 40vh;
+                     
+                margin: auto;
+                padding: 0.5em;
+            }
+            
+            .card-body{
+                
+                /*padding: 15px;
+                flex-direction: row;*/
+                .text-section{
+                    display: flex;
+                    flex-direction: column;
+                    align-items:flex-start;
+                    justify-content: space-between;
+                    text-align: left;
+                
+                .card-title{
+                    text-align: left;
+                }
+                .list-group{
+                    background-color: inherit;
+              }
+              .list-group-item{
+                background-color: inherit;
+                text-align: left;
+              }
+              .no-b{
+                
+                border: none;
+            }
+        
+        }
+            .all-available-books-other {  
+                /*display: flex;
+                flex-direction: row;
+                width: 100%;
+                padding: 10px;
+                margin: 15px;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.871);
+                border-radius: 5px;*/
+                &__details {
+                    /*flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding-left: 15px;*/
+                  &-left {
+                    /*display: flex;
+                    align-items: center;
+                    justify-content: center;*/
+                    &__image {
+                      /*max-width: 40vh;
+                      //object-fit: cover;
+                      margin: auto;
+                      padding: 0.5em;*/
+                    }
+                    /*&-right {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        margin-left: 10px;
+                        padding: 15px;
+                        width: 100%;
+                        align-self: center;
+                        &__text {
+                            font-size: 1rem;
+                            word-wrap: break-word;
+                            text-wrap: wrap;
+                            font-weight: bolder;
+                          }
+                    }*/
+                    
+            }      
+               
+                    
+            }
+          } 
+            } 
+        }
+    } 
+    }
+  }
+}

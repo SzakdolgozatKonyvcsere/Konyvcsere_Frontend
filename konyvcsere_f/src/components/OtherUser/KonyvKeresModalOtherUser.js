@@ -4,12 +4,12 @@ import useApiContext, { ApiContext } from '../../contexts/ApiContext';
 import { useContext, useEffect, useState } from 'react';
 import useAuthContext from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import KonyvKeresModalProfile from './KonyvKeresModalProfile';
+
 
 
 //modal, tehát felugró ablak kinézete, összeállítása, könyv részletei
 //cserélés elindítása gomb
-export default function KonyvKeresModal({book, ...props}) {
+export default function KonyvKeresModalOtherUser({book, ...props}) {
 
     const { postExchangeRequest } = useContext(ApiContext);
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
@@ -24,6 +24,7 @@ export default function KonyvKeresModal({book, ...props}) {
   
     const handleExchangeRequest = async () => {
         const exchangeReqest = {
+          // !!!!!!!!!!!!!! ez itt nem felesleges, a user meg setuser, ha ugyis authusert hasznalok itt..
             interested_user: authUser?.id, // Logged-in user ID
             desired_item: book?.offer_id, // The book that the user is interested in
             exchange_status: 'k' // Example status ('P' = Pending)
@@ -98,12 +99,8 @@ export default function KonyvKeresModal({book, ...props}) {
           </div>
         </Modal.Body>
         <Modal.Footer className='modalFooter'>
-          <div className='modalProfilos'>
-            {/* Feltöltő felhasználó információi külön komponensben */}
-            <KonyvKeresModalProfile userId={book?.user} />
-            {/*{console.log("A könyv feltöltőjének userId-ja:", book?.user)}*/}
-          </div>
-          <Button className="btn btn-primary all-available-books elcserelem" onClick={handleExchangeRequest} variant="primary">Elcserélem!</Button>
+          
+          <Button className="btn btn-primary all-available-books" onClick={handleExchangeRequest} variant="primary">Elcserélem!</Button>
         </Modal.Footer>
       </Modal>
     );
