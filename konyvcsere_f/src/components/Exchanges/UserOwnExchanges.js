@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useApiContext from "../../contexts/ApiContext";
 import UserOwnExchangesCard1 from "./UserOwnExchangesCard1";
 import useAuthContext from "../../contexts/AuthContext";
+import { Tab, Tabs } from "react-bootstrap";
 
 
 export default function UserOwnExchanges() {
@@ -11,6 +12,8 @@ export default function UserOwnExchanges() {
     const [exchanges, setExchanges] = useState([]);
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
     const [user, setUser] = useState("");
+
+    const [key, setKey] = useState('beerkezo');
 
         useEffect(() => {
             if (authUser) {
@@ -41,15 +44,36 @@ export default function UserOwnExchanges() {
     return(
         <div className="exchangesBig">
             <h1>Csere történeteim: </h1>
-            <div className="exchangeCards">
-            {exchanges.length > 0 ? (
-                exchanges.map((exchange) => (
-                    <UserOwnExchangesCard1 key={exchange.exchange_id} exchange={exchange} />
-                ))
-            ) : (
-                <p>Nincsenek csere tranzakciók.</p>
-            )}
-            </div>
+            <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+            >
+            <Tab eventKey="beerkezo" title="Beérkező">
+
+                <div className="exchangeCards">
+                {exchanges.length > 0 ? (
+                    exchanges.map((exchange) => (
+                        <UserOwnExchangesCard1 key={exchange.exchange_id} exchange={exchange} />
+                    ))
+                ) : (
+                    <p>Nincsenek csere tranzakciók.</p>
+                )}
+                </div>
+
+            </Tab>
+            <Tab eventKey="folyamatban" title="Folyamatban">
+                Tab content for Profile
+            </Tab>
+            <Tab eventKey="befejezett" title="Befejezett">
+                Tab content for Contact
+            </Tab>
+            <Tab eventKey="talalatok" title="Találatok">
+                Tab content for Contact
+            </Tab>
+        </Tabs>
+            
             
         </div>
     );
