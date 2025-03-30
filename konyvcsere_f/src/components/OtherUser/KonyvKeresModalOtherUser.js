@@ -24,6 +24,7 @@ export default function KonyvKeresModalOtherUser({book, ...props}) {
   
     const handleExchangeRequest = async () => {
         const exchangeReqest = {
+          // !!!!!!!!!!!!!! ez itt nem felesleges, a user meg setuser, ha ugyis authusert hasznalok itt..
             interested_user: authUser?.id, // Logged-in user ID
             desired_item: book?.offer_id, // The book that the user is interested in
             exchange_status: 'k' // Example status ('P' = Pending)

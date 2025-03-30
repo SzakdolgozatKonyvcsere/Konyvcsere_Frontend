@@ -101,7 +101,7 @@ export default function KonyvKeresModal({book, ...props}) {
           <div className='modalProfilos'>
             {/* Feltöltő felhasználó információi külön komponensben */}
             <KonyvKeresModalProfile userId={book?.user} />
-            {console.log("A könyv feltöltőjének userId-ja:", book?.user)}
+            {/*{console.log("A könyv feltöltőjének userId-ja:", book?.user)}*/}
           </div>
           <Button className="btn btn-primary all-available-books elcserelem" onClick={handleExchangeRequest} variant="primary">Elcserélem!</Button>
         </Modal.Footer>

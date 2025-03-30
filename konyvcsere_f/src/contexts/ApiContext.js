@@ -24,6 +24,7 @@ export const ApiProvider = ({ children }) => {
 
   const [userBookOffersInfo2, setUserBookOffersInfo2] = useState([]);
   const [userGetId, setUserGetId] = useState([]);
+  //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
 
   //Users
   const getUsers = async (vegpont) => {
@@ -176,6 +177,7 @@ const getUserByIdGenre = async (id) => {
 const getExchangeByUser = async (userId) => {
   try {
       const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
+      console.log("csere api 1: ", response.data)
       return response.data;
       //return response.data.length > 0 ? response.data[0] : null;
   } catch (error) {
@@ -183,6 +185,18 @@ const getExchangeByUser = async (userId) => {
       return null;
   }
 };
+// adott konyv lekerese az exchange kiirashoz
+const getBookByIdForExchange = async (id) => {
+  try {
+    const response = await myAxios.get(`/api/user/${id}/book-by-id`);
+    return response.data;
+    //return response.data.length > 0 ? response.data[0] : null;
+} catch (error) {
+    console.error("Hiba a user lekérdezésnél:", error);
+    return null;
+}
+};
+
 
 
 
@@ -280,7 +294,8 @@ const getExchangeByUser = async (userId) => {
         postExchangeRequest, getUserById, getUserByIdGenre,  
         genreList, getGenreList,  
         putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
-        getExchangeByUser  
+        getExchangeByUser,  
+        getBookByIdForExchange
         }
       }>
       {children}

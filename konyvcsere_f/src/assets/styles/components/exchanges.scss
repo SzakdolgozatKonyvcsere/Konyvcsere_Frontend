@@ -1,0 +1,42 @@
+
+
+
+.exchangesStage1{
+    .card{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        .user--profile-picture{
+            
+            margin-top: 20px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            max-width: 200px;
+            transition: all 0.2s;
+            border-radius: 999px;
+            box-shadow: 2px 5px 10px black;
+        
+            .userProfileName {
+                    color: #FFFFFF;
+                    margin: 0;
+                    font-size: 1rem;
+                    text-align:unset;
+                }
+    }
+
+        .exchange-books__image{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            max-width: 200px;
+            transition: all 0.2s;
+            box-shadow: 2px 5px 10px black;
+
+        }
+    }
+    
+
+}
+

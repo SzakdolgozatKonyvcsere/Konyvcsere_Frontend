@@ -28,7 +28,7 @@ export default function KonyvKereses() {
   
   useEffect(() => {
     setSzurtLista(availableBookLista);
-    console.log("📢 Szűrt lista frissült:", szurtLista);
+    console.log("📢 Szűrt lista frissült:", szurtLista); // ezt awaittel???? nah
   }, [availableBookLista]);
 
   function handleReset() {
