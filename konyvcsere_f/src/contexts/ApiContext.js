@@ -25,6 +25,7 @@ export const ApiProvider = ({ children }) => {
   const [userBookOffersInfo2, setUserBookOffersInfo2] = useState([]);
   const [userGetId, setUserGetId] = useState([]);
   //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
+  const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
   //Users
   const getUsers = async (vegpont) => {
@@ -196,6 +197,86 @@ const getBookByIdForExchange = async (id) => {
     return null;
 }
 };
+// cserefolyamat 1 elfogadas
+const patchAcceptExchange = async (exchange_id) => {
+  try {
+    await csrf();
+    console.log("Sending PATCH request with exchange_id:", exchange_id);
+    const response = await myAxios.patch(`/api/user/exchange/${exchange_id}/accept`, {
+      method: "PATCH",
+      headers: {
+          "Content-Type": "application/json",
+          //"Accept": "application/json",
+          "X-CSRF-TOKEN": csrf(),
+          //"X-HTTP-Method-Override": "PATCH"  // Laravel felismeri mint PATCH
+      },
+      body: JSON.stringify({ exchange_status: "f" }), // Csak a státuszt küldjük
+      credentials: "include",  // 🔹 FONTOS!
+  });
+  if (!response.ok) {
+    throw new Error("Hiba történt a könyv kiválasztásakor.");
+}
+const data = await response.json();
+if (response.status === 201) {
+  alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+}
+getExchangeByUser();
+
+return data;
+  /* const textResponse = await response.text();
+  console.log("Raw Response: ", textResponse);
+
+  const jsonResponse = JSON.parse(textResponse);
+        console.log("JSON Response: ", jsonResponse);
+
+        if (!response.ok) {
+            throw new Error(`Hiba történt: ${jsonResponse.error || response.statusText}`);
+        } */
+      
+      //const data = await response.json();
+      /* if (response.status === 200 || response.status === 201) {
+        alert('Sikeresen elfogadtad az érkező cserét!'); // Success message
+      } */
+      //return jsonResponse;
+      /* return await response.json();
+      //return data;*/
+  } catch (error) {
+      console.error("acceptExchange error:", error);
+      return null;
+  } 
+};
+/* // A fetchData funkció, ami frissíti az exchanges adatokat a backendről:
+const fetchData = async () => {
+  try {
+      const exchangeData = await getExchangeByUser(authUser.id);
+      setExchanges(exchangeData || []);
+  } catch (error) {
+      console.error("Hiba az adatok lekérésekor:", error);
+  }
+}; */
+//cserefolyamat 2 konyv kivalasztasa
+const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
+  try {
+      const response = await fetch(`/api/user/exchange/${exchangeId}/select-book`, {
+          method: "PATCH",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ offered_item: bookId }), //ezt lehet mashogy, egyszerubben is de ez igy izgi
+      });
+      if (!response.ok) {
+          throw new Error("Hiba történt a könyv kiválasztásakor.");
+      }
+      const data = await response.json();
+      if (response.status === 201) {
+        alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+      }
+      return data;
+  } catch (error) {
+      console.error("selectOfferedBook error:", error);
+      return null;
+  }
+};
 
 
 
@@ -295,7 +376,9 @@ const getBookByIdForExchange = async (id) => {
         genreList, getGenreList,  
         putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
         getExchangeByUser,  
-        getBookByIdForExchange
+        getBookByIdForExchange,
+        patchAcceptExchange,
+        patchExchangeSelectOfferedBook
         }
       }>
       {children}
