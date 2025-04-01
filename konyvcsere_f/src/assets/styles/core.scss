@@ -273,39 +273,42 @@ body {
         text-align: center;
         margin-top: 20px;
     }
+    
     .ajanlas ul {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
+        justify-content: space-between; 
     }
     
     .book-item {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         align-items: center;
         margin-bottom: 20px;
         border: 1px solid #ccc;
         padding: 10px;
-        text-align: center; 
-
-        .kezdolapBooks{
-            width: 40vh; // csak normalis meretu lesz a konyv az oldalon
-        }
+        text-align: center;
+        width: 30%;  
     }
     
-
-    .book-cover {
-        width: 100px;
-        height: auto;
-        margin-bottom: 10px;
+    .kezdolapBooks {
+        width: 100%;  
+        max-width: 150px;  
+        height: auto;  
+        object-fit: contain;  
     }
-
+    
     h6 {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
-        margin: 5px 0;
+        margin: 10px 0;
     }
     
+    p {
+        font-size: 14px;
+        color: #666;
+    }
 
     
     @media (max-width: 768px) {
