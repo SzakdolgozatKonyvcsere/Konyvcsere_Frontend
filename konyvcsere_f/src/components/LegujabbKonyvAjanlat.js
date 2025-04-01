@@ -33,8 +33,8 @@ function LegujabbKonyvAjanlat() {
                         newBooks.map((book) => (
                             <li key={book.id} className="book-item">
                             <img className='kezdolapBooks' src={book.img_url ? book.img_url : '/basic_book.png'} alt="Könyv borító" />
-                                <h6>Cím: {book.title}</h6>
-                                <p>Szerző: {book.author_name}</p>
+                                <h6>{book.title}</h6>
+                                <p>{book.author_name}</p>
                                 <p>Feltöltve: {new Date(book.created_at).toLocaleDateString()}</p>
                             </li>
                         ))
