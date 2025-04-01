@@ -63,7 +63,6 @@ function ModalEditBookDemand({ show, handleClose, book }) {
               name="genre_id"
               value={userUpdateBookDemand.genre_id || ""}
               onChange={handleInputChange}
-              required
             >
               <option value={null}>-- Válassz műfajt --</option>
               {genreList.map((genre) => (
