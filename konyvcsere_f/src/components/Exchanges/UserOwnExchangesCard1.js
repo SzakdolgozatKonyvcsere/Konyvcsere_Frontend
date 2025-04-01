@@ -28,10 +28,15 @@ export default function UserOwnExchangesCard1(props) {
     // bejelentkezett user id
     useEffect(() => {
         if (authUser) {
+            console.log("authUser.id:", authUser.id); // Ellenőrzés
             setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
             console.log("csere, bejelenkezett fh: ", user) //ok
         }
     }, [authUser]);
+
+    /* useEffect(() => {
+        console.log("csere, bejelenkezett fh: ", user); // Ez most akkor fut le, ha a `user` állapot változik
+    }, [user]); */
 
     // katt a képre s kiirja az adatokat
     const handleClickBook = () => {
@@ -67,7 +72,7 @@ export default function UserOwnExchangesCard1(props) {
             }
         }
         fetchData();
-    }, [props.exchange?.desired_book_id, props.exchange]);
+    }, [props.exchange?.desired_book_id, props.exchange.exchange_status]);
 
     // 1. patch kérés
     const handleExchangeRequest = async () => {
@@ -139,9 +144,9 @@ export default function UserOwnExchangesCard1(props) {
                             <p>A csere elindult, de még nem választottál könyvet! </p><br />
                             <p>Kérlek, válassz egyet tőle:</p>
                             {interestedUser ? (
-                                <Link to={`/profil/${interestedUser.id}`} className="feltoltoUser">
-                                    <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" /><br />
-                                    <span className="userProfileName">{interestedUser.full_name}</span>
+                                <Link to={`/profil/${interestedUser.id}`} className="feltoltoUserMini">
+                                    <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture-Mini" /><br />
+                                    <span className="userProfileNameMini">{interestedUser.full_name}</span>
                                 </Link>
                             ) : (
                                 <p>Érdeklődő felhasználó: Ismeretlen</p>

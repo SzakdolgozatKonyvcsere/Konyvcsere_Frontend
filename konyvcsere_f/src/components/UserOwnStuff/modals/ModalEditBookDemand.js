@@ -8,13 +8,13 @@ function ModalEditBookDemand({ show, handleClose, book }) {
   } = useApiContext();
 
   useEffect (()=>{
-    getGenreList();
     if (book) {
+      const matchingGenre = genreList.find(g => g.genre_name === book.genre_name); //Megkapjuk mufaj id-t neve alapjan
       setUserUpdateBookDemand({
         publisher_name: book.publisher_name,
         title: book.title,
         language: book.language,
-        genre_id: book.genre_id,
+        genre_id: matchingGenre ? matchingGenre.genre_id : "",
         min_publication_year: book.min_publication_year,
         max_publication_year: book.max_publication_year,
       });
@@ -65,7 +65,7 @@ function ModalEditBookDemand({ show, handleClose, book }) {
               onChange={handleInputChange}
               required
             >
-              <option value="">-- Válassz műfajt --</option>
+              <option value={null}>-- Válassz műfajt --</option>
               {genreList.map((genre) => (
                 <option key={genre.genre_id} value={genre.genre_id}>
                   {genre.genre_name}
