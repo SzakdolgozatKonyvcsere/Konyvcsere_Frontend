@@ -23,15 +23,22 @@
       align-items: center;
       background-color: $secondary-color;
       border-radius: 5px;
+      padding: 10px;
       margin: 10px;
       width: 60%;
       align-self: anchor-center;
+      .card {
+        margin: 10px;
+        &:hover {
+          transform: translateY(0);
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+        }
+      }
       .all-available-books {  
         display: flex;
         flex-direction: column;
         width: 100%;
         padding: 10px;
-        
         border-radius: 5px;
         &__details {
             
