@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { Form } from 'react-router-dom';
 import useApiContext from '../../../contexts/ApiContext';
@@ -17,6 +17,19 @@ function ModalEditBookOffer({ show, handleClose, book}) {
     }));
   }
 
+  useEffect(() => {
+    if (book) {
+      getGenreList();
+      setUserUpdateBookOffer({
+        publisher_name: book.publisher_name,
+        title: book.title,
+        language: book.language,
+        genre_id: genreList.find(g => g.genre_name === book.genre_name)?.genre_id || "",
+        publication_year: book.publication_year
+      });
+    }
+  }, [book]);
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -30,7 +43,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
             <Form.Control
               type="text"
               name="publisher_name"
-              value={book.publisher_name || ""}
+              value={userUpdateBookOffer.publisher_name || ""}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -40,7 +53,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
             <Form.Control
               type="text"
               name="title"
-              value={book.title || ""}
+              value={userUpdateBookOffer.title || ""}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -49,7 +62,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
             <Form.Label>Műfaj</Form.Label>
             <Form.Select
               name="genre_id"
-              value={book.genre_id || ""}
+              value={userUpdateBookOffer.genre_id || ""}
               onChange={handleInputChange}
               required
             >
@@ -67,7 +80,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
             <Form.Control
               type="text"
               name="language"
-              value={book.language || ""}
+              value={userUpdateBookOffer.language || ""}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -77,7 +90,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
             <Form.Control
               type="number"
               name="publication_year"
-              value={book.publication_year || ""}
+              value={userUpdateBookOffer.publication_year || ""}
               onChange={handleInputChange}
               min={1700} max={new Date().getFullYear()}
             />
@@ -89,7 +102,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
         <Button
           variant="primary"
           className="btn-primary"
-          onClick={() => putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer)}
+          onClick={() => putUserUpdateBookOffer(userUpdateBookOffer.offer_id, userUpdateBookOffer)}
         >módosítás</Button>
       </Modal.Footer>
     </Modal>
