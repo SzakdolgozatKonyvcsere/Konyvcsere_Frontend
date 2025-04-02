@@ -200,24 +200,25 @@ const getBookByIdForExchange = async (id) => {
 // cserefolyamat 1 elfogadas
 const patchAcceptExchange = async (exchange_id) => {
   try {
-    await csrf();
+    //await csrf();
     console.log("Sending PATCH request with exchange_id:", exchange_id);
     const response = await myAxios.patch(`/api/user/exchange/${exchange_id}/accept`, {
-      method: "PATCH",
+      exchange_status: "f",
       headers: {
           "Content-Type": "application/json",
           //"Accept": "application/json",
-          "X-CSRF-TOKEN": csrf(),
+          //"X-CSRF-TOKEN": csrf(),
           //"X-HTTP-Method-Override": "PATCH"  // Laravel felismeri mint PATCH
       },
-      body: JSON.stringify({ exchange_status: "f" }), // Csak a státuszt küldjük
+      //body: JSON.stringify({ exchange_status: "f" }), // Csak a státuszt küldjük
       credentials: "include",  // 🔹 FONTOS!
+      //withCcredentials: "include",
   });
   if (!response.ok) {
     throw new Error("Hiba történt a könyv kiválasztásakor.");
 }
 const data = await response.json();
-if (response.status === 201) {
+if (response.status === 200) {
   alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
 }
 getExchangeByUser();
@@ -256,24 +257,27 @@ const fetchData = async () => {
 }; */
 //cserefolyamat 2 konyv kivalasztasa
 const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
+  //await csrf();
   try {
-      const response = await fetch(`/api/user/exchange/${exchangeId}/select-book`, {
-          method: "PATCH",
+      const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
+        offered_item: bookId, // Egyszerűsített mód
+           
           headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json", 
           },
-          body: JSON.stringify({ offered_item: bookId }), //ezt lehet mashogy, egyszerubben is de ez igy izgi
+          //body: JSON.stringify({ offered_item: bookId }), //ezt lehet mashogy, egyszerubben is de ez igy izgi
+          withCcredentials: "include",
       });
       if (!response.ok) {
-          throw new Error("Hiba történt a könyv kiválasztásakor.");
+          throw new Error("Hiba történt a másik könyv kiválasztásakor.2");
       }
       const data = await response.json();
-      if (response.status === 201) {
-        alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+      if (response.status === 200) {
+        alert('Sikeresen elküldted a kiválasztott könyvet!2'); // Success message
       }
       return data;
   } catch (error) {
-      console.error("selectOfferedBook error:", error);
+      console.error("selectOfferedBook error2:", error);
       return null;
   }
 };

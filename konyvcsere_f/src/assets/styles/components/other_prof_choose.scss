@@ -1,6 +1,5 @@
-
-
-.other-profile-page {
+ 
+.other-profile-page-choose{
     display: flex;
     align-items: flex-start; // Igazítás a tetején
     gap: 20px; // Távolság a profil és a könyvek között
@@ -8,6 +7,8 @@
     flex-direction: row;
     justify-content: center;
     height: 90vh;
+    //overflow-y: auto; /* Ha túl sok a tartalom, legyen görgethető */
+    min-height: 100%;
 
   
     .otherUserProfileInfo {
@@ -67,9 +68,10 @@
             background-color: $primary-background-color;
             flex-direction: column;
             display: flex;
-            flex-wrap: wrap;
+            //flex-wrap: wrap;
             justify-content: flex-start;
             
+            //flex: 1 1 30%; /* Minél kisebb a % érték, annál több könyvet tudsz elhelyezni egy sorban */
             /*display: flex; 
             margin: 15px;
             border-radius: 5px;
@@ -77,35 +79,62 @@
             .button_section{
                 display: flex;
                 justify-content: space-between;
-                flex-direction: row;
+                flex-direction: column;
             }
             .allofit{
                 flex-direction: row;
-                flex: 1;
+                //flex: 1;
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 flex-wrap: wrap;
+                .imagecontainer{
+                    max-width: 40vh;
+                             
+                    margin: auto;
+                    padding: 0.5em;
 
-            .all-available-books-other__image{
-                max-width: 40vh;
-                     
-                margin: auto;
-                padding: 0.5em;
-            }
+                    .all-available-books-other__image{
+                        max-width: 40vh;
+                             
+                        margin: auto;
+                        padding: 0.5em;
+                    }
+
+                }
+            
             
             .card-body{
+                display: flex;  /* Rugalmas elrendezés */
+                flex-direction: row; /* Alapértelmezetten sorban helyezkedjenek el az elemek */
+                align-items:flex-start;
+                justify-content: flex-start;
+                //flex-wrap: wrap;  /* Engedélyezi a tördelést, ha a hely szűk */
+                //min-width: 20vh;  /* Min szélesség, amit a kártya fenntart */
+                padding: 15px;
+                gap: 20px; 
+                flex-wrap: nowrap;            /* Ne tördelj, amíg van elég hely */
                 
                 /*padding: 15px;
                 flex-direction: row;*/
                 .text-section{
                     display: flex;
                     flex-direction: column;
-                    align-items:flex-start;
-                    justify-content: space-between;
+                    align-items: flex-start;
+                    justify-content: flex-start;
                     text-align: left;
+                    flex-grow: 1;                 /* Lehetővé teszi, hogy a szöveg kitöltse a rendelkezésre álló helyet */
+                    //max-width: 60%;               /* Maximális szélesség */
+                    //box-sizing: border-box;      /* Box model kezelés */
+                    word-wrap: break-word;       /* Szavak tördelése, ha túl hosszúak */
+                    //min-width: 100px;
+                    flex-shrink: 1;               /* Ha szükséges, szűkíthető */
+
                 
                 .card-title{
                     text-align: left;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    word-wrap: break-word;
                 }
                 .list-group{
                     background-color: inherit;
@@ -177,4 +206,23 @@
     } 
     }
   }
+
+
+}
+
+
+
+/* Media query - ha a képernyő szélessége kisebb, mint 768px, az elemek egymás alá kerülnek */
+@media (max-width: 268px) {
+    .allofit {
+        flex-direction: column; /* A kép és a szöveg oszlopban helyezkedjenek el */
+    }
+
+    .imagecontainer, .card-body {
+        max-width: 100%; /* A kép és a szöveg kitöltse a rendelkezésre álló szélességet */
+    }
+
+    .card-body {
+        flex-direction: column; /* A kártya tartalmának is oszlop irányú elrendezése */
+    }
 }

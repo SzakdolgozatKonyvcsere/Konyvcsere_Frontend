@@ -10,6 +10,7 @@ import UserOwnInfo from "./pages/UserOwnInfo";
 import AllAvailableBooks from "./pages/AllAvailabelBooks";
 import OtherUserInfo from "./pages/OtherUserInfo";
 import UserExchanges from "./pages/UserExchanges";
+import OtherUserChoose from "./pages/OtherUserChoose";
 
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
@@ -57,7 +58,8 @@ function App() {
           <Route path="profil" element={<UserOwnInfo />} />
           <Route path="/profil/:id" element={<OtherUserInfo />} />
           <Route path="konyvcserek" element={<UserExchanges />} />
-
+          <Route path="/profil/:id/valasztas" element={<OtherUserChoose />} />
+        
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
       </Routes>
