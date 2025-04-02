@@ -1,12 +1,28 @@
 
-.exchangeCards{
+.modalFooterEmpty{
+    background-color: $button-color;
+    color: $secondary-color;
+}
+
+.spanModalOtherUser{
+    font-style: italic;
+        opacity: .5;
+        display: block;
+}
+
+
+
+
+// beszinezni a beerkezo meg a tobbi fulet !!!! color: $primary-text-color;
+
+.exchangeCards{ // 0.
 
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px; 
 
-.exchangesStage1{
+.exchangesStage1{ //1.
     display: flex;
     justify-content: center; /* Vízszintesen középre */
     height:max-content; /* Teljes képernyőmagasság */
@@ -18,8 +34,8 @@
     width: fit-content;
     margin: 0 auto;
     
-
-    .card{
+    .card{ //2. 
+        position:relative; //???
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -35,10 +51,12 @@
         max-height: 500px;
         margin: 10px;
 
-        .card-header{
+        .card-header{ //3.
             width: 100%;
+            color: $primary-text-color;
         }
-        .card-body{
+        .card-body{ //3. 
+            color: $primary-text-color;
             display: flex;
             justify-content: space-between;
             flex-direction: row;
@@ -54,71 +72,424 @@
             max-height: 400px;
             //margin: 10px;
 
-            .incomingProfile{
+            .incomingProfile{ //4.
                 text-align: center;
 
-                .user--profile-picture{
-                    flex: 3;
+                .feltoltoUser{ //5.
+
+
+                    .user--profile-picture{//6
+                        flex: 3;
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                        object-fit: cover;
+                        max-width: 100px;
+                        transition: all 0.2s;
+                        border-radius: 999px;
+                        box-shadow: 2px 5px 10px black;
+                    }
+                    .userProfileName { //6??
+                        color: $primary-text-color;
+                        margin: 0;
+                        font-size: 1rem;
+                        text-align:unset;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .arrow{ //4. 
+                flex: 1;
+                text-align: center;
+                color: $primary-text-color;
+            }
+            .wantedBook{ //4. 
+                .wantedBook2{ //5.
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    width: 150px;
+                    max-height: 600px;
                     text-align: center;
-                    margin-top: 20px;
-                    margin-bottom: 20px;
+                    color: $primary-text-color;
+                    .exchange-books__image{ //6. 
+                        flex: 3;
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                        object-fit: cover;
+                        max-width: 100px;
+                        transition: all 0.2s;
+                        box-shadow: 2px 5px 10px black;
+                    }
+                    .exchange-books__title{ //6.
+                        overflow-wrap: break-word;
+                        white-space: normal;
+                        display: block;
+                        word-wrap: break-word;
+                        color: $primary-text-color;
+                        
+                    }
+                }
+            }
+            .selectBookSection{ //4. ??
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex: 1;   
+                
+                p{
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    display: block;
+                    margin: 0;
+                    color: $primary-text-color;
+                }
+                .feltoltoUserSmall{ //5.
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;           
+                    align-items: center;
+                    .user--profile-picture{ //6. 
+                            
+                        width: 40px;
+                        height: 40px;
+                        padding: 1px;
+                        border-radius: 999px;
+                        background-color: white;
+                        border: 1.2px solid black;
+                    }
+                    .userProfileName { //6
+                            color: $primary-text-color;
+                            margin: 0;
+                            font-size: 1rem;
+                            text-align: center;
+                            text-decoration: none;
+                    }
+                
+                }
+
+                .plusIcon{ // 5.
+                    color: $primary-text-color;
+                    border: 2px dashed rgba(0, 0, 0, 0.5);
+                    align-self: stretch;
+                    text-align: center;    
+                    margin: 20px auto;
                     object-fit: cover;
                     max-width: 100px;
                     transition: all 0.2s;
-                    border-radius: 999px;
-                    box-shadow: 2px 5px 10px black;
-                
-                    .userProfileName {
-                            color: #FFFFFF;
-                            margin: 0;
-                            font-size: 1rem;
-                            text-align:unset;
-                        }
-            }
-        
-                
-            }
-       
-        
+                    padding: 10px;
+                    //display: block;
+                    min-height: 30vh;
+                    min-width: 20vh;
+                    max-width: 100px;
+                    display: flex;  /* Hozzáadva */
+                    justify-content: center;  /* Vízszintes középre igazítás */
+                    align-items: center;  /* Függőleges középre igazítás */
+                    
+                    .plus{
+                        text-align: center;
+                        text-decoration: none;
+                        color: $primary-text-color;
+                    }
 
-        
-        .wantedBook2{
-            overflow-wrap: break-word;
-            white-space: normal;
-            width: 150px;
-            max-height: 600px;
-            text-align: center;
-            .exchange-books__image{
-                flex: 3;
-                text-align: center;
-                margin-top: 20px;
-                margin-bottom: 20px;
-                object-fit: cover;
-                max-width: 100px;
-                transition: all 0.2s;
-                box-shadow: 2px 5px 10px black;
-            }
-            .exchange-books__title{
-                overflow-wrap: break-word;
-                white-space: normal;
-                display: block;
-                word-wrap: break-word;
-                
+                }
+                .feltoltoUserBookImage{
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    width: 150px;
+                    max-height: 600px;
+                    text-align: center;
+                    color: $primary-text-color;
+                    text-decoration: none;
+                    .exchange-books__image{ //6. 
+                        flex: 3;
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                        object-fit: cover;
+                        max-width: 100px;
+                        transition: all 0.2s;
+                        box-shadow: 2px 5px 10px black;
+                        text-decoration: none;
+                    }
+                    .exchange-books__title{ //6.
+                        overflow-wrap: break-word;
+                        white-space: normal;
+                        display: block;
+                        word-wrap: break-word;
+                        color: $primary-text-color;
+                        text-decoration: none;
+                        
+                    }
+                }
             }
 
-        }
+            
         
-        .arrow{
-            flex: 1;
-            text-align: center;
-        }
+        
     }
     .card-footer{
         width: 100%;
     }
 }
+}
+
+}
+
+
+//2. 
+.exchangeCards{ //0.
+    .exchangesStage2{ //1.
+        .card{ //2. 
+            position:relative; //???
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            flex-wrap: wrap;
+            //gap: 10px;
+            max-width: 500px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            //position: absolute;
+            overflow-wrap: break-word;
+            white-space: normal;
+            max-height: 600px;
+            margin: 10px;
     
+            .card-header{ //3.
+                width: 100%;
+                color: $primary-text-color;
+                justify-content: center;
+            }
+            .card-body{ //3. 
+                color: $primary-text-color;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                flex-wrap: wrap;
+                //gap: 10px;
+                
+                //width: 100%;
+                justify-content: center;
+                align-items: center;
+                //position: absolute;
+                overflow-wrap: break-word;
+                white-space: normal;
+                max-height: 400px;
+                //margin: 10px;
+                
+                
+                .waiting, .answear{
+                   
+                    color: $primary-text-color;
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    //gap: 10px;
+                    //max-width: 500px;
+                    //width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    //position: absolute;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    max-height: 400px;
+                    
+                .sectionLeft{ //left
+                    flex: 1;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                flex-wrap: wrap;
+                //gap: 10px;
+                max-width: 250px;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                //position: absolute;
+                overflow-wrap: break-word;
+                white-space: normal;
+                max-height: 400px;
+                        .incomingProfile{ //4.prof + 1
+                            text-align: center;
+            
+                            .feltoltoUser{ //5. //user
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                                align-items: center;
+                                
+                                .user--profile-picture{//6
+                                    flex: 3;
+                                    text-align: center;
+                                    margin: 10px;
+                                    object-fit: cover;
+                                    max-width: 30px;
+                                    transition: all 0.2s;
+                                    border-radius: 999px;
+                                    box-shadow: 2px 5px 10px black;
+                                }
+                                .userProfileName { //6??
+                                    color: $primary-text-color;
+                                    margin: 0;
+                                    font-size: 1rem;
+                                    text-align:unset;
+                                    text-decoration: none;
+                                }
+                            }
+                           
+                            
+                        }//prof
+                     
+                    .wantedBook{ //4. //konyv
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        flex-wrap: wrap;
+                        
+                        
+                        .wantedBook2{ //5.
+                            display: flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                                align-items: center;
+                                //justify-content: space-between;
+                                overflow-wrap: break-word;
+                                white-space: normal;
+                                width: 150px;
+                                max-height: 600px;
+                                text-align: center;
+                                color: $primary-text-color;
+                                
+                                .exchange-books__image{ //6. 
+                                    flex: 3;
+                                    text-align: center;
+                                    margin-top: 20px;
+                                    margin-bottom: 20px;
+                                    object-fit: cover;
+                                    max-width: 100px;
+                                    transition: all 0.2s;
+                                    box-shadow: 2px 5px 10px black;
+                                    max-width: 20vh;
+                                }
+                                .exchange-books__title{ //6.
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                    display: block;
+                                    word-wrap: break-word;
+                                    color: $primary-text-color;
+                                    
+                                }
+                            }
+                    } //konyv
+                
+                } //left
+                    
+                .arrow{ //4. 
+                        flex: 1;
+                        text-align: center;
+                        color: $primary-text-color;
+                        max-width:fit-content;
+                }
 
-}
+                .sectionRight{ // right
+                    flex: 1;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        //gap: 10px;
+                        max-width: 250px;
+                        width: 100%;
+                        justify-content: center;
+                        align-items: center;
+                        //position: absolute;
+                        overflow-wrap: break-word;
+                        white-space: normal;
+                        max-height: 400px;
+                        .wantedBook{ //4. 
+                            .wantedBook2{ //5.
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                                align-items: center;
+                                //justify-content: space-between;
+                                overflow-wrap: break-word;
+                                white-space: normal;
+                                width: 150px;
+                                max-height: 600px;
+                                text-align: center;
+                                color: $primary-text-color;
+                                .exchange-books__image{ //6. 
+                                    flex: 3;
+                                    text-align: center;
+                                    margin-top: 20px;
+                                    margin-bottom: 20px;
+                                    object-fit: cover;
+                                    max-width: 100px;
+                                    transition: all 0.2s;
+                                    box-shadow: 2px 5px 10px black;
+                                    max-width: 20vh;
+                                }
+                                .exchange-books__title{ //6.
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                    display: block;
+                                    word-wrap: break-word;
+                                    color: $primary-text-color;
+                                    
+                                }
+                            }
+                        }  //konyv
+                        .incomingProfile{ //4.prof + 1
+                            text-align: center;
+            
+                            .feltoltoUser{ //5. //user
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                                align-items: center;
+                                .user--profile-picture{//6
+                                    flex: 3;
+                                    text-align: center;
+                                    margin: 10px;
+                                    object-fit: cover;
+                                    max-width: 30px;
+                                    transition: all 0.2s;
+                                    border-radius: 999px;
+                                    box-shadow: 2px 5px 10px black;
+                                }
+                                .userProfileName { //6??
+                                    color: $primary-text-color;
+                                    margin: 0;
+                                    font-size: 1rem;
+                                    text-align:unset;
+                                    text-decoration: none;
+                                }
+                            }
+                           
+                            
+                        }
+                    } //prof
+                    } //right
+                }//waiting
+                }// card
+                
+                    
+                
+     }//1 
+                
+}//0
 
-}
+
+
