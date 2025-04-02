@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 //modal, tehát felugró ablak kinézete, összeállítása, könyv részletei
 //cserélés elindítása gomb
-export default function UserOwnExchangesModalBook({book, ...props}) {
+export default function UserOwnExchangesModalOtherProfile({userO, ...props}) {
 
     const { postExchangeRequest } = useContext(ApiContext);
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
@@ -40,8 +40,8 @@ export default function UserOwnExchangesModalBook({book, ...props}) {
     
 
     useEffect(() => {
-      console.log("Kapott könyv adat:", book);
-  }, [book]);
+      console.log("Kapott user adat:", userO);
+  }, [userO]);
 
 
     return (
@@ -53,15 +53,15 @@ export default function UserOwnExchangesModalBook({book, ...props}) {
       >
         <Modal.Header closeButton data-bs-theme="dark" className='modalHeader' >
           <Modal.Title id="contained-modal-title-vcenter">
-            Könyv részletei
+            Érdeklődő felhasználó
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='modalBody'>
           <div className='modalBodyFenn'>
-          <h4 style={{ textAlign: "center" }}>{book?.title}</h4>
+          <h4 style={{ textAlign: "center" }}>{userO?.full_name}</h4>
           <p style={{ textAlign: "center" }} className='modalAlahuzas'>
             <small className="text-muted -adat">
-              {book?.authors ? book.authors : "Ismeretlen szerző"}
+              {userO?.name ? userO.name : "Ismeretlen username"}
             </small>
           </p>
           </div>
@@ -69,34 +69,34 @@ export default function UserOwnExchangesModalBook({book, ...props}) {
           <div className='modalImage' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <img
               className='modalimg'
-              src={book && book.img_url ? `http://localhost:8000/${book.img_url}` : '/basic_book.png'}
-              alt="Book Cover"
+              src={userO?.img_url || undefined}
+              alt="Profilkép"
               style={{ width: "40vh", display: "block", margin: "auto", alignContent: "left" }} 
             />
           </div>
           
   
-          {/* Book details with proper tags */}
+          {/* User details with proper tags */}
           <div className="modalDetails">
           <p style={{ textAlign: "center" }}>
             <small className="text-muted -adat">
-              {book?.publisher_name ? book.publisher_name : "Ismeretlen kiadó"} Kiadó
+            <span className='spanModalOtherUser'>Megadott város: </span> {userO?.city ? userO.city : "Ismeretlen város"} 
             </small>
           </p>
           <p style={{ textAlign: "center" }}>
             <small className="text-muted -adat">
-              {book?.publication_year ? book.publication_year : "Nincs dátum"}
+            <span className='spanModalOtherUser'>Cserélem könyveimet: </span>{userO?.registered_since ? userO.registered_since : "Nincs dátum"}
             </small>
           </p>
           <p style={{ textAlign: "center" }}>
-            <small className="text-muted -adat">{book?.language ? book.language : "Nincs nyelv"}</small>
+            <small className="text-muted -adat">
+            <span className='spanModalOtherUser'>Befejezett cseréim száma: </span>{userO?.exchange_count ? userO.exchange_count : "Nincs szám"}</small>
           </p>
           <p style={{ textAlign: "center" }}>
-            <small className="text-muted -adat">{book?.genre_name ? book.genre_name : "Nincs műfaj"}</small>
+            <small className="text-muted -adat"> {/* !!!!!!! műfajt oldd meg !!!!! */}
+            <span className='spanModalOtherUser'>Legtöbbet cserélt műfaj:</span>{userO?.mostExchangedGenre ? userO.mostExchangedGenre : "Nincs műfaj"}</small>
           </p>
-          <p style={{ textAlign: "center" }}>
-            <small className="text-muted -adat">minőség: {book?.quality ? book.quality : "Nincs minőség"}/5</small>
-          </p>
+         
           </div>
           </div>
         </Modal.Body>

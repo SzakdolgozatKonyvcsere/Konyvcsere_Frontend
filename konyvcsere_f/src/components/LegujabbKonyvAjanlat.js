@@ -35,7 +35,7 @@ function LegujabbKonyvAjanlat() {
                             <img className='kezdolapBooks' src={book.img_url ? book.img_url : '/basic_book.png'} alt="Könyv borító" />
                                 <h6>{book.title}</h6>
                                 <p>{book.author_name}</p>
-                                <p>Feltöltve: {new Date(book.created_at).toLocaleDateString()}</p>
+                                {/*<p>Feltöltve: {new Date(book.created_at).toLocaleDateString()}</p>*/}
                             </li>
                         ))
                     ) : (

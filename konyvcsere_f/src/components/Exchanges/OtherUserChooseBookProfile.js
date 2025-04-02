@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Ez szükséges az URL paraméterekhez
-import useApiContext from '../../contexts/ApiContext';
-import KonyvKeresKartyakOtherUser from './KonyvKeresKartyakOtherUser';
 
-export default function ProfilPage() {
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'; // Ez szükséges az URL paraméterekhez
+import useApiContext from '../../contexts/ApiContext';
+import OtherUserChooseBookCard from './OtherUserChooseBookCard';
+
+export default function OtherUserChooseBookProfile() {
     const { id } = useParams();  // Lekérjük az URL-ből az id paramétert
     const { getUserById, getUserBookOffersInfo2, userBookOffersInfo2, getUserByIdGenre } = useApiContext(); // Felhasználó lekérése
     const [user, setUser] = useState(null);  // Tárolja a felhasználó adatait
@@ -43,8 +44,10 @@ export default function ProfilPage() {
         return <p>Felhasználó adatainak betöltése...</p>; 
     }
 
+  
     return (
-        <div className='other-profile-page'>
+        
+        <div className='other-profile-page-choose'>
         <div className='otherUserProfileInfo'>
             <h1>{user.full_name}</h1>
             <small className='felhNev'>{user.name}</small>
@@ -60,12 +63,15 @@ export default function ProfilPage() {
         <div className='otherUserBooksInfo'>
         <h3>Kínált könyveim: </h3><br />
                 <div className="konyv">
+                    
                         {
                             userBookOffersInfo2.map((book) => {
-                            return <KonyvKeresKartyakOtherUser book={book} key={book.offer_id} />;
+                            return <OtherUserChooseBookCard book={book} key={book.offer_id} />;
                           })
                         }
-                      </div>
+                        
+                    
+            </div>
         </div>
         </div>
     );
