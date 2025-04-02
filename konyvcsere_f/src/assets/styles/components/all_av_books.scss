@@ -15,6 +15,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: space-evenly;
         gap: 5px;
         background-color: $secondary-color;
         padding: 20px;
@@ -46,6 +47,7 @@
           
           h3{
             margin-top: 5px !important;
+            font-size: large;
           }
         }
         .accordion-body{
@@ -71,7 +73,11 @@
       
       .card{
         background-color: $primary-background-color;
-        //background-color: #dac5d3;
+        transition: all 0.2s;
+        &:hover {
+          transform: translateY(0);
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+        }//background-color: #dac5d3;
       }
       .list-group{
         background-color: inherit;
@@ -86,7 +92,7 @@
         flex-direction: column;
         width: 100%;
         padding: 10px;
-        
+        justify-content: space-between;
         border-bottom: 1px solid rgba(128, 128, 128, 0.871);
         border-radius: 5px;
         &__details {
@@ -97,13 +103,10 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            &__image {
-              width: 40vh;
-            }
-          }
-        
-            
-          
+          } 
+        }
+        &__image {
+          height: 35vh;
         }
       }
     }

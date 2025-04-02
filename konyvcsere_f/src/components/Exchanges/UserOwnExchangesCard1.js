@@ -73,12 +73,18 @@ export default function UserOwnExchangesCard1(props) {
     // bejelentkezett user id
     useEffect(() => {
         if (authUser) {
+            console.log("authUser.id:", authUser.id); // Ellenőrzés
             setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
             console.log("csere, bejelenkezett fh: ", user) //ok
         }
     }, [authUser]);
 
     // katt a képre s kiirja az adatokat - nem modal van ezek helyett?
+    /* useEffect(() => {
+        console.log("csere, bejelenkezett fh: ", user); // Ez most akkor fut le, ha a `user` állapot változik
+    }, [user]); */
+
+    // katt a képre s kiirja az adatokat
     const handleClickBook = () => {
         setClicked(!clicked);
         alert("Kattintottál a képre!");
@@ -117,6 +123,7 @@ export default function UserOwnExchangesCard1(props) {
         }
         fetchData();
     }, [props.exchange?.desired_book_id, props.exchange, props.exchange?.offered_book_id]);
+    //}, [props.exchange?.desired_book_id, props.exchange.exchange_status]);
 
     // 1. patch kérés
     /* const handleExchangeRequest = async () => {

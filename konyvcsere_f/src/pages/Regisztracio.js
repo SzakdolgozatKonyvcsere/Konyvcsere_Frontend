@@ -118,6 +118,7 @@ export default function Regisztracio(){
         </form>
       </div>
     );
+
     /*<div className="mb-3 mt-3">
     <label htmlFor="img_url" className="form-label">Profilkép:</label>
     <input type="text" value={img_url} onChange={(e) => {setImgUrl(e.target.value);}} className="form-control" id="img_url" placeholder="Profilkép" name="img_url"/>
