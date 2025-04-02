@@ -106,9 +106,6 @@ export default function Konyvfeltoltes() {
     }
   };
 
-
-
-
   return (
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
