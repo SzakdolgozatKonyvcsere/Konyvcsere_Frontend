@@ -21,18 +21,13 @@ export const BookuploadProvider = ({ children }) => {
       await csrf();
       console.log("Küldött adat:", adat);
       try{
-        const response = await myAxios.post(vegpont, adat,{
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true, 
-        });
-       console.log("Sikeres könyvfeltöltés:", response.data);
+        const response = await myAxios.post(vegpont, adat);
+       console.log("Sikeres könyvfeltöltés:", response.adat);
       
   } catch (err) {
       console.error("Hiba a könyv feltöltése közben:", err);
       if (err.response) {
-          console.error("Szerver válasza:", err.response.data);
+          console.error("Szerver válasza:", err.response.adat);
       }
   }
 };

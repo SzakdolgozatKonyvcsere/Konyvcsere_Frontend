@@ -41,8 +41,8 @@ function UserOwnBookDemands() {
               {headLabels.map((item, key) => (
                 <th key={key} className='user-book-demands__table-head_element'>{item}</th>
               ))}
-              <th className='user-book-demands__table-head_element'>szerkesztés</th>
-              <th className='user-book-demands__table-head_element'>törlés</th>
+              <th className='user-book-demands__table-head_element'></th>
+              <th className='user-book-demands__table-head_element'></th>
             </tr>
           </thead>
           <tbody className='user-book-demands__table-body'>
@@ -64,10 +64,10 @@ function UserOwnBookDemands() {
                   )
                 )}
                   <td className='table_admin-row--button'>
-                    <button onClick={() => handleShowEditModal(book)}>✎</button>
+                    <button onClick={() => handleShowEditModal(book)}>szerkesztés</button>
                   </td>
                   <td className='table_admin-row--button'>
-                    <button onClick={null}>🗑️</button>
+                    <button onClick={null}>törlés</button>
                   </td> 
                 </tr>
               )

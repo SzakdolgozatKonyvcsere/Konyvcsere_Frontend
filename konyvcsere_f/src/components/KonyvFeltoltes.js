@@ -77,7 +77,7 @@ export default function Konyvfeltoltes() {
     try {
       // Küldés a backendre
       const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes"); // Egy végpontot hívunk
-      console.log("Sikeres válasz:", response.data);
+      console.log("Sikeres válasz:", response.adat);
       alert("Könyv sikeresen feltöltve.");
       navigate("/feltoltottkonyvek"); // Navigálás a feltöltött könyvek oldalra
     } catch (error) {

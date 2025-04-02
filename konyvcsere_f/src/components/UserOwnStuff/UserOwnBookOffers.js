@@ -27,17 +27,17 @@ function UserOwnBookOffers() {
     <>
       {userBookOffersInfo.map((bookDetail, index) => (
         <div key={index} className="card all-available-books" style={{ width: "18rem" }}>
-          <img className='all-available-books__image' src={bookDetail.img_url ? `http://localhost:8000/${bookDetail.img_url}` : '/basic_bookDetail.png'}></img>
+          <img className='all-available-books__image' src={bookDetail?.img_url ? `http://localhost:8000/${bookDetail?.img_url}` : '/basic_bookDetail.png'}></img>
           <div className="card-body all-available-books">
-            <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{bookDetail.title || "Nincs cím"}</h5>
+            <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{bookDetail?.title || "Nincs cím"}</h5>
             <ul className="list-group list-group-flush all-available-books">
-              <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail.authors ? `${bookDetail.authors}` : "ismeretlen szerző"}</small></li>
-              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail.publisher_name ?  `${bookDetail.publisher_name}` : "ismeretlen kiadó"} Kiadó</small></li>
-              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{bookDetail.publication_year ? bookDetail.publication_year : "nincs dátum"}</small></li>
+              <li className="list-group-item all-available-books" style={{ borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail?.authors ? `${bookDetail?.authors}` : "ismeretlen szerző"}</small></li>
+              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail?.publisher_name ?  `${bookDetail?.publisher_name}` : "ismeretlen kiadó"}</small></li>
+              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{bookDetail?.publication_year ? bookDetail?.publication_year : "nincs dátum"}</small></li>
               {/*<li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center"}}><small className="text-muted -adat" >{bookDetail.language ? `${bookDetail.language}` : "nincs nyelv"}</small></li>*/}
-              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail.genre_name ? `${bookDetail.genre_name}` : "nincs műfaj"}</small></li>
+              <li className="list-group-item all-available-books" style={{ border:"none", borderRadius: "0", textAlign: "center" }}><small className="text-muted -adat" >{bookDetail?.genre_name ? `${bookDetail?.genre_name}` : "nincs műfaj"}</small></li>
             </ul>
-            <button className="btn btn-primary all-available-books__button" variant="primary" onClick={() => handleShowEditModal(userBookOffersInfo)}>szerkesztés</button>
+            <button className="btn btn-primary all-available-books__button" variant="primary" onClick={() => handleShowEditModal(bookDetail)}>szerkesztés</button>
           </div>
         </div>
              
