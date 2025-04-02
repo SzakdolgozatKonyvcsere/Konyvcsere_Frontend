@@ -5,11 +5,13 @@ import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { CardFooter } from "react-bootstrap";
 import { BiCheck } from "react-icons/bi";
 import useAuthContext from "../../contexts/AuthContext";
-import UserOwnExchangesCard1_ from "./UserOwnExchangesCard1_";
+import { useLocation } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import UserOwnExchangesModalBook from "./UserOwnExchangesModalBook";
 import UserOwnExchangesModalOtherProfile from "./UserOwnExchangesModalOtherProfile";
 import UserOwnExchangesModalCooseBook from "./UserOwnExchangesModalCooseBook";
+import useSelectedBook from "../../hooks/useSelectedBook";
+import { useNavigate } from "react-router-dom";
 
 //1. masik kerte a konyvem: elfogadom/elutasitom - patch
 //2. elfogadtam a kerelmet es ki kell valasztanom tole konyvet 
@@ -17,12 +19,20 @@ import UserOwnExchangesModalCooseBook from "./UserOwnExchangesModalCooseBook";
 
 export default function UserOwnExchangesCard1(props) {
 
-    const { getUserById, getBookByIdForExchange, patchAcceptExchange, patchExchangeSelectOfferedBook } = useApiContext();
+    const { getUserById, getBookByIdForExchange, patchAcceptExchange, patchExchangeSelectOfferedBook, getExchangeByUser } = useApiContext();
 
     const [interestedUser, setInterestedUser] = useState(null);
     const [desiredBook, setDesiredBook] = useState(null);
     const [desiredBookOwnerUser, setDesiredBookOwnerUser] = useState(null);
-    const [offeredBook, setOfferedBook] = useState(null);
+    const { selectedBook: offeredBook, saveBook, clearBook } = useSelectedBook(); //ezzel nem kell local storaget kozvetlenul hivni
+
+    const navigate = useNavigate(); // szükséges a navigáláshoz
+    const location = useLocation();
+
+    useEffect(() => {
+    // Ha a kiválasztott könyv újra betöltődött, loggoljuk (és UI frissül) - visszalépés után kell book megjelenítéséhez
+    console.log("Visszanavigáltunk, új offeredBook állapot:", offeredBook);
+    }, [location]);
 
     //const [users, setUsers] = useState([]);
     //const [books, setBooks] = useState([]);
@@ -35,9 +45,11 @@ export default function UserOwnExchangesCard1(props) {
     const [exchangeData, setExchangeData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);  // Az állapot, hogy adatokat töltünk-e
 
+    const { refreshExchanges } = props; // ezt szulo komponensbol propskent kapja
+
     //modalok:
     const [modalShowB, setModalShowB] = useState(false);
-    const [selectedBook, setSelectedBook] = useState(null);
+    const [selectedBookModal, setSelectedBookModal] = useState(null);
 
     const [modalShowU, setModalShowU] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -47,7 +59,7 @@ export default function UserOwnExchangesCard1(props) {
     
             const handleShowModalB = (book) => {
               if (book){
-                setSelectedBook(book);
+                setSelectedBookModal(book);
                 setModalShowB(true);
                 
               }
@@ -122,7 +134,7 @@ export default function UserOwnExchangesCard1(props) {
             }
         }
         fetchData();
-    }, [props.exchange?.desired_book_id, props.exchange, props.exchange?.offered_book_id]);
+    }, [props.exchange]);
     //}, [props.exchange?.desired_book_id, props.exchange.exchange_status]);
 
     // 1. patch kérés
@@ -147,7 +159,7 @@ export default function UserOwnExchangesCard1(props) {
         console.error("Hiba a PATCH kérés során:", error);
     }
     } */
-    useEffect(() => {
+    /* useEffect(() => {
         console.log("Frissült az exchanges állapot:", props.exchange);
         // Ez minden alkalommal lefut, amikor az exchanges változik.
 
@@ -165,11 +177,25 @@ export default function UserOwnExchangesCard1(props) {
         };
 
         patchAcceptExchangee();
-    }, [props.exchange?.exchange_id, isLoading]); // Ha az exchanges változik, akkor ez a blokk fut le
+    }, [props.exchange?.exchange_id, isLoading]);  */// Ha az exchanges változik, akkor ez a blokk fut le
     // +
-    const handleExchangeRequest = async () => {
-        
 
+    // 🔁 offeredBook frissítése location váltásra (pl. visszanavigálás után)
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedBook");
+    console.log("Frissítjük a selectedBook state-et a storage alapján:", saved);
+    if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          saveBook(parsed);
+        } catch (err) {
+          console.error("Hiba a JSON parse-nál:", err);
+        }
+      }
+  }, [location]);
+
+
+    const handleExchangeRequest = async () => {
         const exchangeId = props.exchange?.exchange_id;
         if (!exchangeId) {
             console.error("Nincs exchange ID, a kérés nem küldhető.");
@@ -177,8 +203,15 @@ export default function UserOwnExchangesCard1(props) {
         }
 
         try {
+            const updatedExchange = await patchAcceptExchange(exchangeId);
+                if (updatedExchange) {
+                // frissiti a teljes listát (a szülő komponensben)
+                if (typeof refreshExchanges === 'function') {
+                    refreshExchanges(); 
+                }
+            }
             // Küldd el a PATCH kérést
-            await patchAcceptExchange(exchangeId);
+            //await patchAcceptExchange(exchangeId);
         } catch (error) {
             console.error("Hiba a PATCH kérés során:", error);
         }
@@ -191,14 +224,14 @@ export default function UserOwnExchangesCard1(props) {
     // kivalasztott konyv kezelese
     
     // Betöltjük a könyvet, ha van tárolt adat
-  useEffect(() => {
+  /* useEffect(() => {
     const savedBook = localStorage.getItem("selectedBook");
     if (savedBook) {
         const book = JSON.parse(savedBook);
         setOfferedBook(book);
         console.log("Offered book:", book);
     }
-  }, []);
+  }, []); */
 
   // 2. patch kérés
   const handleExchangeRequest2 = async () => {
@@ -214,14 +247,22 @@ export default function UserOwnExchangesCard1(props) {
     console.log("p2: ", exchangeId)
     console.log("p2: ", book.offer_id)
 
-    // Meghívjuk az API-t a könyv adatainak elküldésére
-    const result = await patchExchangeSelectOfferedBook(exchangeId, book.offer_id);
-
-    // Ha sikeres volt, töröljük a localStorage-ból a kiválasztott könyvet
-    if (result) {
-        localStorage.removeItem("selectedBook");
-        alert("Sikeresen elküldted a kiválasztott könyvet!");
-    }
+    try {
+        // Meghívjuk az API-t a könyv adatainak elküldésére
+        const result = await patchExchangeSelectOfferedBook(exchangeId, book.offer_id);
+        // Ha sikeres volt, töröljük a localStorage-ból a kiválasztott könyvet
+        if (result) {
+          localStorage.removeItem("selectedBook"); 
+          alert("Sikeresen elküldted a kiválasztott könyvet!");
+    
+          // Frissítjük az exchanges listát
+          if (typeof refreshExchanges === "function") {
+            refreshExchanges();
+          }
+        }
+      } catch (error) {
+        console.error("Hiba a könyv elküldésénél:", error);
+      }
 
   }
 
@@ -244,7 +285,7 @@ export default function UserOwnExchangesCard1(props) {
                             {/*<Link to={`/profil/${interestedUser.id}`} className="feltoltoUser">*/}
                             {interestedUser ? ( 
                                 <div className="feltoltoUser" >
-                                    <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
+                                    <img src={interestedUser?.img_url ? interestedUser.img_url.startsWith("http") ? interestedUser.img_url : `http://localhost:8000/${interestedUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
                                     onClick={() => handleShowModalU(interestedUser)}
                                     style={{ cursor: "pointer" }} 
                                     className="user--profile-picture" /><br />
@@ -267,14 +308,14 @@ export default function UserOwnExchangesCard1(props) {
                             {desiredBook ? (
                                 <div className="wantedBook2">
                                     <img className='exchange-books__image' 
-                                        src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
+                                        src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                                         onClick={() => handleShowModalB(desiredBook)}
                                         style={{ cursor: "pointer" }} 
                                     /><br />
                                     <UserOwnExchangesModalBook
                                                         show={modalShowB}
                                                         onHide={() => setModalShowB(false)}
-                                                        book={selectedBook} 
+                                                        book={selectedBookModal} 
                                                     />
                                     <span className="exchange-books__title">{desiredBook.title}</span>
                                 </div>
@@ -295,7 +336,7 @@ export default function UserOwnExchangesCard1(props) {
                             {/*<p>Kérlek, válassz egyet tőle:</p>*/}
                             {interestedUser ? (
                                 <div className="feltoltoUserSmall" >
-                                    <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
+                                    <img src={interestedUser?.img_url ? interestedUser.img_url.startsWith("http") ? interestedUser.img_url : `http://localhost:8000/${interestedUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
                                     className="user--profile-picture" />
                                     <span className="userProfileName">{interestedUser.full_name}</span>
                                 </div>   
@@ -304,20 +345,24 @@ export default function UserOwnExchangesCard1(props) {
                             )}
                                 
                                 
-                            <Link to={`/profil/${props.exchange.interested_user_id}/valasztas`} 
-                            className="feltoltoUser" style={{ cursor: "pointer" }}>
+                            
                             {offeredBook ? (
-                                <div className='feltoltoUserBookImage'>
-                                    <img className="exchange-books__image" src={offeredBook?.img_url ? `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'}
+                                // ha van kiválasztott könyv
+                                <div className='feltoltoUserBookImage' onClick={() => {
+                                    clearBook(); // Hookból, ha használod a useSelectedBook-ot
+                                }}>
+                                    <img className="exchange-books__image" src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'}
                                     alt={offeredBook?.title || 'Alapértelmezett könyv'} />
                                     <span className="exchange-books__title">{offeredBook.title}</span>
+                                    <small>(Katt a cseréhez!)</small>
                                 </div>
                                 ) : (
-                                <div className="plusIcon">
+                                // ha nincs kiválasztott könyv
+                                <div className="plusIcon" onClick={() => navigate(`/profil/${props.exchange.interested_user_id}/valasztas`)}>
                                     <FaPlus className="plus" />
                                 </div>
                                 )}
-                            </Link>
+                            
                             
                             {/*<span className="exchange-books__title">{desiredBook.title}</span>*/}
 
@@ -331,7 +376,7 @@ export default function UserOwnExchangesCard1(props) {
                             {desiredBook ? (
                                 <div className="wantedBook2">
                                     <img className='exchange-books__image' 
-                                        src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
+                                        src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                                         onClick={handleClickBook}
                                         style={{ cursor: "pointer" }} 
                                     /><br />

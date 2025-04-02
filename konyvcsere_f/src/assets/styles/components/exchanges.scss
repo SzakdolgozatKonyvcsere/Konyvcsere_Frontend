@@ -178,16 +178,20 @@
                     text-align: center;    
                     margin: 20px auto;
                     object-fit: cover;
-                    max-width: 100px;
-                    transition: all 0.2s;
+                    max-width: 120px;
+                    //transition: all 0.2s;
                     padding: 10px;
                     //display: block;
                     min-height: 30vh;
                     min-width: 20vh;
-                    max-width: 100px;
-                    display: flex;  /* Hozzáadva */
+                    display: flex; 
                     justify-content: center;  /* Vízszintes középre igazítás */
                     align-items: center;  /* Függőleges középre igazítás */
+                    cursor: pointer; 
+                    transition: background-color 0.3s ease;
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.05);
+                      }
                     
                     .plus{
                         text-align: center;

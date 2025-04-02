@@ -8,13 +8,14 @@ export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
-
+  const [message, setMessage] = useState("");
+  const [refreshOffers, setRefreshOffers] = useState(false);
 
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
 
   const navigate = useNavigate();
-
+ 
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
@@ -30,6 +31,7 @@ export default function Konyvfeltoltes() {
   const [img_url, setImg_url] = useState(null);
   const imgInputRef = useRef(null);
   //const [image, setImage] = useState(null);
+
 
   // műfaj lekérése: 
   useEffect(() => {
@@ -68,20 +70,10 @@ export default function Konyvfeltoltes() {
     setQuality("");
     setImg_url(null);
     if (imgInputRef.current) {
-      imgInputRef.current.value = null; 
+      imgInputRef.current.value = null;
     }
   };
-  console.log({
-    title,
-    author,
-    publisher,
-    publication_year,
-    selectedGenre,
-    language,
-    quality,
-    img_url
-  });
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -99,8 +91,9 @@ export default function Konyvfeltoltes() {
     try {
       const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes");
       console.log("Sikeres válasz:", response.data);
-      alert("Könyv sikeresen feltöltve.");
+      setMessage("✅ Könyv sikeresen feltöltve!");
       resetForm();
+      setRefreshOffers(true);
     } catch (error) {
       console.error("Hiba a könyv feltöltésekor:", error);
     }
@@ -111,6 +104,11 @@ export default function Konyvfeltoltes() {
       <h1 className="text-center">Könyvfeltöltés</h1>
 
       <form onSubmit={handleSubmit}>
+        {message && (
+          <div className="mb-4 p-3 rounded bg-green-100 text-green-800 border border-green-300 text-sm">
+            {message}
+          </div>
+        )}
         <div className="mb-3">
           <label htmlFor="title" className="form-label">Cím</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />

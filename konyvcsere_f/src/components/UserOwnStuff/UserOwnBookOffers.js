@@ -6,7 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { hu } from "date-fns/locale";
 import ModalEditBookOffer from './modals/ModalEditBookOffer';
 
-function UserOwnBookOffers() {
+function UserOwnBookOffers({ refresh = false, onRefreshed = () => {} }) {
   const { userBookOffersInfo, getUserBookOffersInfo, setBookOffersInfo } = useApiContext();
   const { user } = useAuthContext();
 
@@ -18,6 +18,14 @@ function UserOwnBookOffers() {
     setEditSelectedBook(book);
   };
 
+  useEffect(() => {
+    if (refresh) {
+      getUserBookOffersInfo(user.id, setBookOffersInfo);
+      onRefreshed();
+    }
+  }, [refresh]);
+
+  
   useEffect(() => {
     getUserBookOffersInfo(user.id, setBookOffersInfo);
   }, [user]);

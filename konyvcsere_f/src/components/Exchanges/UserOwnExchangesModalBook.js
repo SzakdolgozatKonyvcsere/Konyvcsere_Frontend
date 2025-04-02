@@ -41,6 +41,7 @@ export default function UserOwnExchangesModalBook({book, ...props}) {
 
     useEffect(() => {
       console.log("Kapott könyv adat:", book);
+      
   }, [book]);
 
 
@@ -67,12 +68,23 @@ export default function UserOwnExchangesModalBook({book, ...props}) {
           </div>
           <div className='modalBodyRendezes'>
           <div className='modalImage' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img
-              className='modalimg'
-              src={book && book.img_url ? `http://localhost:8000/${book.img_url}` : '/basic_book.png'}
-              alt="Book Cover"
-              style={{ width: "40vh", display: "block", margin: "auto", alignContent: "left" }} 
-            />
+          <img
+          className='modalimg'
+          src={
+            book?.img_url
+              ? book.img_url.startsWith("http")
+                ? book.img_url
+                : `http://localhost:8000/${book.img_url}`
+              : '/basic_book.png'
+          }
+          alt="Book Cover"
+          style={{
+            width: "40vh",
+            display: "block",
+            margin: "auto",
+            alignContent: "left"
+          }}
+        />
           </div>
           
   
