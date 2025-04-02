@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Modal } from 'react-bootstrap';
-import { Form } from 'react-router-dom';
+import { Button, Modal, Form } from 'react-bootstrap';
 import useApiContext from '../../../contexts/ApiContext';
 
 function ModalEditBookOffer({ show, handleClose, book}) {
@@ -16,19 +15,35 @@ function ModalEditBookOffer({ show, handleClose, book}) {
       [name]: value, // Frissítjük a state-et kapott névvel és értékkel
     }));
   }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
+    setUserUpdateBookOffer(prev => ({
+      ...prev,
+      imageFile: file
+    }));
+  };
 
   useEffect(() => {
-    if (book) {
-      getGenreList();
+    getGenreList();
+  }, []);
+
+  useEffect(() => {
+    if (book && genreList.length > 0) {
       setUserUpdateBookOffer({
         publisher_name: book.publisher_name,
         title: book.title,
         language: book.language,
         genre_id: genreList.find(g => g.genre_name === book.genre_name)?.genre_id || "",
-        publication_year: book.publication_year
+        publication_year: book.publication_year,
+        quality: book.quality,
+        img_url: book.img_url
       });
     }
-  }, [book]);
+  }, [book, genreList]);
+
+  if (!userUpdateBookOffer) return null;
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -86,7 +101,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Minimum kiadási év</Form.Label>
+            <Form.Label>Kiadási év</Form.Label>
             <Form.Control
               type="number"
               name="publication_year"
@@ -95,6 +110,39 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               min={1700} max={new Date().getFullYear()}
             />
           </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Minőség</Form.Label>
+            <Form.Control
+              type="number"
+              name="quality"
+              value={userUpdateBookOffer.quality || ""}
+              onChange={handleInputChange}
+              min={1} max={5}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Kép (opcionális)</Form.Label>
+            <Form.Control
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+              accept="image/*"
+            />
+          </Form.Group>
+          {userUpdateBookOffer.img_url && (
+            <div className="mb-3">
+              <Form.Label>Jelenlegi kép</Form.Label>
+              <div>
+                <img
+                  src={`http://localhost:8000/${userUpdateBookOffer.img_url}`}
+                  alt="Jelenlegi könyv kép"
+                  style={{ maxWidth: '100%', maxHeight: '200px' }}
+                />
+              </div>
+            </div>
+          )}
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -102,7 +150,10 @@ function ModalEditBookOffer({ show, handleClose, book}) {
         <Button
           variant="primary"
           className="btn-primary"
-          onClick={() => putUserUpdateBookOffer(userUpdateBookOffer.offer_id, userUpdateBookOffer)}
+          onClick={() => {
+            putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer)
+            console.log("KÜLDÉS: " + JSON.stringify(userUpdateBookOffer, null, 2) + "\nAZ OFFERES IDS KÖNYV MEG: " + JSON.stringify(book, null, 2));
+          }}
         >módosítás</Button>
       </Modal.Footer>
     </Modal>

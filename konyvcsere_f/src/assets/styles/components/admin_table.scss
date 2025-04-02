@@ -22,11 +22,11 @@
     &--button {
       text-align: center;
       button {
-        width: 40px;
-        height: 40px;
+        height: 30px;
         border-radius: 2px;
         box-shadow: 0px 1px 3px black;
         border: 0px;
+        margin: 5px;
         &:active{
           box-shadow: 0px 1px 2px #1c1c1c;
           background-color: #b5b5b5;

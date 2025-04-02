@@ -11,9 +11,7 @@ export default function KezdolapUser() {
         
             {/*<h1>Kezdőlap</h1>*/}
             <section className="container">
-                <article>
                 
-                </article>
                 <aside>
                 <h2>Üdvözöllek az Adok-Kapok Közösségben!</h2>
              <ul>

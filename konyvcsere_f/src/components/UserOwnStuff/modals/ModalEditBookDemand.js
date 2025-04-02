@@ -7,6 +7,10 @@ function ModalEditBookDemand({ show, handleClose, book }) {
     putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand, genreList, getGenreList
   } = useApiContext();
 
+  useEffect(() => {
+    getGenreList();
+  }, []);
+
   useEffect (()=>{
     if (book) {
       const matchingGenre = genreList.find(g => g.genre_name === book.genre_name); //Megkapjuk mufaj id-t neve alapjan

@@ -53,6 +53,10 @@
         }
       }
       &-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
         &__text {
           padding: 10px;
           font-size: 1.25rem;

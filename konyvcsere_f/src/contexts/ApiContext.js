@@ -17,6 +17,7 @@ export const ApiProvider = ({ children }) => {
   const [availableBookLista, setAvailableBookLista] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [userUpdateBookDemand, setUserUpdateBookDemand] = useState([]);
+  const [userUpdateBookOffer, setUserUpdateBookOffer] = useState([]);
 
   const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
@@ -268,10 +269,6 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
 };
 
 
-
-
-  
-
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
@@ -328,6 +325,40 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
       setLoading(false);
     }
   }
+  /*const putUserUpdateBookOffer = async (book_demand_id, adat) => {
+    setLoading(true);
+    try {
+      await myAxios.put(`/api/book-offers/${book_demand_id}/user-update`, adat);  
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false);
+    }
+  }*/
+  const putUserUpdateBookOffer = async (offerId, data) => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('publisher_name', data.publisher_name);
+    formData.append('title', data.title);
+    formData.append('language', data.language);
+    formData.append('genre_id', data.genre_id);
+    formData.append('publication_year', data.publication_year);
+    formData.append('quality', data.quality);
+    // Optional image
+    if (data.imageFile) {
+      formData.append('image', data.imageFile);
+    }
+    try {
+      const response = await myAxios.post(`/api/book-offers/${offerId}/user-update?_method=PUT`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      console.log('SUCCESS:', response.data);
+    } catch (err) {
+      console.error('ERROR:', err.response?.data || err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
   //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
@@ -337,9 +368,9 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
 
   useEffect(()=>{
     //if (user.role === 0) {
-      getUsers("/api/users", setUserLista)
-      getBooks("/api/book-offers", setBookLista)
-      getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
+      //getUsers("/api/users", setUserLista)
+      //getBooks("/api/book-offers", setBookLista)
+      //getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
       //getUserById("/api/user/${adat}/showinfo", user_id)
       //getUsers("/api/users", setUserLista)
       //getBooks("/api/book-offers", setBookLista)
@@ -364,6 +395,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
         postExchangeRequest, getUserById, getUserByIdGenre,  
         genreList, getGenreList,  
         putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
+        putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
         getExchangeByUser,  
         getBookByIdForExchange,
         patchAcceptExchange,
