@@ -4,7 +4,7 @@ import useApiContext from '../../../contexts/ApiContext';
 
 function ModalEditBookOffer({ show, handleClose, book}) {
   const {
-    putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer, genreList, getGenreList
+    putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer, genreList, getGenreList, getUserBookOffersInfo
   } = useApiContext();
 
 
@@ -60,6 +60,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               name="publisher_name"
               value={userUpdateBookOffer.publisher_name || ""}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
 
@@ -70,6 +71,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               name="title"
               value={userUpdateBookOffer.title || ""}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
 
@@ -97,6 +99,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               name="language"
               value={userUpdateBookOffer.language || ""}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
 
@@ -108,6 +111,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               value={userUpdateBookOffer.publication_year || ""}
               onChange={handleInputChange}
               min={1700} max={new Date().getFullYear()}
+              required
             />
           </Form.Group>
 
@@ -119,6 +123,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               value={userUpdateBookOffer.quality || ""}
               onChange={handleInputChange}
               min={1} max={5}
+              required
             />
           </Form.Group>
 
@@ -150,11 +155,15 @@ function ModalEditBookOffer({ show, handleClose, book}) {
         <Button
           variant="primary"
           className="btn-primary"
-          onClick={() => {
-            putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer)
-            console.log("KÜLDÉS: " + JSON.stringify(userUpdateBookOffer, null, 2) + "\nAZ OFFERES IDS KÖNYV MEG: " + JSON.stringify(book, null, 2));
+          onClick={async () => {
+            await putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer);
+            await getUserBookOffersInfo();
+            await handleClose();
+            window.location.reload();
           }}
-        >módosítás</Button>
+        >
+          módosítás
+        </Button>
       </Modal.Footer>
     </Modal>
   );

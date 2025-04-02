@@ -15,7 +15,7 @@ export default function Konyvfeltoltes() {
   //const [works, setWorks] = useState([]);
 
   const navigate = useNavigate();
-
+ 
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
