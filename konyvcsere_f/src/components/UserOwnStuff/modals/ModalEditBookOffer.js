@@ -18,7 +18,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
   }
 
   useEffect(() => {
-    if (book) {
+    if (book && genreList.length > 0) {
       getGenreList();
       setUserUpdateBookOffer({
         publisher_name: book.publisher_name,
@@ -28,7 +28,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
         publication_year: book.publication_year
       });
     }
-  }, [book]);
+  }, [book, genreList]);
 
   return (
     <Modal show={show} onHide={handleClose}>
