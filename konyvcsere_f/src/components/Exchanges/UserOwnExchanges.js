@@ -44,6 +44,15 @@ export default function UserOwnExchanges() {
         console.log("Frissült az exchanges állapot:", exchanges);
     }, [exchanges]);
 
+    const refreshExchanges = async () => {
+        try {
+          const exchangeData = await getExchangeByUser(authUser.id);
+          setExchanges(exchangeData || []);
+        } catch (error) {
+          console.error("Hiba a frissítésnél:", error);
+        }
+      };
+
 
     // !!!!
     // 2 oszlop/ 2 FÜL!! - bejovo, valaszra var..
@@ -69,7 +78,7 @@ export default function UserOwnExchanges() {
                             (e.exchange_status === 'k' && e.interested_user_id !== authUser.id) || 
                             (e.exchange_status === 'f' && e.offered_book_id === null)
                         )
-                        .map(exchange => <UserOwnExchangesCard1 key={exchange.exchange_id} exchange={exchange} />)
+                        .map(exchange => (<UserOwnExchangesCard1 key={exchange.exchange_id} exchange={exchange} refreshExchanges={refreshExchanges} />))
                 ) : (
                     <p>Nincsenek beérkező cserék.</p>
                 )}

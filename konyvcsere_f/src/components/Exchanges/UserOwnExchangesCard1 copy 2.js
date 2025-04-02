@@ -5,7 +5,7 @@ import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { CardFooter } from "react-bootstrap";
 import { BiCheck } from "react-icons/bi";
 import useAuthContext from "../../contexts/AuthContext";
-import UserOwnExchangesCard1_ from "./UserOwnExchangesCard1_";
+
 import { FaPlus } from "react-icons/fa6";
 import UserOwnExchangesModalBook from "./UserOwnExchangesModalBook";
 import UserOwnExchangesModalOtherProfile from "./UserOwnExchangesModalOtherProfile";

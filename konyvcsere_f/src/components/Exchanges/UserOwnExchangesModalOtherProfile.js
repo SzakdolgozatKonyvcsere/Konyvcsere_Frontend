@@ -41,6 +41,7 @@ export default function UserOwnExchangesModalOtherProfile({userO, ...props}) {
 
     useEffect(() => {
       console.log("Kapott user adat:", userO);
+      
   }, [userO]);
 
 
@@ -67,12 +68,17 @@ export default function UserOwnExchangesModalOtherProfile({userO, ...props}) {
           </div>
           <div className='modalBodyRendezes'>
           <div className='modalImage' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img
-              className='modalimg'
-              src={userO?.img_url || undefined}
-              alt="Profilkép"
-              style={{ width: "40vh", display: "block", margin: "auto", alignContent: "left" }} 
-            />
+          <img
+          className='modalimg'
+          src={
+            userO?.img_url
+              ? userO.img_url.startsWith("http")
+                ? userO.img_url
+                : `http://localhost:8000/${userO.img_url}`
+              : "/user_basic_pfp.jpg"
+          }
+          alt="Profilkép"
+        />
           </div>
           
   

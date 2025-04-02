@@ -5,13 +5,14 @@ import { useState } from 'react';
 import useAuthContext from '../../contexts/AuthContext';
 import useApiContext from '../../contexts/ApiContext';
 import { useNavigate } from 'react-router-dom';
+import useSelectedBook from '../../hooks/useSelectedBook';
 
 //a keresés funkcióhoz az összes elérhető könyv megmutatása
 //modal, tehát a felugró ablak gomb általi mutatása, könvek részleteinek kiirása
 export default function OtherUserChooseBookCard(props) {
 
 
-  
+  const { saveBook } = useSelectedBook();
         const [modalShow, setModalShow] = useState(false);
         const [selectedBook, setSelectedBook] = useState(null);
 
@@ -66,10 +67,23 @@ export default function OtherUserChooseBookCard(props) {
 
           
         const handleSelectBook = (book) => {
-          localStorage.setItem("selectedBook", JSON.stringify(book)); // Elmentjük a könyvet
+          const bookWithId = { ...book, id: book.offer_id }; // vagy simán book, ha mindenhol offer_id-vel dolgozol
+          console.log("Mentés előtt a könyv:", bookWithId);
+          saveBook(bookWithId);  // ⬅️ így kell!
+          
+          navigate(-1); // vissza a csere oldalra
+          /* localStorage.setItem("selectedBook", JSON.stringify(book)); // Elmentjük a könyvet
           console.log(book.offer_id)
-              navigate(-1); // Visszavisz az előző oldalra
+              navigate(-1); // Visszavisz az előző oldalra */
       };
+
+      //akkor fut le, amikor a komponens unmountolódik, pl. visszalep az előző oldalra
+      /* useEffect(() => {
+        return () => {
+          // amikor elhagyjuk az oldalt, töröljük a választást
+          localStorage.removeItem("selectedBook");
+        };
+      }, []); */
 
 
     return( 

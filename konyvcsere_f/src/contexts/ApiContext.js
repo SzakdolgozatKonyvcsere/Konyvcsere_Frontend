@@ -203,27 +203,16 @@ const patchAcceptExchange = async (exchange_id) => {
     //await csrf();
     console.log("Sending PATCH request with exchange_id:", exchange_id);
     const response = await myAxios.patch(`/api/user/exchange/${exchange_id}/accept`, {
-      exchange_status: "f",
-      headers: {
-          "Content-Type": "application/json",
-          //"Accept": "application/json",
-          //"X-CSRF-TOKEN": csrf(),
-          //"X-HTTP-Method-Override": "PATCH"  // Laravel felismeri mint PATCH
-      },
-      //body: JSON.stringify({ exchange_status: "f" }), // Csak a státuszt küldjük
-      credentials: "include",  // 🔹 FONTOS!
-      //withCcredentials: "include",
-  });
-  if (!response.ok) {
-    throw new Error("Hiba történt a könyv kiválasztásakor.");
-}
-const data = await response.json();
-if (response.status === 200) {
-  alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
-}
-getExchangeByUser();
+      exchange_status: "f"
+    });
+    const data = response.data; // kell majd a local state frissiteshez
+    if (response.status === 200) {
+      alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+    }
+    return data;
+ 
 
-return data;
+
   /* const textResponse = await response.text();
   console.log("Raw Response: ", textResponse);
 
@@ -260,22 +249,18 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   //await csrf();
   try {
       const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
-        offered_item: bookId, // Egyszerűsített mód
-           
-          headers: {
-              "Content-Type": "application/json", 
-          },
-          //body: JSON.stringify({ offered_item: bookId }), //ezt lehet mashogy, egyszerubben is de ez igy izgi
-          withCcredentials: "include",
+        offered_item: bookId
       });
-      if (!response.ok) {
-          throw new Error("Hiba történt a másik könyv kiválasztásakor.2");
-      }
-      const data = await response.json();
+      
+      const data = response.data;
       if (response.status === 200) {
         alert('Sikeresen elküldted a kiválasztott könyvet!2'); // Success message
+        return response.data || true;
       }
-      return data;
+      // Ha mégis más státusz jött
+    console.warn("Váratlan státuszkód:", response.status);
+    return null;
+      //return data;
   } catch (error) {
       console.error("selectOfferedBook error2:", error);
       return null;
