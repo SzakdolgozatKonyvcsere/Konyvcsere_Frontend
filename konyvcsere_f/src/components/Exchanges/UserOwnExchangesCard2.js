@@ -4,13 +4,14 @@ import useAuthContext from "../../contexts/AuthContext";
 import { BiCheck } from "react-icons/bi";
 import { FaArrowRightLong, FaArrowLeftLong, FaArrowRightArrowLeft } from "react-icons/fa6";
 import UserOwnExchangesModalOtherProfile from "./UserOwnExchangesModalOtherProfile";
+import UserOwnExchangesModalBook from "./UserOwnExchangesModalBook";
 
 //1. varakozas: en kertem eloszor, valaszara, konyvere varok 
 //2. beleegyezes: ha a korabbi valasza, konyve megjott, elfogadom/elutasitom - patch
 //3. varakozas: o kerte eloszor, valasztottam konyvet es az o beleegyezesere varok
 export default function UserOwnExchangesCard2(props) {
 
-    const { getUserById, getBookByIdForExchange, patchAcceptExchange, patchExchangeSelectOfferedBook } = useApiContext();
+    const { getUserById, getBookByIdForExchange, patchAcceptExchange } = useApiContext();
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
     const [interestedUser, setInterestedUser] = useState(null);
     const [desiredBook, setDesiredBook] = useState(null);
@@ -18,6 +19,8 @@ export default function UserOwnExchangesCard2(props) {
     const [desiredBookOwnerUser, setDesiredBookOwnerUser] = useState(null);
     const [user, setUser] = useState("");
     const [clicked, setClicked] = useState(false);
+    // Ha az interested_user nem egyezik az authUser-rel
+    const isInterestedUser = interestedUser && interestedUser.id === authUser.id;
     //modalok:
     const [modalShowB, setModalShowB] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
@@ -56,7 +59,11 @@ export default function UserOwnExchangesCard2(props) {
                 const userInterestedData = await getUserById(props.exchange.interested_user_id);
                 const bookDesiredData = await getBookByIdForExchange(props.exchange.desired_book_id);
                 const userDesiredBookOwnerData = await getUserById(props.exchange.desired_book_owner_id);
-                const bookOfferedData = await getBookByIdForExchange(props.exchange.offered_book_id);
+                //const bookOfferedData = await getBookByIdForExchange(props.exchange.offered_book_id);
+                const bookOfferedData = props.exchange.offered_book_id
+                ? await getBookByIdForExchange(props.exchange.offered_book_id)
+                : null;
+      
 
                 setInterestedUser(userInterestedData || null);
                 setDesiredBook(bookDesiredData || null);
@@ -69,247 +76,153 @@ export default function UserOwnExchangesCard2(props) {
         fetchData();
     }, [props.exchange]);
 
-    // Ha az interested_user nem egyezik az authUser-rel
-    const isInterestedUser = interestedUser && interestedUser.id === authUser.id;
-
-    const handleExchangeRequest2 = async () => {
-        const exchangeId = props.exchange?.exchange_id;
-        const savedBook = localStorage.getItem("selectedBook");
-        if (!savedBook) {
-            alert("Válassz egy könyvet először!");
-            return;
+    // utolso patch
+    const handleFinalAccept = async () => {
+        const result = await patchAcceptExchange(props.exchange.exchange_id);
+        if (result && typeof props.refreshExchanges === "function") {
+          props.refreshExchanges();
         }
-        const book = JSON.parse(savedBook);
-        const result = await patchExchangeSelectOfferedBook(exchangeId, book.id);
-
-        if (result) {
-            localStorage.removeItem("selectedBook");
-            alert("Sikeresen elküldted a kiválasztott könyvet!");
-        }
-    }
+      };
 
 
     return(
-        <>
         <div className="exchangesStage2">
         <div className="card 1">
-        <div className="card-header">
-            {props.exchange.exchange_status === 'f' && offeredBook && !isInterestedUser || isInterestedUser && !offeredBook ? "Csere partnered válasza.." : "Találat! Elfogadod a csere feltételeit?"}
-        </div>
-        <div className="card-body">
-            {/* 1. Ha az interestedUser nem az authUser 
-                - varakozas: o kerte eloszor, valasztottam konyvet es az o beleegyezesere varok
-                - nem en vagyok interested user, exch stat: f, masik book is megvan */}
-                
-            {!isInterestedUser && offeredBook && Object.keys(offeredBook).length > 0  &&(
-                <div className="waiting">
-                    <div className='sectionLeft'>
-                    
-                        <div className="incomingProfile">
-                        <span>Másik felhasználó: </span><br />
-                            {interestedUser ? ( 
-                                <div className="feltoltoUser" >
-                                    <img src={interestedUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
-                                    onClick={() => handleShowModalU(interestedUser)}
-                                    style={{ cursor: "pointer" }} 
-                                    className="user--profile-picture" /><br />
-                                    <UserOwnExchangesModalOtherProfile
-                                            show={modalShowU}
-                                            onHide={() => setModalShowU(false)}
-                                            userO={selectedUser} 
-                                    />
-                                    <span className="userProfileName">{interestedUser.full_name}</span>
-                                </div>
-                                ) : (
-                                    <p>Érdeklődő felhasználó: Ismeretlen</p>
-                                )}
-                        </div>
-                        <div className="wantedBook">
-                            
-                            {offeredBook ? (
-                                <div className="wantedBook2">
-                                    <img className='exchange-books__image' 
-                                        src={offeredBook.img_url ? `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
-                                        onClick={handleClickBook}
-                                        style={{ cursor: "pointer" }} 
-                                    /><br />
-                                    <span className="exchange-books__title">{offeredBook.title}</span>
-                                </div>
-                            ) : (
-                                <p>Érdekelt könyv: Ismeretlen</p>
-                            )}
-
-                        </div>
-                    </div>
-                    <div className="arrow">
-                        <FaArrowRightArrowLeft />
-                    </div>
-                    <div className="sectionRight">
-                        <div className="incomingProfile">
-                            <span>Én felhasználó: </span><br />
-                            {authUser ? ( 
-                                <div className="feltoltoUser" >
-                                    <img src={authUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
-                                    onClick={() => handleShowModalU(authUser)}
-                                    style={{ cursor: "pointer" }} 
-                                    className="user--profile-picture" />
-                                    <UserOwnExchangesModalOtherProfile
-                                            show={modalShowU}
-                                            onHide={() => setModalShowU(false)}
-                                            userO={selectedUser} 
-                                    />
-                                    <span className="userProfileName">{authUser.full_name}</span>
-                                </div>
-                                ) : (
-                                    <p>Érdeklődő felhasználó: Ismeretlen</p>
-                                )}
-                        </div>
-                        <div className="wantedBook">
-                                {desiredBook ? (
-                                    <div className="wantedBook2">
-                                        <img className='exchange-books__image' 
-                                            src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
-                                            onClick={handleClickBook}
-                                            style={{ cursor: "pointer" }} 
-                                        /><br />
-                                        <span className="exchange-books__title">{desiredBook.title}</span>
-                                    </div>
-                                ) : (
-                                    <p>Érdekelt könyv: Ismeretlen</p>
-                                )}
-                        </div>
-                    </div>
-                    
-                </div>
-            )}
-
-            {/* 2. Ha az interestedUser megegyezik az authUser-rel, és offeredBook is van 
-                - varakozas: en kertem eloszor, valaszara, konyvere varok 
-                - en profilon, masik konyve
-                - en vagyok az interested, book offer null*/}
+          <div className="card-header">
+            {isInterestedUser && offeredBook
+              ? "Találat! Elfogadod a csere feltételeit?"
+              : !isInterestedUser && offeredBook
+              ? "Csere partnered válasza..."
+              : "A másik felhasználó beleegyezésére vár..."}
+          </div>
+  
+          <div className="card-body">
+            {/* Állapot 1 */}
             {isInterestedUser && !offeredBook && (
-                <div className="waiting">
-                <div className='sectionLeft'>
-                    <div className="desiredBook">
-                        <span> hello{desiredBook.title}</span>
+              <div className="waiting">
+                <div className="sectionRight">
+                <div className="feltoltoUser" onClick={() => handleShowModalU(desiredBookOwnerUser)}>
+                    <img src={desiredBookOwnerUser?.img_url ? desiredBookOwnerUser.img_url.startsWith("http") ? desiredBookOwnerUser.img_url : `http://localhost:8000/${desiredBookOwnerUser.img_url}` : "user_basic_pfp.jpg"} 
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{desiredBookOwnerUser?.full_name}</span>
+                  </div>
+                    <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
+                        <img
+                        className="exchange-books__image"
+                        src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
+                        />
+                        <span className="exchange-books__title">{desiredBook?.title}</span>
                     </div>
                 </div>
-                    <div className="arrow">
-                        <FaArrowLeftLong />
-                    </div>
-                    <div className='sectionRight'>
-                    <div className="desiredBook">
-                        <span>{desiredBook?.title}</span>
-                    </div>
-                    </div>
-                    <div className="statusText">
-                        <p>A másik felhasználó beleegyezésére vár</p>
-                    </div>
-                    <button className="btn btn-primary" onClick={handleExchangeRequest2}>
-                        Elfogadom <BiCheck />
-                    </button>
-                    
+                <div className="arrow">
+                  <FaArrowLeftLong />
                 </div>
-            )}
-
-            {/* 3. Ha az interestedUser megegyezik az authUser-rel, és offeredBook VAN 
-                - beleegyezes: ha a korabbi valasza, konyve megjott, elfogadom/elutasitom - patch
-                - en vagyon interested, offered book van
-                - gomb - patch */}
-            {isInterestedUser && offeredBook && Object.keys(offeredBook).length > 0 && (
-                <div className="answear">
-                    
-                    <div className='sectionLeft'>
-                    
-                        <div className="incomingProfile">
-                        <span>Másik felhasználó 3: </span><br />
-                            {desiredBookOwnerUser ? ( 
-                                <div className="feltoltoUser" >
-                                    <img src={desiredBookOwnerUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
-                                    onClick={() => handleShowModalU(desiredBookOwnerUser)}
-                                    style={{ cursor: "pointer" }} 
-                                    className="user--profile-picture" /><br />
-                                    <UserOwnExchangesModalOtherProfile
-                                            show={modalShowU}
-                                            onHide={() => setModalShowU(false)}
-                                            userO={selectedUser} 
-                                    />
-                                    <span className="userProfileName">{desiredBookOwnerUser.full_name}</span>
-                                </div>
-                                ) : (
-                                    <p>Érdeklődő felhasználó: Ismeretlen</p>
-                                )}
-                        </div>
-                        <div className="wantedBook">
-                            
-                            {offeredBook ? (
-                                <div className="wantedBook2">
-                                    <img className='exchange-books__image' 
-                                        src={offeredBook.img_url ? `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
-                                        onClick={handleClickBook}
-                                        style={{ cursor: "pointer" }} 
-                                    /><br />
-                                    <span className="exchange-books__title">{offeredBook.title}</span>
-                                </div>
-                            ) : (
-                                <p>Érdekelt könyv: Ismeretlen</p>
-                            )}
-
-                        </div>
-                    </div>
-                    <div className="arrow">
-                        <FaArrowRightArrowLeft />
-                    </div>
-                    <div className="sectionRight">
-                        <div className="incomingProfile">
-                            <span>Én felhasználó 3: </span><br />
-                            {authUser ? ( 
-                                <div className="feltoltoUser" >
-                                    <img src={authUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" 
-                                    onClick={() => handleShowModalU(authUser)}
-                                    style={{ cursor: "pointer" }} 
-                                    className="user--profile-picture" />
-                                    <UserOwnExchangesModalOtherProfile
-                                            show={modalShowU}
-                                            onHide={() => setModalShowU(false)}
-                                            userO={selectedUser} 
-                                    />
-                                    <span className="userProfileName">{authUser.full_name}</span>
-                                </div>
-                                ) : (
-                                    <p>Érdeklődő felhasználó: Ismeretlen</p>
-                                )}
-                        </div>
-                        <div className="wantedBook">
-                                {desiredBook ? (
-                                    <div className="wantedBook2">
-                                        <img className='exchange-books__image' 
-                                            src={desiredBook.img_url ? `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
-                                            onClick={handleClickBook}
-                                            style={{ cursor: "pointer" }} 
-                                        /><br />
-                                        <span className="exchange-books__title">{desiredBook.title}</span>
-                                    </div>
-                                ) : (
-                                    <p>Érdekelt könyv: Ismeretlen</p>
-                                )}
-                        </div>
-                    </div>
+                <div className="sectionLeft"> 
+                <div className="feltoltoUser"  > {/*onClick={() => handleShowModalU(authUser)} */}
+                    <img src={authUser?.img_url ? authUser.img_url.startsWith("http") ? authUser.img_url : `http://localhost:8000/${authUser.img_url}` : "user_basic_pfp.jpg"}
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{authUser?.full_name}</span>
+                  </div>
+                  
                 </div>
+              </div>
             )}
-        </div>
-        <div className="card-footer">
-            {props.exchange.exchange_status === 'f' && offeredBook && !isInterestedUser || isInterestedUser && !offeredBook ? (
-                <div>A másik felhasználó reakciójára vár..</div>
-            ) : (
-                <button className="btn btn-primary" onClick={handleExchangeRequest2}>
-                    Elfogadom <BiCheck />
-                </button>
+  
+            {/* Állapot 2 */}
+            {!isInterestedUser && offeredBook && (
+              <div className="waiting">
+                <div className="sectionLeft">
+                  <div className="feltoltoUser" onClick={() => handleShowModalU(interestedUser)}>
+                    <img src={interestedUser?.img_url ? interestedUser.img_url.startsWith("http") ? interestedUser.img_url : `http://localhost:8000/${interestedUser.img_url}` : "user_basic_pfp.jpg"} 
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{interestedUser?.full_name}</span>
+                  </div>
+                  <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
+                    <img
+                    className="exchange-books__image"
+                    src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
+                    />
+                    <span className="exchange-books__title">{offeredBook?.title}</span>
+                  </div>
+                </div>
+                <div className="arrow">
+                  <FaArrowRightArrowLeft />
+                </div>
+                <div className="sectionRight">
+                  <div className="feltoltoUser" onClick={() => handleShowModalU(authUser)}>
+                    <img src={authUser?.img_url ? authUser.img_url.startsWith("http") ? authUser.img_url : `http://localhost:8000/${authUser.img_url}` : "user_basic_pfp.jpg"} 
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{authUser?.full_name}</span>
+                  </div>
+                  <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
+                    <img
+                      className="exchange-books__image"
+                      src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
+                    />
+                    <span className="exchange-books__title">{desiredBook?.title}</span>
+                  </div>
+                </div>
+              </div>
             )}
+  
+            {/* Állapot 3 */}
+            {isInterestedUser && offeredBook && (
+              <div className="answear">
+                <div className="sectionLeft">
+                  <div className="feltoltoUser" onClick={() => handleShowModalU(desiredBookOwnerUser)}>
+                    <img src={desiredBookOwnerUser?.img_url ? desiredBookOwnerUser.img_url.startsWith("http") ? desiredBookOwnerUser.img_url : `http://localhost:8000/${desiredBookOwnerUser.img_url}` : "user_basic_pfp.jpg"} 
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{desiredBookOwnerUser?.full_name}</span>
+                  </div>
+                  <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
+                    <img
+                    className="exchange-books__image"
+                    src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
+                    />
+                    <span className="exchange-books__title">{offeredBook?.title}</span>
+                  </div>
+                </div>
+                <div className="arrow">
+                  <FaArrowRightArrowLeft />
+                </div>
+                <div className="sectionRight">
+                  <div className="feltoltoUser"  > {/* onClick={() => handleShowModalU(authUser)} */}
+                    <img src={authUser?.img_url ? authUser.img_url.startsWith("http") ? authUser.img_url : `http://localhost:8000/${authUser.img_url}` : "user_basic_pfp.jpg"} 
+                    className="user--profile-picture" />
+                    <span className="userProfileName">{authUser?.full_name}</span>
+                  </div>
+                  <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
+                    <img
+                    className="exchange-books__image"
+                    src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
+                    />
+                    <span className="exchange-books__title">{desiredBook?.title}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+  
+          <div className="card-footer">
+            {isInterestedUser && offeredBook ? (
+              <button className="btn btn-primary" onClick={handleFinalAccept}>
+                Elfogadom <BiCheck />
+              </button>
+            ) : null}
+          </div>
         </div>
-    </div>
-        </div>
-        
-        </>
+  
+        {/* MODALOK */}
+        <UserOwnExchangesModalOtherProfile
+          show={modalShowU}
+          onHide={() => setModalShowU(false)}
+          userO={selectedUser}
+        />
+        <UserOwnExchangesModalBook
+          show={modalShowB}
+          onHide={() => setModalShowB(false)}
+          book={selectedBook}
+        />
+      </div>
     );
 }

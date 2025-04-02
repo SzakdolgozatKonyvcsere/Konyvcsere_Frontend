@@ -253,7 +253,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
         offered_item: bookId
       });
       
-      const data = response.data;
+      //const data = response.data;
       if (response.status === 200) {
         alert('Sikeresen elküldted a kiválasztott könyvet!2'); // Success message
         return response.data || true;
@@ -265,6 +265,20 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   } catch (error) {
       console.error("selectOfferedBook error2:", error);
       return null;
+  }
+};
+// cserefolyamat 3 elfogadas
+const patchFinalizeExchange = async (exchangeId) => {
+  try {
+    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/finalize`);
+    if (response.status === 200) {
+      alert('Sikeresen elküldted a beleegyezést!'); // Success message
+      return response.data || true;
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Hiba a csere véglegesítésekor:", error);
+    return null;
   }
 };
 
@@ -399,7 +413,8 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
         getExchangeByUser,  
         getBookByIdForExchange,
         patchAcceptExchange,
-        patchExchangeSelectOfferedBook
+        patchExchangeSelectOfferedBook,
+        patchFinalizeExchange
         }
       }>
       {children}

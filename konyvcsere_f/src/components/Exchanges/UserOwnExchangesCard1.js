@@ -237,7 +237,8 @@ export default function UserOwnExchangesCard1(props) {
   const handleExchangeRequest2 = async () => {
     const savedBook = localStorage.getItem("selectedBook");
     if (!savedBook) {
-        alert("Válassz egy könyvet először!");
+        //alert("Válassz egy könyvet először!");
+        console.log("Válassz egy könyvet először!- 2.patch")
         return;
     }
     console.log("p2: ", savedBook) 
