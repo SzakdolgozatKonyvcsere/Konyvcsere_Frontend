@@ -8,6 +8,9 @@ export default function Konyvfeltoltes() {
 
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
+
+  const [showModal, setShowModal] = useState(false); // A modál láthatósága
+
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
 
@@ -16,27 +19,28 @@ export default function Konyvfeltoltes() {
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
   const [selectedGenre, setSelectedGenre] = useState(""); // Kiválasztott műfaj
-  
+
   //sima:
   const [user, setUser] = useState("");
-  const [author, setAuthor] = useState("");
+  const [authorId, setAuthorId] = useState("");
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication_year, setYear] = useState("");
   const [language, setLanguage] = useState("");
   const [quality, setQuality] = useState("");
   const [img_url, setImg_url] = useState(null);
+  const [workId, setWorkId] = useState("");
   //const [image, setImage] = useState(null);
-  
+
   // műfaj lekérése: 
-  useEffect(() => {    
+  useEffect(() => {
     myAxios.get("/api/genres")
-    .then(response => {
-      setGenres(response.data); // Beállítjuk a műfajokat
-    })
-    .catch(error => {
-      console.error("Hiba a műfajok lekérése közben:", error);
-    });
+      .then(response => {
+        setGenres(response.data); // Beállítjuk a műfajokat
+      })
+      .catch(error => {
+        console.error("Hiba a műfajok lekérése közben:", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -45,148 +49,188 @@ export default function Konyvfeltoltes() {
     }
   }, [authUser]);
 
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  const types = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
-if (file && ! types.includes(file.type)){
-  alert('Csak jpg, png, gif, jpeg, vagy svg képfájlokat tölthetsz fel.');
-  return;
-}
-setImg_url(file);
-}
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const konyvAdat = new FormData();
-    konyvAdat.append("user",user);
-    konyvAdat.append("author",author);
-    konyvAdat.append("title",title);
-    konyvAdat.append("publisher",publisher);
-    konyvAdat.append("publication_year",publication_year);
-    konyvAdat.append("genre_id", Number(selectedGenre)); // A kiválasztott műfaj az ID alapján
-    konyvAdat.append("language",language);
-    konyvAdat.append("quality",quality);
-
-    if(img_url){
-      konyvAdat.append("img_url",img_url);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const types = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+    if (file && !types.includes(file.type)) {
+      alert('Csak jpg, png, gif, jpeg, vagy svg képfájlokat tölthetsz fel.');
+      return;
+    }
+    setImg_url(file);
   }
-  console.log("Feltöltött könyv", konyvAdat);
-  
-    //uploadWork( konyvAdat, "/api/mufeltoltes")
-  await uploadBook(konyvAdat, "/api/konyvfeltoltes");
 
-    // Kép URL frissítése
-    /*if (response.data.img_url) {
-      setImg_url(response.data.img_url);
-    }*/
+  // Alapadatok feltöltése
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // Átirányítás a sikeres feltöltés után
-    navigate("/feltoltottkonyvek");
+    const konyvAdat = new FormData();
+    konyvAdat.append("user", user);
+    konyvAdat.append("author_id", authorId);
+    konyvAdat.append("title", title);
+    konyvAdat.append("publisher", publisher);
+    konyvAdat.append("publication_year", publication_year);
+    konyvAdat.append("genre_id", Number(selectedGenre));
+    konyvAdat.append("language", language);
+    konyvAdat.append("quality", quality);
+    if (img_url) konyvAdat.append("img_url", img_url);
 
- 
-};
-    
-  /*  const konyvAdat = new FormData();
-  konyvAdat.append('user', user);
-  konyvAdat.append('author', author);
-  konyvAdat.append('title', title);
-  konyvAdat.append('publisher', publisher);
-  konyvAdat.append('publication_year', publication_year);
-  konyvAdat.append('genre_id', Number(selectedGenre));
-  konyvAdat.append('language', language);
-  konyvAdat.append('quality', quality);
+    try {
+      // Küldés a backendre
+      const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes"); // Egy végpontot hívunk
+      console.log("Sikeres válasz:", response.data);
+      alert("Könyv sikeresen feltöltve.");
+      navigate("/feltoltottkonyvek"); // Navigálás a feltöltött könyvek oldalra
+    } catch (error) {
+      console.error("Hiba a könyv feltöltésekor:", error);
+    }
+  };
 
-  if (img_url) {
-    konyvAdat.append('img_url', img_url);
-  }
-  */
-    
+  // A kapcsolati táblák frissítése után jelenjen meg a modális ablak
 
-  /*try {
-    const result = await uploadBook(konyvAdat);
-    console.log("Sikeres feltöltés:", result);
-    navigate("/feltoltottkonyvek"); // átirányítás a saját könyvek oldalra
-  } catch (err) {
-    // Hibakezelés itt, ha szükséges
-    console.error("Feltöltési hiba:", err);
-  }
-  console.log("hm")
 
-    await uploadBook(konyvAdat); // Könyv elküldése Contexten keresztül
-    navigate("/feltoltottkonyvek"); // Átirányítás a könyvlistához
-    */
+  // Kapcsolati táblák frissítése
+  const handleConfirmUpload = async () => {
+    setShowModal(false);
+
+    const adat = new FormData();
+    adat.append("work_id", workId);
+    adat.append("author_id", authorId);
+
+    try {
+      const response = await uploadWork(adat, "/api/mufeltoltes");
+      alert("Kapcsolati táblák sikeresen frissítve.");
+      navigate("/feltoltottkonyvek");
+    } catch (error) {
+      console.error("Hiba a kapcsolati táblák feltöltésekor:", error);
+    }
+  };
+
+  const handleCancel = () => {
+    setShowModal(false); // A modál bezárása anélkül, hogy bármit is feltöltenénk
+  };
 
   return (
     <div className="card max-w-lg mx-auto mt-10 p-5">
       <h1 className="text-center">Könyvfeltöltés</h1>
+
       <form onSubmit={handleSubmit}>
-      <div className="mb-3">
+        <div className="mb-3">
           <label htmlFor="title" className="form-label">Cím</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="form-control" id="title" name="title" required />
         </div>
+
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
-          <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
+          <input type="text" value={authorId} onChange={(e) => setAuthorId(e.target.value)} className="form-control" id="authorId" name="authorId" required />
         </div>
-        {/*több szerző gomb?*/} 
+
         <div className="mb-3">
           <label htmlFor="publisher" className="form-label">Kiadó</label>
           <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} className="form-control" id="publisher" name="publisher" required />
         </div>
+
         <div className="mb-3">
           <label htmlFor="publication_year" className="form-label">Év</label>
           <input type="number" value={publication_year} onChange={(e) => setYear(Number(e.target.value))} className="form-control" id="publication_year" name="publication_year" min={1700} max={new Date().getFullYear()} required />
         </div>
+
         <div className="mb-3">
           <label htmlFor="genre" className="form-label">Műfaj</label>
-          
-          {/*<input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} className="form-control" id="genre" name="genre" required />*/}
           <select
             id="genre"
             value={selectedGenre}
             onChange={(e) => setSelectedGenre(e.target.value)}
             required
           >
-          <option value="">-- Válassz műfajt --</option>
-          {genres.map((genre) => (
-            <option key={genre.genre_id} value={genre.genre_id}>
-              {genre.genre_name}
-            </option>
-            ))} 
+            <option value="">-- Válassz műfajt --</option>
+            {genres.map((genre) => (
+              <option key={genre.genre_id} value={genre.genre_id}>
+                {genre.genre_name}
+              </option>
+            ))}
           </select>
         </div>
+
         <div className="mb-3">
           <label htmlFor="language" className="form-label">Nyelv</label>
           <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} className="form-control" id="language" name="language" required />
         </div>
+
         <div className="mb-3">
           <label htmlFor="quality" className="form-label">Minőség 1-5 </label>
           <input type="number" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="form-control" id="quality" name="quality" min={1} max={5} required />
         </div>
-          <div className="mb-3">
-          <label htmlFor="image" className="form-label">Kép</label>
-          <input type="file" onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml"/>
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Feltöltés</button>
-          </form>
-        </div>
-          /*<Form.Group controlId="img_url">
-        <Form.Label>Kép</Form.Label>
-        <Form.Control
-          type="file"
-          name="img_url"
-          accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
-          onChange={handleChange}
-        />
-      </Form.Group>*/
 
+        <div className="mb-3">
+          <label htmlFor="image" className="form-label">Kép</label>
+          <input type="file" onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml" />
+        </div>
+        <button type="submit" className="btn btn-primary w-100">Könyv feltöltése</button>
+      </form>
+    </div>
   );
-}  
-          
-          
-        
-     
+}
+
+
+//console.log("Feltöltött könyv", konyvAdat);
+
+//uploadWork( konyvAdat, "/api/mufeltoltes")
+//await uploadBook(konyvAdat, "/api/konyvfeltoltes");
+
+// Kép URL frissítése
+/*if (response.data.img_url) {
+  setImg_url(response.data.img_url);
+}*/
+
+// Átirányítás a sikeres feltöltés után
+//navigate("/feltoltottkonyvek");
+
+
+
+
+/*  const konyvAdat = new FormData();
+konyvAdat.append('user', user);
+konyvAdat.append('author', author);
+konyvAdat.append('title', title);
+konyvAdat.append('publisher', publisher);
+konyvAdat.append('publication_year', publication_year);
+konyvAdat.append('genre_id', Number(selectedGenre));
+konyvAdat.append('language', language);
+konyvAdat.append('quality', quality);
+ 
+if (img_url) {
+  konyvAdat.append('img_url', img_url);
+}
+*/
+
+
+/*try {
+  const result = await uploadBook(konyvAdat);
+  console.log("Sikeres feltöltés:", result);
+  navigate("/feltoltottkonyvek"); // átirányítás a saját könyvek oldalra
+} catch (err) {
+  // Hibakezelés itt, ha szükséges
+  console.error("Feltöltési hiba:", err);
+}
+console.log("hm")
+ 
+  await uploadBook(konyvAdat); // Könyv elküldése Contexten keresztül
+  navigate("/feltoltottkonyvek"); // Átirányítás a könyvlistához
+  */
+
+
+/*<Form.Group controlId="img_url">
+<Form.Label>Kép</Form.Label>
+<Form.Control
+type="file"
+name="img_url"
+accept="image/png, image/jpeg, image/jpg, image/gif, image/svg+xml"
+onChange={handleChange}
+/>
+</Form.Group>*/
+
+
+
 
 
 /*import { useEffect, useState } from "react";
