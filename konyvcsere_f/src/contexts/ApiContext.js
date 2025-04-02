@@ -2,6 +2,7 @@ import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
+import Loader from "../components/Loader";
 
 export const ApiContext = createContext("");
 
@@ -9,7 +10,8 @@ export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
   const {user, crsf} = useAuthContext();
   
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
   const [genreList, setGenreList] = useState([]);
@@ -30,7 +32,7 @@ export const ApiProvider = ({ children }) => {
 
   //Users
   const getUsers = async (vegpont) => {
-    setLoading(true);
+    //setLoading(true);
     try{
       //console.log("getusers");
       const {data} = await myAxios.get(vegpont);
@@ -42,19 +44,20 @@ export const ApiProvider = ({ children }) => {
     }
   }
   const postUsers = async(vegpont,adat)=>{
-    setLoading(true);
+    //setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
     }catch(error){
         console.log("Hiba",error);
     }finally{
+      setLoading(false);
     }
   }
 
   //Books
   const getBooks = async (vegpont) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
       setBookLista(data);
@@ -67,7 +70,7 @@ export const ApiProvider = ({ children }) => {
     }
   };
   const postBooks = async(vegpont,adat)=>{
-    setLoading(true);
+    //setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -79,7 +82,7 @@ export const ApiProvider = ({ children }) => {
   }
 
   const getGenreList = async() => {
-    setLoading(true)
+    //setLoading(true);
     try {
       const response = await myAxios.get("/api/genres");
       setGenreList(response.data);
@@ -92,7 +95,7 @@ export const ApiProvider = ({ children }) => {
 
   //Book demands
   const getBookDemands = async () => {
-    setLoading(true);
+    //setLoading(true);
     try {
       const { data } = await myAxios.get("/api/book-demands");
       setBookDemandLista(data);
@@ -108,6 +111,7 @@ export const ApiProvider = ({ children }) => {
 
   // adott felhasználó könyveinek (s + f) lekérése
 const getUserBookOffersInfo2 = async (user_id) => {
+  //setLoading(true);
   try {
     const {data} = await myAxios.get(`/api/user/${user_id}/book-offers`);
     console.log("Kapott user könyv adatok:", user_id);
@@ -122,6 +126,7 @@ const getUserBookOffersInfo2 = async (user_id) => {
 }
 //osszes elerheto (s + f) konyv
   const getAllAvailableOfferedBooks = async () => {
+    //setLoading(true);
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
       const { data } = await myAxios.get("/api/all-available-books");
@@ -138,6 +143,7 @@ const getUserBookOffersInfo2 = async (user_id) => {
   }
 //csere tortenet valtoztatasa elso kerelemmel
   const postExchangeRequest = async (adat) => {
+    //setLoading(true);
     try {
       const response = await myAxios.post('/api/exchange-request', adat)
       console.log("cseretortenet", adat);
@@ -151,10 +157,13 @@ const getUserBookOffersInfo2 = async (user_id) => {
       } else {
         alert('Hiba történt, próbáld újra!'); // alapértelmezett hibaüzenet
       }
+    } finally {
+      setLoading(false);
     }
   };
   // Egy adott felhasználó lekérése API-ból
   const getUserById = async (id) => {
+    //setLoading(true);
     try {
         const response = await myAxios.get(`/api/user/${id}/showinfo`);
         return response.data;
@@ -162,10 +171,13 @@ const getUserBookOffersInfo2 = async (user_id) => {
     } catch (error) {
         console.error("Hiba a user lekérdezésnél:", error);
         return null;
+    } finally {
+      setLoading(false);
     }
 };
 // adott user legtobbet cserelt mufaja
 const getUserByIdGenre = async (id) => {
+  //setLoading(true);
   try {
       const response = await myAxios.get(`/api/user/${id}/book-offers`);
       return response.data;
@@ -173,10 +185,13 @@ const getUserByIdGenre = async (id) => {
   } catch (error) {
       console.error("Hiba a user lekérdezésnél:", error);
       return null;
+  } finally {
+    setLoading(false);
   }
 };
 // adott userhez kapcsolodo osszes exchange
 const getExchangeByUser = async (userId) => {
+  //setLoading(true);
   try {
       const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
       console.log("csere api 1: ", response.data)
@@ -185,10 +200,13 @@ const getExchangeByUser = async (userId) => {
   } catch (error) {
       console.error("Hiba az exchange by user lekérdezésnél:", error);
       return null;
+  } finally {
+    setLoading(false);
   }
 };
 // adott konyv lekerese az exchange kiirashoz
 const getBookByIdForExchange = async (id) => {
+  //setLoading(true);
   try {
     const response = await myAxios.get(`/api/user/${id}/book-by-id`);
     return response.data;
@@ -196,6 +214,8 @@ const getBookByIdForExchange = async (id) => {
 } catch (error) {
     console.error("Hiba a user lekérdezésnél:", error);
     return null;
+} finally {
+  setLoading(false);
 }
 };
 // cserefolyamat 1 elfogadas
@@ -245,7 +265,9 @@ return data;
   } catch (error) {
       console.error("acceptExchange error:", error);
       return null;
-  } 
+  } finally {
+    setLoading(false);
+  }
 };
 /* // A fetchData funkció, ami frissíti az exchanges adatokat a backendről:
 const fetchData = async () => {
@@ -258,6 +280,7 @@ const fetchData = async () => {
 }; */
 //cserefolyamat 2 konyv kivalasztasa
 const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
+  //setLoading(true);
   //await csrf();
   try {
       const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
@@ -280,13 +303,15 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   } catch (error) {
       console.error("selectOfferedBook error2:", error);
       return null;
+  } finally {
+    setLoading(false);
   }
 };
 
 
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       const {data} = await myAxios.get(`/api/user/${user_id}/profile-info`);
       setUserProfileInfoList(data);
@@ -309,6 +334,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
     }
   }
   const getUserBookDemandsInfo = async (user_id) => {
+    //setLoading(true);
     try {
       const {data} = await myAxios.get(`/api/user/${user_id}/book-demand-info`);
       setUserBookDemandsInfo(data);
@@ -320,7 +346,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   }
 
   const patchUserPFP = async (vegpont, adat) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       await myAxios.post(vegpont, adat);      
     } catch (error) {
@@ -331,7 +357,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   }
 
   const putUserUpdateBookDemand = async (book_demand_id, adat) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);  
     } catch (error) {
@@ -341,7 +367,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
     }
   }
   /*const putUserUpdateBookOffer = async (book_demand_id, adat) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       await myAxios.put(`/api/book-offers/${book_demand_id}/user-update`, adat);  
     } catch (error) {
@@ -351,14 +377,14 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
     }
   }*/
   const putUserUpdateBookOffer = async (offerId, data) => {
-    setLoading(true);
+    //setLoading(true);
     const formData = new FormData();
-    formData.append('publisher_name', data.publisher_name);
-    formData.append('title', data.title);
-    formData.append('language', data.language);
-    formData.append('genre_id', data.genre_id);
-    formData.append('publication_year', data.publication_year);
-    formData.append('quality', data.quality);
+    formData.append('publisher_name', String(data.publisher_name));
+    formData.append('title', String(data.title));
+    formData.append('language', String(data.language));
+    formData.append('genre_id', String(data.genre_id));
+    formData.append('publication_year', String(data.publication_year));
+    formData.append('quality', String(data.quality));
     // Optional image
     if (data.imageFile) {
       formData.append('image', data.imageFile);
@@ -381,7 +407,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
 
 
 
-  useEffect(()=>{
+  //useEffect(()=>{
     //if (user.role === 0) {
       //getUsers("/api/users", setUserLista)
       //getBooks("/api/book-offers", setBookLista)
@@ -394,7 +420,7 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
     //postWorks("/api/work-upload")
     //postBooks("/api/book-offer-upload")
    
-  },[])
+  //},[])
 
 
   return (
@@ -414,7 +440,8 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
         getExchangeByUser,  
         getBookByIdForExchange,
         patchAcceptExchange,
-        patchExchangeSelectOfferedBook
+        patchExchangeSelectOfferedBook,
+        loading, setLoading
         }
       }>
       {children}

@@ -12,6 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { ApiProvider } from "./contexts/ApiContext";
 import { BookuploadProvider } from "./contexts/BookuploadContext";
+import DisplayLoader from "./components/DisplayLoader";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -21,7 +22,9 @@ root.render(
       <AuthProvider>
         <ApiProvider>
           <BookuploadProvider>
-            <App />
+            <DisplayLoader>
+              <App />
+            </DisplayLoader>
           </BookuploadProvider>
         </ApiProvider>
       </AuthProvider>

@@ -115,7 +115,11 @@ function ModalEditBookDemand({ show, handleClose, book }) {
         <Button
           variant="primary"
           className="btn-primary"
-          onClick={() => putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand)}
+          onClick={async () => {
+            await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
+            await handleClose();
+            window.location.reload();
+          }}
         >módosítás</Button>
       </Modal.Footer>
     </Modal>

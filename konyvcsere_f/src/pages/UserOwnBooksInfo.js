@@ -3,7 +3,7 @@ import UserOwnBookOffers from '../components/UserOwnStuff/UserOwnBookOffers'
 import UserOwnBookDemands from '../components/UserOwnStuff/UserOwnBookDemands'
 
 function UserOwnBooksInfo() {
-  const [showDemands, setShowDemands] = useState(false);
+  const [showDemands, setShowDemands] = useState(true);
 
   const handleShowDemands = () => {
     setShowDemands(!showDemands);
