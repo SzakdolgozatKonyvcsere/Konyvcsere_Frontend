@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../contexts/AuthContext";
 import { BookuploadContext } from "../contexts/BookuploadContext";
@@ -9,7 +9,6 @@ export default function Konyvfeltoltes() {
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
 
-  const [showModal, setShowModal] = useState(false); // A modál láthatósága
 
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
@@ -22,14 +21,14 @@ export default function Konyvfeltoltes() {
 
   //sima:
   const [user, setUser] = useState("");
-  const [authorId, setAuthorId] = useState("");
+  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication_year, setYear] = useState("");
   const [language, setLanguage] = useState("");
   const [quality, setQuality] = useState("");
   const [img_url, setImg_url] = useState(null);
-  const [workId, setWorkId] = useState("");
+  const imgInputRef = useRef(null);
   //const [image, setImage] = useState(null);
 
   // műfaj lekérése: 
@@ -59,13 +58,36 @@ export default function Konyvfeltoltes() {
     setImg_url(file);
   }
 
-  // Alapadatok feltöltése
+  const resetForm = () => {
+    setAuthor("");
+    setTitle("");
+    setPublisher("");
+    setYear("");
+    setSelectedGenre("");
+    setLanguage("");
+    setQuality("");
+    setImg_url(null);
+    if (imgInputRef.current) {
+      imgInputRef.current.value = null; 
+    }
+  };
+  console.log({
+    title,
+    author,
+    publisher,
+    publication_year,
+    selectedGenre,
+    language,
+    quality,
+    img_url
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const konyvAdat = new FormData();
     konyvAdat.append("user", user);
-    konyvAdat.append("author_id", authorId);
+    konyvAdat.append("author", author);
     konyvAdat.append("title", title);
     konyvAdat.append("publisher", publisher);
     konyvAdat.append("publication_year", publication_year);
@@ -75,39 +97,17 @@ export default function Konyvfeltoltes() {
     if (img_url) konyvAdat.append("img_url", img_url);
 
     try {
-      // Küldés a backendre
-      const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes"); // Egy végpontot hívunk
+      const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes");
       console.log("Sikeres válasz:", response.data);
       alert("Könyv sikeresen feltöltve.");
-      navigate("/feltoltottkonyvek"); // Navigálás a feltöltött könyvek oldalra
+      resetForm();
     } catch (error) {
       console.error("Hiba a könyv feltöltésekor:", error);
     }
   };
 
-  // A kapcsolati táblák frissítése után jelenjen meg a modális ablak
 
 
-  // Kapcsolati táblák frissítése
-  const handleConfirmUpload = async () => {
-    setShowModal(false);
-
-    const adat = new FormData();
-    adat.append("work_id", workId);
-    adat.append("author_id", authorId);
-
-    try {
-      const response = await uploadWork(adat, "/api/mufeltoltes");
-      alert("Kapcsolati táblák sikeresen frissítve.");
-      navigate("/feltoltottkonyvek");
-    } catch (error) {
-      console.error("Hiba a kapcsolati táblák feltöltésekor:", error);
-    }
-  };
-
-  const handleCancel = () => {
-    setShowModal(false); // A modál bezárása anélkül, hogy bármit is feltöltenénk
-  };
 
   return (
     <div className="card max-w-lg mx-auto mt-10 p-5">
@@ -121,7 +121,7 @@ export default function Konyvfeltoltes() {
 
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Szerző</label>
-          <input type="text" value={authorId} onChange={(e) => setAuthorId(e.target.value)} className="form-control" id="authorId" name="authorId" required />
+          <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="form-control" id="author" name="author" required />
         </div>
 
         <div className="mb-3">
@@ -163,7 +163,7 @@ export default function Konyvfeltoltes() {
 
         <div className="mb-3">
           <label htmlFor="image" className="form-label">Kép</label>
-          <input type="file" onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml" />
+          <input type="file" ref={imgInputRef} onChange={handleImageChange} className="form-control" id="image" accept="image/jpeg, image/png, image/gif, image/svg+xml" />
         </div>
         <button type="submit" className="btn btn-primary w-100">Könyv feltöltése</button>
       </form>
