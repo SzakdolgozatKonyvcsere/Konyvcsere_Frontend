@@ -10,11 +10,13 @@ import Accordion from 'react-bootstrap/Accordion';
 
 export default function KonyvKereses() {
   const {
-    availableBookLista,
+    availableBookLista, getAllAvailableOfferedBooks
   } = useApiContext();
-  const [szurtLista, setSzurtLista] = useState([...availableBookLista]);
+  const [szurtLista, setSzurtLista] = useState([]);
   const [szuroertek, setSzuroErtek] = useState("");
   //const [finalFilteredBooks, setFinalFilteredBooks] = useState([...availableBookLista]);
+  //const isBooksLoaded = availableBookLista && availableBookLista.length > 0;
+  const [isLoading, setIsLoading] = useState(true);
 
   const [filters, setFilters] = useState({
     author: "",
@@ -25,11 +27,43 @@ export default function KonyvKereses() {
     maxYear: new Date().getFullYear(),
   });
   //const [filteredBooks, setFilteredBooks] = useState([...availableBookLista]);
+
+  useEffect(() => {
+    getAllAvailableOfferedBooks(); // <--- EZ FONTOS!
+  }, []);
   
   useEffect(() => {
+    if (availableBookLista && availableBookLista.length > 0) {
+      setSzurtLista([...availableBookLista]);
+      console.log("✅ Könyvek betöltve:", availableBookLista);
+      setIsLoading(false)
+    } else {
+      console.log("❌ Még nincs adat, várunk...");
+    }
+  }, [availableBookLista]);
+  
+
+  
+/* 
+  useEffect(() => {
+    if (availableBookLista && availableBookLista.length > 0) {
     setSzurtLista(availableBookLista);
     console.log("📢 Szűrt lista frissült:", szurtLista); // ezt awaittel???? nah
+    }
   }, [availableBookLista]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+useEffect(() => {
+  if (availableBookLista.length > 0) {
+    setSzurtLista(availableBookLista);
+    setIsLoading(false);
+  }
+}, [availableBookLista]);
+
+if (isLoading) {
+  return <p>Adatok betöltése folyamatban...</p>;
+} */
 
   function handleReset() {
     setSzuroErtek(""); // Visszaállítja a keresési értéket üresre
@@ -45,7 +79,7 @@ export default function KonyvKereses() {
 
     const atmeneti = availableBookLista.filter((book) => {
         console.log("Ellenőrzés: ", book);
-        return book.title.toLowerCase().includes(szuroertek);
+        return book.title.toLowerCase().includes(ujszuroertek);
         
     });
     //console.log(atmeneti)
@@ -102,7 +136,7 @@ export default function KonyvKereses() {
             value={szuroertek}
             onChange={(e) => handleSearch(e)}   
         />
-            <label for="floatingTitle">Keresés könyvcím alapján...</label>
+            <label htmlFor="floatingTitle">Keresés könyvcím alapján...</label>
       </div>
       <div>
       <Accordion className="acc">
@@ -119,7 +153,7 @@ export default function KonyvKereses() {
                     onChange={(e) => setFilters({ ...filters, author: e.target.value })}
                     
                 />
-                <label for="floatingAuthor">Keresés szerző alapján...</label>
+                <label htmlFor="floatingAuthor">Keresés szerző alapján...</label>
             </div>
         </div>
     <div className="col-md">
@@ -133,7 +167,7 @@ export default function KonyvKereses() {
                 }
                 
             />
-            <label for="floatingPublisher">Keresés kiadó alapján...</label>
+            <label htmlFor="floatingPublisher">Keresés kiadó alapján...</label>
         </div>
     </div>
     </div>

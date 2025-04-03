@@ -50,7 +50,7 @@ export default function ProfilPage() {
             <small className='felhNev'>{user.name}</small>
             <img className='user-own-profile__details-top__image' src={user.img_url ? (user.img_url.startsWith("http") ? user.img_url : `http://localhost:8000/${user.img_url}` ) : "/default-profile.jpg"} alt="Profilkép" />
             {/* További felhasználói adatok */}
-            <p><span>Jelneleg</span> {/* online status + zld piros szinu jel? */} online/offline <span>vagyok</span></p>
+            {/*<p><span>Jelneleg</span> {/* online status + zld piros szinu jel? // online/offline <span>vagyok</span></p>*/}
             <p><span>Megadott város:</span> {user.city}</p>
             {/*<p><span>Regisztráció dátuma:</span> {user.created_at}</p>*/} 
             <p><span>Cserélem könyveimet:</span> {user.registered_since}</p>

@@ -98,7 +98,7 @@ export default function KonyvKereses() {
             value={szuroertek}
             onChange={(e) => handleSearch(e)}   
         />
-            <label for="floatingTitle">Keresés könyvcím alapján...</label>
+            <label htmlFor="floatingTitle">Keresés könyvcím alapján...</label>
       </div>
       <div>
         <h3>További feltételek:</h3>
@@ -112,7 +112,7 @@ export default function KonyvKereses() {
                         onChange={(e) => setFilters({ ...filters, author: e.target.value })}
                         
                     />
-                    <label for="floatingAuthor">Keresés szerző alapján...</label>
+                    <label htmlFor="floatingAuthor">Keresés szerző alapján...</label>
                 </div>
             </div>
         <div class="col-md">
@@ -126,7 +126,7 @@ export default function KonyvKereses() {
                     }
                     
                 />
-                <label for="floatingPublisher">Keresés kiadó alapján...</label>
+                <label htmlFor="floatingPublisher">Keresés kiadó alapján...</label>
             </div>
         </div>
         </div>
