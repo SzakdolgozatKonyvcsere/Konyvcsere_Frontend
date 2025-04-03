@@ -47,20 +47,3 @@ export default function KonyvKeresKartyak(props) {
 }
 
 
-
-       /*<div className='all-available-books'>
-          <div className='all-available-books__details-left'>
-            <img className='all-available-books__details-left__image' src={'/basic_book.png'}></img>
-          </div>
-          <div className='all-available-books__details-right'>
-            <p className='all-available-books__details-right__text'><span className='--value'>{props.book.title}</span></p>
-            <p className='all-available-books__details-right__text'>kiadó: <span className='--value'>{props.book.publisher_name ?  `${props.book.publisher_name}` : "ismeretlen kiadó"}</span></p>
-            <p className='all-available-books__details-right__text'>műfaj: <span className='--value'>{props.book.author_name ? `${props.book.author_name}` : "ismeretlen szerző"}</span></p>
-            <p className='all-available-books__details-right__text'>nyelv: <span className='--value'>{props.book.language}</span></p>
-            <p className='all-available-books__details-right__text'>kiadás éve: <span className='--value'>{props.book.publication_year ? props.book.publication_year : "nincs dátum"}</span></p>
-            <p className='all-available-books__details-right__text'>minőség: <span className='--value'>{props.book.quality}</span></p>
-          </div> 
-          <div>
-          <a href="#" className="btn btn-primary">Megtekintés</a>
-          </div>
-        </div>*/

@@ -33,17 +33,14 @@ export default function UserOwnExchangesCard1(props) {
     // Ha a kiválasztott könyv újra betöltődött, loggoljuk (és UI frissül) - visszalépés után kell book megjelenítéséhez
     console.log("Visszanavigáltunk, új offeredBook állapot:", offeredBook);
     }, [location]);
-
-    //const [users, setUsers] = useState([]);
-    //const [books, setBooks] = useState([]);
     
     const [clicked, setClicked] = useState(false);
 
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
     const [user, setUser] = useState("");
 
-    const [exchangeData, setExchangeData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);  // Az állapot, hogy adatokat töltünk-e
+    //const [exchangeData, setExchangeData] = useState(null);
+    //const [isLoading, setIsLoading] = useState(true);  // Az állapot, hogy adatokat töltünk-e
 
     const { refreshExchanges } = props; // ezt szulo komponensbol propskent kapja
 
@@ -54,9 +51,6 @@ export default function UserOwnExchangesCard1(props) {
     const [modalShowU, setModalShowU] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    //const [modalShowChoose, setModalShowChoose] = useState(false);
-    //const [selectedBookChoose, setSelectedBookChoose] = useState(null);
-    
             const handleShowModalB = (book) => {
               if (book){
                 setSelectedBookModal(book);
@@ -73,14 +67,6 @@ export default function UserOwnExchangesCard1(props) {
             }
             
         };
-        /* const handleShowModalChoose = (book) => {
-            if (book){
-              setSelectedBookChoose(book);
-              setModalShowChoose(true);
-              
-            }
-            
-        }; */
     
     // bejelentkezett user id
     useEffect(() => {
@@ -91,22 +77,6 @@ export default function UserOwnExchangesCard1(props) {
         }
     }, [authUser]);
 
-    // katt a képre s kiirja az adatokat - nem modal van ezek helyett?
-    /* useEffect(() => {
-        console.log("csere, bejelenkezett fh: ", user); // Ez most akkor fut le, ha a `user` állapot változik
-    }, [user]); */
-
-    // katt a képre s kiirja az adatokat
-    const handleClickBook = () => {
-        setClicked(!clicked);
-        alert("Kattintottál a képre!");
-    };
-    const handleClickUser = () => {
-        setClicked(!clicked);
-        alert("Kattintottál a userre!");
-    };
-
-    // + kell egy modal konyv kivalasztos?? azt hogyan genyo
 
     // kapott csere idkat bedobja s visszaadja a részletes adatait
     useEffect(() => {
@@ -138,49 +108,7 @@ export default function UserOwnExchangesCard1(props) {
     //}, [props.exchange?.desired_book_id, props.exchange.exchange_status]);
 
     // 1. patch kérés
-    /* const handleExchangeRequest = async () => {
-        const exchangeId = props.exchange?.exchange_id;
-        /* const exchangeRequest = {
-            exchange_status: 'f'  // Csak a státuszt frissítjük 'f'-re
-        }; //
-        console.log("Kérelem frissítési adatok:", exchangeId);
-        // PATCH kérés küldése a backendnek
-        //patchAcceptExchange(exchangeId);
-    try {
-        // Küldd el a PATCH kérést
-        const result = await patchAcceptExchange(exchangeId);
-
-        // Ha sikeres a kérés, frissítsd a helyi állapotot a válasz alapján
-        if (result) {
-            // Itt frissítjük az exchange adatokat, amik a komponensben megjelennek
-            setExchangeData(result);  // Az új adatokat beállítjuk, hogy újrarendereljen
-        }
-    } catch (error) {
-        console.error("Hiba a PATCH kérés során:", error);
-    }
-    } */
-    /* useEffect(() => {
-        console.log("Frissült az exchanges állapot:", props.exchange);
-        // Ez minden alkalommal lefut, amikor az exchanges változik.
-
-        // Lekérjük a friss adatokat, amikor a PATCH kérést sikeresen elküldjük
-        const patchAcceptExchangee = async () => {
-            try {
-                // Példa: adatbetöltés az API-ból
-                const result = await patchAcceptExchangee(props.exchange?.exchange_id);
-                setExchangeData(result);  // Adatok beállítása
-                setIsLoading(false);  // Az adatok betöltődtek, nem vagyunk már loading állapotban
-            } catch (error) {
-                console.error("Hiba az adatbetöltés során:", error);
-                setIsLoading(false);  // Ha hiba van, ne maradjunk végtelen loadingban
-            }
-        };
-
-        patchAcceptExchangee();
-    }, [props.exchange?.exchange_id, isLoading]);  */// Ha az exchanges változik, akkor ez a blokk fut le
-    // +
-
-    // 🔁 offeredBook frissítése location váltásra (pl. visszanavigálás után)
+    // offeredBook frissítése location váltásra (pl. visszanavigálás után)
   useEffect(() => {
     const saved = localStorage.getItem("selectedBook");
     console.log("Frissítjük a selectedBook state-et a storage alapján:", saved);
@@ -194,14 +122,13 @@ export default function UserOwnExchangesCard1(props) {
       }
   }, [location]);
 
-
-    const handleExchangeRequest = async () => {
+// patch 
+const handleExchangeRequest = async () => {
         const exchangeId = props.exchange?.exchange_id;
         if (!exchangeId) {
             console.error("Nincs exchange ID, a kérés nem küldhető.");
             return;
         }
-
         try {
             const updatedExchange = await patchAcceptExchange(exchangeId);
                 if (updatedExchange) {
@@ -210,28 +137,10 @@ export default function UserOwnExchangesCard1(props) {
                     refreshExchanges(); 
                 }
             }
-            // Küldd el a PATCH kérést
-            //await patchAcceptExchange(exchangeId);
         } catch (error) {
             console.error("Hiba a PATCH kérés során:", error);
         }
     };
-
-
-
-
-
-    // kivalasztott konyv kezelese
-    
-    // Betöltjük a könyvet, ha van tárolt adat
-  /* useEffect(() => {
-    const savedBook = localStorage.getItem("selectedBook");
-    if (savedBook) {
-        const book = JSON.parse(savedBook);
-        setOfferedBook(book);
-        console.log("Offered book:", book);
-    }
-  }, []); */
 
   // 2. patch kérés
   const handleExchangeRequest2 = async () => {
@@ -350,7 +259,7 @@ export default function UserOwnExchangesCard1(props) {
                             {offeredBook ? (
                                 // ha van kiválasztott könyv
                                 <div className='feltoltoUserBookImage' onClick={() => {
-                                    clearBook(); // Hookból, ha használod a useSelectedBook-ot
+                                    clearBook(); // Hookból, a useSelectedBook van hasznalva
                                 }}>
                                     <img className="exchange-books__image" src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'}
                                     alt={offeredBook?.title || 'Alapértelmezett könyv'} />
@@ -378,9 +287,14 @@ export default function UserOwnExchangesCard1(props) {
                                 <div className="wantedBook2">
                                     <img className='exchange-books__image' 
                                         src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
-                                        onClick={handleClickBook}
+                                        onClick={() => handleShowModalB(desiredBook)}
                                         style={{ cursor: "pointer" }} 
                                     /><br />
+                                    <UserOwnExchangesModalBook
+                                                        show={modalShowB}
+                                                        onHide={() => setModalShowB(false)}
+                                                        book={selectedBookModal} 
+                                                    />
                                     <span className="exchange-books__title">{desiredBook.title}</span>
                                 </div>
                             ) : (
