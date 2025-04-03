@@ -26,7 +26,7 @@ export default function KonyvKeresModal({book, ...props}) {
         const exchangeReqest = {
             interested_user: authUser?.id, // Logged-in user ID
             desired_item: book?.offer_id, // The book that the user is interested in
-            exchange_status: 'k' // Example status ('P' = Pending)
+            exchange_status: 'k' // status
             
           };
           console.log("Kérelem kezdeményezés adatok: ", exchangeReqest);

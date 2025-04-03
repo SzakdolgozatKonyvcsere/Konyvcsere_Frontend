@@ -138,7 +138,7 @@ const getUserBookOffersInfo2 = async (user_id) => {
         console.log("Hiba:" + error.message);
       }
     } finally{
-      setLoading(false); // Stop loading after fetching books
+      setLoading(false);
     }
   }
 //csere tortenet valtoztatasa elso kerelemmel
@@ -196,7 +196,6 @@ const getExchangeByUser = async (userId) => {
       const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
       console.log("csere api 1: ", response.data)
       return response.data;
-      //return response.data.length > 0 ? response.data[0] : null;
   } catch (error) {
       console.error("Hiba az exchange by user lekérdezésnél:", error);
       return null;
@@ -210,7 +209,6 @@ const getBookByIdForExchange = async (id) => {
   try {
     const response = await myAxios.get(`/api/user/${id}/book-by-id`);
     return response.data;
-    //return response.data.length > 0 ? response.data[0] : null;
 } catch (error) {
     console.error("Hiba a user lekérdezésnél:", error);
     return null;
@@ -231,26 +229,6 @@ const patchAcceptExchange = async (exchange_id) => {
       alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
     }
     return data;
- 
-
-
-  /* const textResponse = await response.text();
-  console.log("Raw Response: ", textResponse);
-
-  const jsonResponse = JSON.parse(textResponse);
-        console.log("JSON Response: ", jsonResponse);
-
-        if (!response.ok) {
-            throw new Error(`Hiba történt: ${jsonResponse.error || response.statusText}`);
-        } */
-      
-      //const data = await response.json();
-      /* if (response.status === 200 || response.status === 201) {
-        alert('Sikeresen elfogadtad az érkező cserét!'); // Success message
-      } */
-      //return jsonResponse;
-      /* return await response.json();
-      //return data;*/
   } catch (error) {
       console.error("acceptExchange error:", error);
       return null;
@@ -258,25 +236,14 @@ const patchAcceptExchange = async (exchange_id) => {
     setLoading(false);
   }
 };
-/* // A fetchData funkció, ami frissíti az exchanges adatokat a backendről:
-const fetchData = async () => {
-  try {
-      const exchangeData = await getExchangeByUser(authUser.id);
-      setExchanges(exchangeData || []);
-  } catch (error) {
-      console.error("Hiba az adatok lekérésekor:", error);
-  }
-}; */
+
 //cserefolyamat 2 konyv kivalasztasa
 const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
   //setLoading(true);
-  //await csrf();
   try {
       const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
         offered_item: bookId
       });
-      
-      //const data = response.data;
       if (response.status === 200) {
         alert('Sikeresen elküldted a kiválasztott könyvet!2'); // Success message
         return response.data || true;
@@ -306,6 +273,8 @@ const patchFinalizeExchange = async (exchangeId) => {
     return null;
   }
 };
+
+
 
 
   //Mindet at lehete irni nem parameteresre

@@ -35,7 +35,7 @@ export default function KonyvKereses() {
   useEffect(() => {
     if (availableBookLista && availableBookLista.length > 0) {
       setSzurtLista([...availableBookLista]);
-      console.log("✅ Könyvek betöltve:", availableBookLista);
+      console.log("Könyvek betöltve:", availableBookLista);
       setIsLoading(false)
     } else {
       console.log("❌ Még nincs adat, várunk...");
@@ -43,27 +43,7 @@ export default function KonyvKereses() {
   }, [availableBookLista]);
   
 
-  
-/* 
-  useEffect(() => {
-    if (availableBookLista && availableBookLista.length > 0) {
-    setSzurtLista(availableBookLista);
-    console.log("📢 Szűrt lista frissült:", szurtLista); // ezt awaittel???? nah
-    }
-  }, [availableBookLista]);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-useEffect(() => {
-  if (availableBookLista.length > 0) {
-    setSzurtLista(availableBookLista);
-    setIsLoading(false);
-  }
-}, [availableBookLista]);
-
-if (isLoading) {
-  return <p>Adatok betöltése folyamatban...</p>;
-} */
 
   function handleReset() {
     setSzuroErtek(""); // Visszaállítja a keresési értéket üresre
@@ -119,7 +99,7 @@ if (isLoading) {
     return megfelel;
     });
 
-    console.log("Szűrt könyvek:", finalFilteredBooks); // Debug log
+    console.log("Szűrt könyvek:", finalFilteredBooks); 
     setSzurtLista([...finalFilteredBooks]);
     
   }
