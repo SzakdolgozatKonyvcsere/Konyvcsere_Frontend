@@ -40,7 +40,7 @@ export default function Regisztracio(){
             full_name:full_name,
             city:city,
             tel:tel,
-            //img_url:null,
+            //img_url:`http://localhost:8000/profile_pictures/user_basic_pfp.jpg`,
         };
         console.log(adat);
         loginReg(adat, "/register");

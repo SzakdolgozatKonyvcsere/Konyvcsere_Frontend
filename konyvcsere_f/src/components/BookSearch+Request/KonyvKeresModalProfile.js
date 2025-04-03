@@ -51,7 +51,7 @@ return (
     {/* Feltöltő felhasználó információi */}
     {feltoltoUser ? (
         <Link to={`/profil/${feltoltoUser.id}`} className="feltoltoUser">
-            <img src={feltoltoUser.img_url || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" />
+            <img src={`http://localhost:8000/${feltoltoUser.img_url}` || "user_basic_pfp.jpg"} alt="Profilkép" className="user--profile-picture" />
             <span className="userProfileName">{feltoltoUser.full_name}</span>
         </Link>
     ) : (

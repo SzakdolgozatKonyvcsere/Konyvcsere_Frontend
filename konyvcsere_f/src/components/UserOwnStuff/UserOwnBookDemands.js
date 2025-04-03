@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useAuthContext from '../../contexts/AuthContext';
 import useApiContext from '../../contexts/ApiContext';
-import UserOwnBookEditModal from "./UserOwnBookEditModal";
-import { data } from 'react-router-dom';
 import ModalEditBookDemand from './modals/ModalEditBookDemand';
 
 function UserOwnBookDemands() {
@@ -67,7 +65,7 @@ function UserOwnBookDemands() {
                     <button onClick={() => handleShowEditModal(book)}>szerkesztés</button>
                   </td>
                   <td className='table_admin-row--button'>
-                    <button onClick={null}>törlés</button>
+                    <button onClick={console.log("torles fejlesztes alatt")}>törlés</button>
                   </td> 
                 </tr>
               )
