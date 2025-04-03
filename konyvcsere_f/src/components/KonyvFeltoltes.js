@@ -9,12 +9,12 @@ export default function Konyvfeltoltes() {
   const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése
   const { uploadBook, uploadWork } = useContext(BookuploadContext);
   const [message, setMessage] = useState("");
-  const [refreshOffers, setRefreshOffers] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   //const [books, setBooks] = useState([]);
   //const [works, setWorks] = useState([]);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
  
   //műfajok:
   const [genres, setGenres] = useState([]); // Műfajok listája
@@ -87,13 +87,13 @@ export default function Konyvfeltoltes() {
     konyvAdat.append("language", language);
     konyvAdat.append("quality", quality);
     if (img_url) konyvAdat.append("img_url", img_url);
-
+    
     try {
       const response = await uploadBook(konyvAdat, "/api/konyvfeltoltes");
       console.log("Sikeres válasz:", response.data);
       setMessage("✅ Könyv sikeresen feltöltve!");
       resetForm();
-      setRefreshOffers(true);
+      setRefresh(true);
     } catch (error) {
       console.error("Hiba a könyv feltöltésekor:", error);
     }

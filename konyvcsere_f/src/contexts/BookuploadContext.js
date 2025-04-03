@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 export const BookuploadContext = createContext();
 
-export const BookuploadProvider = ({ children }) => {
+export const BookuploadProvider = ({ children }) => { //provider definiálása
 
     //const [loading, setLoading] = useState(false);
     //const [error, setError] = useState(null);
