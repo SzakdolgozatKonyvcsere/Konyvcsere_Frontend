@@ -66,7 +66,7 @@ function UserOwnBookDemands() {
                     <button onClick={() => handleShowEditModal(book)}>szerkesztés</button>
                   </td>
                   <td className='table_admin-row--button'>
-                    <button onClick={console.log("torles fejlesztes alatt")}>törlés</button>
+                    <button onClick={() => {}}>törlés</button>
                   </td> 
                 </tr>
               )
