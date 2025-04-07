@@ -1,14 +1,13 @@
 import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
-import useAuthContext from "./AuthContext";
-import Loader from "../components/Loader";
+
 
 export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  const {user, crsf} = useAuthContext();
+  //const {user, crsf} = useAuthContext();
   
   const [loading, setLoading] = useState(false);
 
@@ -26,9 +25,9 @@ export const ApiProvider = ({ children }) => {
   const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
 
   const [userBookOffersInfo2, setUserBookOffersInfo2] = useState([]);
-  const [userGetId, setUserGetId] = useState([]);
+  //const [userGetId, setUserGetId] = useState([]);
   //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
-  const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+  //const csrf = () => myAxios.get("/sanctum/csrf-cookie");
 
   //Users
   const getUsers = async (vegpont) => {
@@ -350,6 +349,7 @@ const patchFinalizeExchange = async (exchangeId) => {
     formData.append('publisher_name', String(data.publisher_name));
     formData.append('title', String(data.title));
     formData.append('language', String(data.language));
+    formData.append('authors', String(data.authors));
     formData.append('genre_id', String(data.genre_id));
     formData.append('publication_year', String(data.publication_year));
     formData.append('quality', String(data.quality));
@@ -392,25 +392,26 @@ const patchFinalizeExchange = async (exchangeId) => {
 
 
   return (
-    <ApiContext.Provider value={
-      { 
-        userLista, bookLista, bookDemandLista,  
-        getUsers, postUsers, getBooks, postBooks, getBookDemands,  
-        userProfileInfoList, getUserProfileInfo,  
-        userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
-        userBookDemandsInfo, getUserBookDemandsInfo,  
-        availableBookLista, getAllAvailableOfferedBooks,  
-        patchUserPFP, selectedImage, setSelectedImage,  
-        postExchangeRequest, getUserById, getUserByIdGenre,  
-        genreList, getGenreList,  
-        putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
-        putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
-        getExchangeByUser,  
-        getBookByIdForExchange,
-        patchAcceptExchange,
-        patchExchangeSelectOfferedBook,
-        patchFinalizeExchange,
-        loading, setLoading
+    <ApiContext.Provider
+      value={
+        { 
+          userLista, bookLista, bookDemandLista,  
+          getUsers, postUsers, getBooks, postBooks, getBookDemands,  
+          userProfileInfoList, getUserProfileInfo,  
+          userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
+          userBookDemandsInfo, getUserBookDemandsInfo,  
+          availableBookLista, getAllAvailableOfferedBooks,  
+          patchUserPFP, selectedImage, setSelectedImage,  
+          postExchangeRequest, getUserById, getUserByIdGenre,  
+          genreList, getGenreList,  
+          putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
+          putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
+          getExchangeByUser,  
+          getBookByIdForExchange,
+          patchAcceptExchange,
+          patchExchangeSelectOfferedBook,
+          patchFinalizeExchange,
+          loading, setLoading
         }
       }>
       {children}

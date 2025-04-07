@@ -101,7 +101,7 @@
         direction: ltr;
         padding: 10px;
         table {
-          width: 100%;
+          width: 90%;
           justify-self: center;
           padding: 10px;
           min-width: 600px;
@@ -110,16 +110,17 @@
         &__table {
           &-head {
             border-bottom: 1px solid black;
-            background-color: $secondary-color;
-            text-align: center;
+            background-color: $button-color;
+            color: white;
+            //text-align: center;
             &_element {
-              padding: 10px;
+              padding: 10px 2.5px;
             }
           }
           &-body {
             background-color: white;
             &_element {
-              padding: 10px;
+              padding: 10px !important;
               border-bottom: 1px solid rgba(0, 0, 0, 0.25);
             }
           }

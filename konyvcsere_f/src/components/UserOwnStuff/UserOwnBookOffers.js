@@ -6,7 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { hu } from "date-fns/locale";
 import ModalEditBookOffer from './modals/ModalEditBookOffer';
 
-function UserOwnBookOffers({ refresh = false, onRefreshed = () => {} }) {
+function UserOwnBookOffers() {
   const { userBookOffersInfo, getUserBookOffersInfo, setBookOffersInfo } = useApiContext();
   const { user } = useAuthContext();
 
@@ -19,11 +19,8 @@ function UserOwnBookOffers({ refresh = false, onRefreshed = () => {} }) {
   };
 
   useEffect(() => {
-    if (refresh) {
-      getUserBookOffersInfo(user.id, setBookOffersInfo);
-      onRefreshed();
-    }
-  }, [refresh]);
+    if (user) getUserBookOffersInfo(user.id, setBookOffersInfo);
+  }, [user]);
 
   
   useEffect(() => {
@@ -48,34 +45,12 @@ function UserOwnBookOffers({ refresh = false, onRefreshed = () => {} }) {
             <button className="btn btn-primary all-available-books__button" variant="primary" onClick={() => handleShowEditModal(bookDetail)}>szerkesztés</button>
           </div>
         </div>
-             
-        /*<div key={index} className='user-book-offers'>
-          <div className='user-book-offers__details-left'>
-            <img
-              className='user-book-offers__details-left__image'
-              src={book && bookDetail.img_url ? `http://localhost:8000/${bookDetail.img_url}` : '/basic_bookDetail.png'}
-              alt={bookDetail.title}
-            />
-          </div>
-          <div className='user-book-offers__details-right'>
-            <p className='user-book-offers__details-right__text'>cím: <span className='--value'>{bookDetail.title}</span></p>
-            <p className='user-book-offers__details-right__text'>kiadó: <span className='--value'>{bookDetail.publisher_name}</span></p>
-            <p className='user-book-offers__details-right__text'>műfaj: <span className='--value'>{bookDetail.genre_name}</span></p>
-            <p className='user-book-offers__details-right__text'>nyelv: <span className='--value'>{bookDetail.language}</span></p>
-            <p className='user-book-offers__details-right__text'>kiadás éve: <span className='--value'>{bookDetail.publication_year}</span></p>
-            <p className='user-book-offers__details-right__text'>minőség: <span className='--value'>{bookDetail.quality}</span></p>
-            <p className='user-book-offers__details-right__text'>állapot: <span className='--value'>{bookDetail.book_status}</span></p>
-          </div>
-            <p className='user-book-offers__details-right__text'>feltöltve: <span className='--value'>{
-              formatDistanceToNow(new Date(bookDetail.updated_at), { addSuffix: true, locale: hu })}
-                    </span>
-          </p>
-        </div>*/
       ))}
       {editModalVisible && <ModalEditBookOffer
         show={editModalVisible}
         handleClose={handleShowEditModal}
         book={editSelectedBook}
+        onUpdated={() => getUserBookOffersInfo(user.id, setBookOffersInfo)}
       />} 
     </>
   );

@@ -8,9 +8,9 @@
     .modal-content {
         
         
-        .modalHeader {
+        .modal-header {
         background-color: $button-color;
-        color: $secondary-color;
+        color: white;
         
         
         
@@ -34,7 +34,7 @@
             }
         
         }
-        .modalBody{
+        .modal-body{
             
             padding: 20px;
             background-color: $primary-background-color;

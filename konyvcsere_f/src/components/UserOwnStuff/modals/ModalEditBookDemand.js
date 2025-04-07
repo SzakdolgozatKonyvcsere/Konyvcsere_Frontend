@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import useApiContext from '../../../contexts/ApiContext';
 
-function ModalEditBookDemand({ show, handleClose, book }) {
+function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
   const {
     putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand, genreList, getGenreList
   } = useApiContext();
@@ -14,14 +14,15 @@ function ModalEditBookDemand({ show, handleClose, book }) {
   useEffect (()=>{
     if (book) {
       const matchingGenre = genreList.find(g => g.genre_name === book.genre_name); //Megkapjuk mufaj id-t neve alapjan
-      setUserUpdateBookDemand({
-        publisher_name: book.publisher_name,
-        title: book.title,
-        language: book.language,
-        genre_id: matchingGenre ? matchingGenre.genre_id : "",
-        min_publication_year: book.min_publication_year,
-        max_publication_year: book.max_publication_year,
-      });
+        setUserUpdateBookDemand({
+          publisher_name: book.publisher_name,
+          title: book.title,
+          language: book.language,
+          authors: book.authors,
+          genre_id: matchingGenre ? matchingGenre.genre_id : "",
+          min_publication_year: book.min_publication_year,
+          max_publication_year: book.max_publication_year,
+        });
     }
   }, [book]);
 
@@ -52,7 +53,7 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Cím</Form.Label>
+            <Form.Label>Cím (kötelező)</Form.Label>
             <Form.Control
               type="text"
               name="title"
@@ -62,7 +63,7 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Műfaj</Form.Label>
+            <Form.Label>Műfaj (kötelező)</Form.Label>
             <Form.Select
               name="genre_id"
               value={userUpdateBookDemand.genre_id || ""}
@@ -78,6 +79,16 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
+            <Form.Label>Szerzők (több szerzőt felsorolhat vesszővel elválasztva)</Form.Label>
+            <Form.Control
+              type="text"
+              name="authors"
+              value={userUpdateBookDemand.authors|| ""}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
             <Form.Label>Nyelv</Form.Label>
             <Form.Control
               type="text"
@@ -88,7 +99,7 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Minimum kiadási év</Form.Label>
+            <Form.Label>Minimum kiadási év (kötelező)</Form.Label>
             <Form.Control
               type="number"
               name="min_publication_year"
@@ -99,7 +110,7 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Maximum kiadási év</Form.Label>
+            <Form.Label>Maximum kiadási év (kötelező)</Form.Label>
             <Form.Control
               type="number"
               name="max_publication_year"
@@ -117,8 +128,8 @@ function ModalEditBookDemand({ show, handleClose, book }) {
           className="btn-primary"
           onClick={async () => {
             await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
+            onUpdated();
             await handleClose();
-            window.location.reload();
           }}
         >módosítás</Button>
       </Modal.Footer>

@@ -21,6 +21,7 @@ const UsersTableAdminPage = React.lazy(() => import("./pages/UsersTableAdminPage
 const BooksTableAdminPage = React.lazy(() => import("./pages/BooksTableAdminPage")) ;
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
 const KonyvInfoSajat = React.lazy(() => import("./pages/UserOwnBooksInfo"));
+const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo"));
 
 function App() {
   const { user } = useAuthContext();
@@ -53,13 +54,14 @@ function App() {
         {user && user.role === 1 && <Route element={<UserLayout />}>
           <Route path="/" element={<KezdolapUser />} />
           <Route path="konyvek-sajat" element={<KonyvInfoSajat />} />
+          <Route path="keresesek-sajat" element={<KeresesekInfoSajat />} />
           <Route path="konyvfeltoltes" element={<KonyvFeltoltes />} />
           <Route path="konyvkereses" element={<AllAvailableBooks />} />
           <Route path="profil" element={<UserOwnInfo />} />
           <Route path="/profil/:id" element={<OtherUserInfo />} />
           <Route path="konyvcserek" element={<UserExchanges />} />
           <Route path="/profil/:id/valasztas" element={<OtherUserChoose />} />
-        
+
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
       </Routes>

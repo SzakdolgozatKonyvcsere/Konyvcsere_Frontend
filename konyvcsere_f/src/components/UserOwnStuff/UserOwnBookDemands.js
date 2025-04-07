@@ -24,6 +24,7 @@ function UserOwnBookDemands() {
     "kiadó",
     "cím",
     "műfaj",
+    "szerzők",
     "nyelv",
     "min év",
     "max év",
@@ -77,6 +78,7 @@ function UserOwnBookDemands() {
         show={editModalVisible}
         handleClose={handleShowEditModal}
         book={editSelectedBook}
+        onUpdated={() => getUserBookDemandsInfo(user.id, setUserBookDemandsInfo)}
       />}
     </>
   )

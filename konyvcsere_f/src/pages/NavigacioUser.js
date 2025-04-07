@@ -27,7 +27,9 @@ export default function NavigacioUser() {
         case '/konyvfeltoltes':
             return 'Könyvfeltöltés';
         case '/konyvek-sajat':
-            return 'Feltöltött Könyveim';
+            return 'Feltöltött könyveim';
+        case '/keresesek-sajat':
+            return 'Mentett kereséseim';
         case '/konyvkereses':
             return 'Könyvek keresése';
         case '/':
@@ -66,6 +68,9 @@ export default function NavigacioUser() {
                         </li>
                         <li className="list-group-item border-0">
                             <Link className="nav-link" to="/konyvek-sajat" onClick={() => setMenuOpen(false)}>Feltöltött könyveim</Link>
+                        </li>
+                        <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/keresesek-sajat" onClick={() => setMenuOpen(false)}>Mentett kereséseim</Link>
                         </li>
                         <li className="list-group-item border-0">
                             <Link className="nav-link" to="/konyvkereses" onClick={() => setMenuOpen(false)}>Könyv keresés</Link>

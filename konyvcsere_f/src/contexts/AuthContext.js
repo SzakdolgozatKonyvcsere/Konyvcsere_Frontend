@@ -61,7 +61,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await csrf();
-
     myAxios.post("/logout").then((resp) => {
       setUser(null);
       navigate("/"); 

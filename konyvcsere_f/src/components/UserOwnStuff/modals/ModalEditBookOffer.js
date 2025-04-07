@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap';
 import useApiContext from '../../../contexts/ApiContext';
 
-function ModalEditBookOffer({ show, handleClose, book}) {
+function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
   const {
     putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer, genreList, getGenreList, getUserBookOffersInfo
   } = useApiContext();
@@ -35,6 +35,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
         publisher_name: book.publisher_name,
         title: book.title,
         language: book.language,
+        authors: book.authors,
         genre_id: genreList.find(g => g.genre_name === book.genre_name)?.genre_id || "",
         publication_year: book.publication_year,
         quality: book.quality,
@@ -93,6 +94,16 @@ function ModalEditBookOffer({ show, handleClose, book}) {
           </Form.Group>
 
           <Form.Group className="mb-3">
+            <Form.Label>Szerzők (több szerzőt felsorolhat vesszővel elválasztva)</Form.Label>
+            <Form.Control
+              type="text"
+              name="authors"
+              value={userUpdateBookOffer.authors|| ""}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
             <Form.Label>Nyelv</Form.Label>
             <Form.Control
               type="text"
@@ -136,7 +147,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
               accept="image/*"
             />
           </Form.Group>
-          {userUpdateBookOffer.img_url && (
+          {/*userUpdateBookOffer.img_url && (
             <div className="mb-3">
               <Form.Label>Jelenlegi kép</Form.Label>
               <div>
@@ -147,7 +158,7 @@ function ModalEditBookOffer({ show, handleClose, book}) {
                 />
               </div>
             </div>
-          )}
+          )*/}
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -158,8 +169,9 @@ function ModalEditBookOffer({ show, handleClose, book}) {
           onClick={async () => {
             await putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer);
             await getUserBookOffersInfo();
+            onUpdated();
             await handleClose();
-            window.location.reload();
+            //window.location.reload();
           }}
         >
           módosítás
