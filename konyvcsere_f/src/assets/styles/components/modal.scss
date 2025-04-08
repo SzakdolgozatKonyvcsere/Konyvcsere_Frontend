@@ -26,11 +26,10 @@
             border-radius: 8px;
             border: none;
             transition: 0.3s ease-in-out, transform 0.2s;
-            
-    
+
             &:hover {
                 background-color: $primary-color;
-                transform: scale(1.05);
+                //transform: scale(1.05);
             }
         
         }

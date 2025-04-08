@@ -94,6 +94,13 @@
         }
       }
     }
+    .book-demands-head {
+      display: flex;
+      flex-direction: row;
+      height: 10vh;
+      align-items: center;
+      justify-content: space-evenly;
+    }
     .book-demands-area {
       width: 100%;
       .user-book-demands {

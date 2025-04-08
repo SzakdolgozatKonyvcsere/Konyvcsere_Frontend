@@ -361,14 +361,34 @@ const patchFinalizeExchange = async (exchangeId) => {
       const response = await myAxios.post(`/api/book-offers/${offerId}/user-update?_method=PUT`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      console.log('SUCCESS:', response.data);
     } catch (err) {
-      console.error('ERROR:', err.response?.data || err.message);
+      console.error('Hiba:', err.response?.data || err.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const softDeleteBookDemand = async (demandId) => {
+    try {
+      await myAxios.patch(`/api/soft-delete/${demandId}/book-demand`);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  const softDeleteBookOffer = async (offerId) => {
+    try {
+      await myAxios.patch(`/api/soft-delete/${offerId}/book-offer`);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  const softDeleteExchange = async (exchangeId) => {
+    try {
+      await myAxios.patch(`/api/soft-delete/${exchangeId}/exchange`);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
   //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
   //meghivhatunk tehat lehetne ezt egysegesiteni
@@ -408,9 +428,8 @@ const patchFinalizeExchange = async (exchangeId) => {
           putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
           getExchangeByUser,  
           getBookByIdForExchange,
-          patchAcceptExchange,
-          patchExchangeSelectOfferedBook,
-          patchFinalizeExchange,
+          patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange,
+          softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
           loading, setLoading
         }
       }>

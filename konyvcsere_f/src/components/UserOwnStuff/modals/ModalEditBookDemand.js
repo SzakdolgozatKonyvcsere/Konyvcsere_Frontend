@@ -41,7 +41,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-
           <Form.Group className="mb-3">
             <Form.Label>Kiadó</Form.Label>
             <Form.Control
@@ -125,7 +124,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
         <Button variant="secondary" onClick={handleClose}>vissza</Button>
         <Button
           variant="primary"
-          className="btn-primary"
           onClick={async () => {
             await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
             onUpdated();

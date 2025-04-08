@@ -2,18 +2,27 @@ import React, { useEffect, useState } from 'react'
 import useAuthContext from '../../contexts/AuthContext';
 import useApiContext from '../../contexts/ApiContext';
 import ModalEditBookDemand from './modals/ModalEditBookDemand';
+import ModalDeleteBookDemand from './modals/ModalDeleteBookDemand';
 
 function UserOwnBookDemands() {
   const {userBookDemandsInfo, getUserBookDemandsInfo, setUserBookDemandsInfo, genreList, getGenreList} = useApiContext();
   const {user} = useAuthContext();
 
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [editSelectedBook, setEditSelectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(null);
+
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  //const [deleteSelectedBook, setDeleteSelectedBook] = useState(null);
 
   const handleShowEditModal = (book) => {
     setEditModalVisible(!editModalVisible);
-    setEditSelectedBook(book);
+    setSelectedBook(book);
   };
+
+  const handleShowDeleteModal = (book) => {
+    setDeleteModalVisible(!deleteModalVisible);
+    setSelectedBook(book);
+  }
   
   useEffect(() => {
     getUserBookDemandsInfo(user.id, setUserBookDemandsInfo);
@@ -45,7 +54,9 @@ function UserOwnBookDemands() {
             </tr>
           </thead>
           <tbody className='user-book-demands__table-body'>
-            {userBookDemandsInfo.map((book, index) => (
+            {userBookDemandsInfo
+              .filter((book) => book.demand_status !== 'x')
+              .map((book, index) => (
                 <tr key={index} className='user-book-demands__table-body_element'>
                 {Object.entries(book)
                   .filter(([key]) => !["demand_id", "name", "created_at"].includes(key))
@@ -66,7 +77,7 @@ function UserOwnBookDemands() {
                     <button onClick={() => handleShowEditModal(book)}>szerkesztés</button>
                   </td>
                   <td className='table_admin-row--button'>
-                    <button onClick={() => {}}>törlés</button>
+                    <button onClick={() => handleShowDeleteModal(book)}>törlés</button>
                   </td> 
                 </tr>
               )
@@ -77,7 +88,13 @@ function UserOwnBookDemands() {
       {editModalVisible && <ModalEditBookDemand
         show={editModalVisible}
         handleClose={handleShowEditModal}
-        book={editSelectedBook}
+        book={selectedBook}
+        onUpdated={() => getUserBookDemandsInfo(user.id, setUserBookDemandsInfo)}
+      />}
+      {deleteModalVisible && <ModalDeleteBookDemand
+        show={deleteModalVisible}
+        handleClose={handleShowDeleteModal}
+        book={selectedBook}
         onUpdated={() => getUserBookDemandsInfo(user.id, setUserBookDemandsInfo)}
       />}
     </>

@@ -165,7 +165,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
         <Button variant="secondary" onClick={handleClose}>vissza</Button>
         <Button
           variant="primary"
-          className="btn-primary"
+          //className="btn-primary"
           onClick={async () => {
             await putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer);
             await getUserBookOffersInfo();
