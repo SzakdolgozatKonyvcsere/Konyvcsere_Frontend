@@ -5,19 +5,14 @@ import KonyvKeresModal from './KonyvKeresModal';
 //a keresés funkcióhoz az összes elérhető könyv megmutatása
 //modal, tehát a felugró ablak gomb általi mutatása, könvek részleteinek kiirása
 export default function KonyvKeresKartyak(props) {
-
-
-  
         const [modalShow, setModalShow] = useState(false);
         const [selectedBook, setSelectedBook] = useState(null);
 
         const handleShowModal = (book) => {
           if (book){
             setSelectedBook(book);
-            setModalShow(true);
-            
+            setModalShow(true);       
           }
-          
       };
 
     return( 

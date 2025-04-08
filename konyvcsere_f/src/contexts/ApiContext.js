@@ -1,13 +1,14 @@
 import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "./AuthContext";
 
 
 export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  //const {user, crsf} = useAuthContext();
+  const {user, crsf} = useAuthContext();
   
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +32,7 @@ export const ApiProvider = ({ children }) => {
 
   //Users
   const getUsers = async (vegpont) => {
-    //setLoading(true);
+    setLoading(true);
     try{
       //console.log("getusers");
       const {data} = await myAxios.get(vegpont);
@@ -43,7 +44,7 @@ export const ApiProvider = ({ children }) => {
     }
   }
   const postUsers = async(vegpont,adat)=>{
-    //setLoading(true);
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -56,7 +57,7 @@ export const ApiProvider = ({ children }) => {
 
   //Books
   const getBooks = async (vegpont) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
       setBookLista(data);
@@ -69,7 +70,7 @@ export const ApiProvider = ({ children }) => {
     }
   };
   const postBooks = async(vegpont,adat)=>{
-    //setLoading(true);
+    setLoading(true);
     try{
         const response = await myAxios.post(vegpont,adat);
         //console.log("adat:", response.data)
@@ -81,7 +82,7 @@ export const ApiProvider = ({ children }) => {
   }
 
   const getGenreList = async() => {
-    //setLoading(true);
+    setLoading(true);
     try {
       const response = await myAxios.get("/api/genres");
       setGenreList(response.data);
@@ -94,7 +95,7 @@ export const ApiProvider = ({ children }) => {
 
   //Book demands
   const getBookDemands = async () => {
-    //setLoading(true);
+    setLoading(true);
     try {
       const { data } = await myAxios.get("/api/book-demands");
       setBookDemandLista(data);
@@ -238,7 +239,7 @@ const patchAcceptExchange = async (exchange_id) => {
 
 //cserefolyamat 2 konyv kivalasztasa
 const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
-  //setLoading(true);
+  setLoading(true);
   try {
       const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
         offered_item: bookId
@@ -278,7 +279,7 @@ const patchFinalizeExchange = async (exchangeId) => {
 
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       const {data} = await myAxios.get(`/api/user/${user_id}/profile-info`);
       setUserProfileInfoList(data);
@@ -291,6 +292,7 @@ const patchFinalizeExchange = async (exchangeId) => {
     }
   }
   const getUserBookOffersInfo = async (user_id) => {
+    //setLoading(true);
     try {
       const {data} = await myAxios.get(`/api/user/${user_id}/book-offer-info`);
       setUserBookOffersInfo(data);
@@ -313,7 +315,7 @@ const patchFinalizeExchange = async (exchangeId) => {
   }
 
   const patchUserPFP = async (vegpont, adat) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       await myAxios.post(vegpont, adat);      
     } catch (error) {
@@ -324,7 +326,7 @@ const patchFinalizeExchange = async (exchangeId) => {
   }
 
   const putUserUpdateBookDemand = async (book_demand_id, adat) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);  
     } catch (error) {
@@ -334,7 +336,7 @@ const patchFinalizeExchange = async (exchangeId) => {
     }
   }
   /*const putUserUpdateBookOffer = async (book_demand_id, adat) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       await myAxios.put(`/api/book-offers/${book_demand_id}/user-update`, adat);  
     } catch (error) {
@@ -344,7 +346,7 @@ const patchFinalizeExchange = async (exchangeId) => {
     }
   }*/
   const putUserUpdateBookOffer = async (offerId, data) => {
-    //setLoading(true);
+    setLoading(true);
     const formData = new FormData();
     formData.append('publisher_name', String(data.publisher_name));
     formData.append('title', String(data.title));
@@ -361,6 +363,7 @@ const patchFinalizeExchange = async (exchangeId) => {
       const response = await myAxios.post(`/api/book-offers/${offerId}/user-update?_method=PUT`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
+      return response.data;
     } catch (err) {
       console.error('Hiba:', err.response?.data || err.message);
     } finally {
@@ -410,6 +413,11 @@ const patchFinalizeExchange = async (exchangeId) => {
    
   //},[])
 
+  useEffect(() => {
+    if (user) {
+      getGenreList();
+    }
+  }, [user]);
 
   return (
     <ApiContext.Provider

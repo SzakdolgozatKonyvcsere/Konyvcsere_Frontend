@@ -25,7 +25,7 @@ const KonyvKeresRange = ({ range, setRange }) => {
                 <Form.Label>Válassz egy évjárat tartományt:</Form.Label>
                 <Slider 
                     range 
-                    min={1930} 
+                    min={1700} 
                     max={new Date().getFullYear()} 
                     step={1} 
                     value={yearRange}

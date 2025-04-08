@@ -23,7 +23,7 @@ export default function KonyvKereses() {
     publisher: "",
     language: "",
     genre_name:"",
-    minYear: 1930,
+    minYear: 1700,
     maxYear: new Date().getFullYear(),
   });
   //const [filteredBooks, setFilteredBooks] = useState([...availableBookLista]);

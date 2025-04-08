@@ -30,7 +30,9 @@ function LegujabbKonyvAjanlat() {
             ) : (
                 <ul>
                     {newBooks.length > 0 ? (
-                        newBooks.map((book) => (
+                        newBooks
+                            .filter((book) => book.book_status !== 'x')
+                            .map((book) => (
                             <li key={book.id} className="book-item">
                             <img className='kezdolapBooks' src={book.img_url ? book.img_url : '/basic_book.png'} alt="Könyv borító" />
                                 <h6>{book.title}</h6>

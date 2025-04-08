@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap';
 import useApiContext from '../../../contexts/ApiContext';
 
 function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
   const {
-    putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer, genreList, getGenreList, getUserBookOffersInfo
+    putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer, genreList, getUserBookOffersInfo
   } = useApiContext();
 
+  const [validated, setValidated] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +26,20 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
     }));
   };
 
-  useEffect(() => {
-    getGenreList();
-  }, []);
+  const handleSubmit = async (e) => {
+    const form = document.getElementById("edit-user-book-offer-form");
+
+    if (!form.checkValidity()) {
+      setValidated(true);
+      return;
+    }
+
+    setValidated(true);
+    await getUserBookOffersInfo(book.user);
+    await putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer);
+    onUpdated();
+    await handleClose();
+  }
 
   useEffect(() => {
     if (book && genreList.length > 0) {
@@ -52,7 +64,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
         <Modal.Title>szerkesztés</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form id="edit-user-book-offer-form" noValidate validated={validated}>
 
           <Form.Group className="mb-3">
             <Form.Label>Kiadó</Form.Label>
@@ -63,6 +75,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               onChange={handleInputChange}
               required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -74,6 +87,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               onChange={handleInputChange}
               required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -91,6 +105,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
                 </option>
               ))}
             </Form.Select>
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -100,7 +115,9 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               name="authors"
               value={userUpdateBookOffer.authors|| ""}
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -112,6 +129,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               onChange={handleInputChange}
               required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -124,6 +142,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               min={1700} max={new Date().getFullYear()}
               required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -136,6 +155,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
               min={1} max={5}
               required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -165,14 +185,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
         <Button variant="secondary" onClick={handleClose}>vissza</Button>
         <Button
           variant="primary"
-          //className="btn-primary"
-          onClick={async () => {
-            await putUserUpdateBookOffer(book.offer_id, userUpdateBookOffer);
-            await getUserBookOffersInfo();
-            onUpdated();
-            await handleClose();
-            //window.location.reload();
-          }}
+          onClick={handleSubmit}
         >
           módosítás
         </Button>

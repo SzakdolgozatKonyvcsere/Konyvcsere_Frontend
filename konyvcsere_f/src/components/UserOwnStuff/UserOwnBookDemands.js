@@ -26,7 +26,6 @@ function UserOwnBookDemands() {
   
   useEffect(() => {
     getUserBookDemandsInfo(user.id, setUserBookDemandsInfo);
-    getGenreList();
   }, []);
 
   const headLabels = [

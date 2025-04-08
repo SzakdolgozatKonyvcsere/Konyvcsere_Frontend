@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import useApiContext from '../../../contexts/ApiContext';
 
 function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
   const {
-    putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand, genreList, getGenreList
+    putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand, genreList
   } = useApiContext();
-
-  useEffect(() => {
-    getGenreList();
-  }, []);
+  
+  const [validated, setValidated] = useState(false);
 
   useEffect (()=>{
-    if (book) {
+    if (book && genreList.length > 0) {
       const matchingGenre = genreList.find(g => g.genre_name === book.genre_name); //Megkapjuk mufaj id-t neve alapjan
         setUserUpdateBookDemand({
           publisher_name: book.publisher_name,
@@ -24,7 +22,7 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
           max_publication_year: book.max_publication_year,
         });
     }
-  }, [book]);
+  }, [book, genreList]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,13 +32,26 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
     }));
   }
 
+  const handleSubmit = async (e) => {
+    const form = document.getElementById("edit-user-book-demand-form");
+
+    if (!form.checkValidity()) {
+      setValidated(true);
+      return;
+    }
+
+    await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
+    onUpdated();
+    await handleClose();
+  }
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>szerkesztés</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form id="edit-user-book-demand-form" noValidate validated={validated}>
           <Form.Group className="mb-3">
             <Form.Label>Kiadó</Form.Label>
             <Form.Control
@@ -58,7 +69,9 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
               name="title"
               value={userUpdateBookDemand.title || ""}
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -67,14 +80,16 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
               name="genre_id"
               value={userUpdateBookDemand.genre_id || ""}
               onChange={handleInputChange}
+              required
             >
-              <option value={null}>-- Válassz műfajt --</option>
+              <option value="">-- Válassz műfajt --</option>
               {genreList.map((genre) => (
                 <option key={genre.genre_id} value={genre.genre_id}>
                   {genre.genre_name}
                 </option>
               ))}
             </Form.Select>
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -105,7 +120,9 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
               value={userUpdateBookDemand.min_publication_year || ""}
               onChange={handleInputChange}
               min={1700}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -116,7 +133,9 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
               value={userUpdateBookDemand.max_publication_year || ""}
               onChange={handleInputChange}
               max={new Date().getFullYear()}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
         </Form>
       </Modal.Body>
@@ -124,11 +143,7 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
         <Button variant="secondary" onClick={handleClose}>vissza</Button>
         <Button
           variant="primary"
-          onClick={async () => {
-            await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
-            onUpdated();
-            await handleClose();
-          }}
+          onClick={handleSubmit}
         >módosítás</Button>
       </Modal.Footer>
     </Modal>

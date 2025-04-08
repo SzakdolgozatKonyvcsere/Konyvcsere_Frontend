@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     //getAdat("/api/osszes-konyv", setKonyvekLista)
-    getUser()
+    getUser();
   }, [])
 
   return (

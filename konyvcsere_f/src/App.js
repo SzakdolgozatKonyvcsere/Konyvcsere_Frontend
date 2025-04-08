@@ -43,7 +43,7 @@ function App() {
               <Route path="/" element={<Kezdolap/>} />
               <Route path="/bejelentkezes" element={<Bejelentkezes />} />
               <Route path="regisztracio" element={<Regisztracio />} />      
-              <Route path="*" element={<NoPage />} />    
+              {/*<Route path="*" element={<NoPage />} />*/}    
           </Route>  
         )}
 
