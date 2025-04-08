@@ -1,65 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Button, Modal, Form } from 'react-bootstrap'
+import useAuthContext from '../../../contexts/AuthContext';
 import useApiContext from '../../../contexts/ApiContext';
 
-function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
-  const {
-    putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand, genreList
-  } = useApiContext();
+function ModalAddNewBookSearch({ show, handleClose, onUpdated }) {
+
+  const { user } = useAuthContext();
+  const { postBookSearch, genreList } = useApiContext();
   
   const [validated, setValidated] = useState(false);
-
-  useEffect (()=>{
-    if (book && genreList.length > 0) {
-      const matchingGenre = genreList.find(g => g.genre_name === book.genre_name); //Megkapjuk mufaj id-t neve alapjan
-        setUserUpdateBookDemand({
-          publisher_name: book.publisher_name,
-          title: book.title,
-          language: book.language,
-          authors: book.authors,
-          genre_id: matchingGenre ? matchingGenre.genre_id : "",
-          min_publication_year: book.min_publication_year,
-          max_publication_year: book.max_publication_year,
-        });
-    }
-  }, [book, genreList]);
+  const [bookDemandData, setBookDemandData] = useState({
+    user:user.id,
+    publisher_name:"",
+    title:"",
+    genre_id:"",
+    authors:"",
+    language:"",
+    min_publication_year:"",
+    max_publication_year:"",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserUpdateBookDemand((prevData) => ({
+    setBookDemandData((prevData) => ({
       ...prevData,
       [name]: value, // Frissítjük a state-et kapott névvel és értékkel
     }));
   }
 
   const handleSubmit = async () => {
-    const form = document.getElementById("edit-user-book-demand-form");
-
+    const form = document.getElementById("upload-user-book-demand-form");
     if (!form.checkValidity()) {
       setValidated(true);
       return;
     }
-
-    await putUserUpdateBookDemand(book.demand_id, userUpdateBookDemand);
+  
+    setValidated(true);
+  
+    const formData = new FormData();
+    Object.entries(bookDemandData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+  
+    await postBookSearch(formData);
     onUpdated();
     await handleClose();
-  }
+  };
 
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>szerkesztés</Modal.Title>
+        <Modal.Title>Keresés felvitele</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form id="edit-user-book-demand-form" noValidate validated={validated}>
+        <Form id="upload-user-book-demand-form" noValidate validated={validated}>
           <Form.Group className="mb-3">
             <Form.Label>Kiadó</Form.Label>
             <Form.Control
               type="text"
               name="publisher_name"
-              value={userUpdateBookDemand.publisher_name || ""}
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -67,7 +70,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Control
               type="text"
               name="title"
-              value={userUpdateBookDemand.title || ""}
               onChange={handleInputChange}
               required
             />
@@ -78,7 +80,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Label>Műfaj (kötelező)</Form.Label>
             <Form.Select
               name="genre_id"
-              value={userUpdateBookDemand.genre_id || ""}
               onChange={handleInputChange}
               required
             >
@@ -97,9 +98,10 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Control
               type="text"
               name="authors"
-              value={userUpdateBookDemand.authors|| ""}
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -107,9 +109,10 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Control
               type="text"
               name="language"
-              value={userUpdateBookDemand.language || ""}
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">Kérem töltse ki ezt a mezőt!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -117,7 +120,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Control
               type="number"
               name="min_publication_year"
-              value={userUpdateBookDemand.min_publication_year || ""}
               onChange={handleInputChange}
               min={1700}
               required
@@ -130,7 +132,6 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
             <Form.Control
               type="number"
               name="max_publication_year"
-              value={userUpdateBookDemand.max_publication_year || ""}
               onChange={handleInputChange}
               max={new Date().getFullYear()}
               required
@@ -140,11 +141,11 @@ function ModalEditBookDemand({ show, handleClose, book, onUpdated }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>vissza</Button>
-        <Button variant="primary" onClick={handleSubmit}>módosítás</Button>
+        <Button variant='secondary' onClick={handleClose}>mégse</Button>
+        <Button variant='primary' onClick={handleSubmit}>feltölt</Button>
       </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
-export default ModalEditBookDemand
+export default ModalAddNewBookSearch

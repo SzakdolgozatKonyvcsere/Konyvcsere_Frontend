@@ -392,11 +392,18 @@ const patchFinalizeExchange = async (exchangeId) => {
       console.log(error.message);
     }
   }
-  //Ezeket a vegpontokat lehet hasznalni barmely adat lekeresere!
-  //getUserrel ha vegpontot adunk parameterbe akkor barmilyen vegpontot
-  //meghivhatunk tehat lehetne ezt egysegesiteni
 
-
+  const postBookSearch = async (data) => {
+    setLoading(true);
+    try {
+      const response = await myAxios.post('/api/keresesfeltoltes', data);
+      return response.data;
+    } catch (error) {
+      console.log("Hiba, "+ error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   //useEffect(()=>{
     //if (user.role === 0) {
@@ -429,9 +436,9 @@ const patchFinalizeExchange = async (exchangeId) => {
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
           userBookDemandsInfo, getUserBookDemandsInfo,  
           availableBookLista, getAllAvailableOfferedBooks,  
-          patchUserPFP, selectedImage, setSelectedImage,  
+          patchUserPFP, selectedImage, setSelectedImage, 
           postExchangeRequest, getUserById, getUserByIdGenre,  
-          genreList, getGenreList,  
+          genreList, getGenreList, postBookSearch,
           putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
           putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
           getExchangeByUser,  
