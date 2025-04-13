@@ -11,7 +11,7 @@ import UserOwnExchangesModalBook from "./UserOwnExchangesModalBook";
 //3. varakozas: o kerte eloszor, valasztottam konyvet es az o beleegyezesere varok
 export default function UserOwnExchangesCard2(props) {
 
-    const { getUserById, getBookByIdForExchange, patchAcceptExchange } = useApiContext();
+    const { getUserById, getBookByIdForExchange, patchAcceptExchange, patchFinalizeExchange } = useApiContext();
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
     const [interestedUser, setInterestedUser] = useState(null);
     const [desiredBook, setDesiredBook] = useState(null);
@@ -19,6 +19,7 @@ export default function UserOwnExchangesCard2(props) {
     const [desiredBookOwnerUser, setDesiredBookOwnerUser] = useState(null);
     const [user, setUser] = useState("");
     const [clicked, setClicked] = useState(false);
+    const { refreshExchanges } = props;
     // Ha az interested_user nem egyezik az authUser-rel
     const isInterestedUser = interestedUser && interestedUser.id === authUser.id;
     //modalok:
@@ -78,10 +79,27 @@ export default function UserOwnExchangesCard2(props) {
 
     // utolso patch
     const handleFinalAccept = async () => {
-        const result = await patchAcceptExchange(props.exchange.exchange_id);
+      const exchangeId = props.exchange?.exchange_id;
+        if (!exchangeId) {
+            console.error("Nincs exchange ID, a kérés nem küldhető.");
+            return;
+        }
+        try {
+          const finalizedExchange = await patchFinalizeExchange(exchangeId);
+              if (finalizedExchange) {
+              // frissiti a teljes listát (a szülő komponensben)
+              if (typeof refreshExchanges === 'function') {
+                refreshExchanges(); 
+              }
+          }
+      } catch (error) {
+          console.error("Hiba a PATCH kérés során:", error);
+      }
+
+        /*const result = await patchAcceptExchange(props.exchange.exchange_id);
         if (result && typeof props.refreshExchanges === "function") {
           props.refreshExchanges();
-        }
+        }*/
       };
 
 
@@ -108,7 +126,7 @@ export default function UserOwnExchangesCard2(props) {
                   </div>
                     <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
                         <img
-                        className="exchange-books__image"
+                        className="exchange-books__image exchangecardimg"
                         src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                         />
                         <span className="exchange-books__title">{desiredBook?.title}</span>
@@ -139,7 +157,7 @@ export default function UserOwnExchangesCard2(props) {
                   </div>
                   <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
                     <img
-                    className="exchange-books__image"
+                    className="exchange-books__image exchangecardimg"
                     src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
                     />
                     <span className="exchange-books__title">{offeredBook?.title}</span>
@@ -156,7 +174,7 @@ export default function UserOwnExchangesCard2(props) {
                   </div>
                   <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
                     <img
-                      className="exchange-books__image"
+                      className="exchange-books__image exchangecardimg"
                       src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                     />
                     <span className="exchange-books__title">{desiredBook?.title}</span>
@@ -176,7 +194,7 @@ export default function UserOwnExchangesCard2(props) {
                   </div>
                   <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
                     <img
-                    className="exchange-books__image"
+                    className="exchange-books__image exchangecardimg"
                     src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'} 
                     />
                     <span className="exchange-books__title">{offeredBook?.title}</span>
@@ -193,7 +211,7 @@ export default function UserOwnExchangesCard2(props) {
                   </div>
                   <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
                     <img
-                    className="exchange-books__image"
+                    className="exchange-books__image exchangecardimg"
                     src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                     />
                     <span className="exchange-books__title">{desiredBook?.title}</span>
@@ -201,7 +219,7 @@ export default function UserOwnExchangesCard2(props) {
                 </div>
               </div>
             )}
-          </div>
+          </div> 
   
           <div className="card-footer">
             {isInterestedUser && offeredBook ? (

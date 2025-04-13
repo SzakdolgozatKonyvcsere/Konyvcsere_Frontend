@@ -13,32 +13,33 @@ export default function UserOwnExchanges() {
  
     const [exchanges, setExchanges] = useState([]);
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
-    const [user, setUser] = useState("");
+    //const [user, setUser] = useState("");
 
     const [key, setKey] = useState('beerkezo');
 
         useEffect(() => {
             if (authUser) {
-              setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
-              console.log("csere, bejelenkezett fh: ", user) //ok
+              //setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
+              console.log("csere, bejelenkezett fh: ", authUser.id) //ok
             }
           }, [authUser]);
    
 
     useEffect(() => {
+        if (!authUser || !authUser.id) return;
         async function fetchData() {
             try {
                 const exchangeData = await getExchangeByUser(authUser.id);
                 setExchanges(exchangeData || []);
-                console.log("cserek: ", exchangeData) // ok
-                console.log("cserek2: ", exchanges)
+                //console.log("lekert cserek: ", exchangeData, authUser) // ok
+                //console.log("cserek2: ", exchanges) regi allapoto mutatja
             } catch (error) {
                 console.error("Hiba az adatok lekérésekor:", error);
             }
-            console.log("cserek2: ", exchanges)
+            //console.log("cserek2 (regi allapot?): ", exchanges)
         }
         fetchData();
-    }, []);
+    }, [authUser]);
 
     useEffect(() => {
         console.log("Frissült az exchanges állapot:", exchanges);
@@ -98,9 +99,9 @@ export default function UserOwnExchanges() {
             </Tab>
             <Tab eventKey="befejezett" title="Befejezett">
                 <div className="exchangeCards">
-                {exchanges.filter(e => e.exchange_status === 'a').length > 0 ? (
+                {exchanges.filter(e => e.exchange_status === 'a' || (e.exchange_status === 'v')).length > 0 ? (
                     exchanges
-                        .filter(e => e.exchange_status === 'a')
+                        .filter(e => e.exchange_status === 'a' || (e.exchange_status === 'v'))
                         .map(exchange => <UserOwnExchangesCard3 key={exchange.exchange_id} exchange={exchange} />)
                 ) : (
                     <p>Nincsenek befejezett cserék.</p>

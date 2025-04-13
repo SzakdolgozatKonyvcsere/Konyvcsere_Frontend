@@ -19,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserOwnExchangesCard1(props) {
 
-    const { getUserById, getBookByIdForExchange, patchAcceptExchange, patchExchangeSelectOfferedBook, getExchangeByUser } = useApiContext();
+    const { getUserById, getBookByIdForExchange, patchAcceptExchange, 
+        patchExchangeSelectOfferedBook, getExchangeByUser, patchRejectExchange } = useApiContext();
 
     const [interestedUser, setInterestedUser] = useState(null);
     const [desiredBook, setDesiredBook] = useState(null);
@@ -73,8 +74,10 @@ export default function UserOwnExchangesCard1(props) {
         if (authUser) {
             console.log("authUser.id:", authUser.id); // Ellenőrzés
             setUser(authUser.id); // Az authUser objektum id-ját állítjuk be
-            console.log("csere, bejelenkezett fh: ", user) //ok
+            console.log("csere, bejelenkezett fh: ", user, authUser.id) //ok
         }
+        console.log("csere, bejelenkezett fh 2x: ", user, authUser.id) //ok
+
     }, [authUser]);
 
 
@@ -163,7 +166,7 @@ const handleExchangeRequest = async () => {
         // Ha sikeres volt, töröljük a localStorage-ból a kiválasztott könyvet
         if (result) {
           localStorage.removeItem("selectedBook"); 
-          alert("Sikeresen elküldted a kiválasztott könyvet!");
+          //alert("Sikeresen elküldted a kiválasztott könyvet!");
     
           // Frissítjük az exchanges listát
           if (typeof refreshExchanges === "function") {
@@ -173,6 +176,28 @@ const handleExchangeRequest = async () => {
       } catch (error) {
         console.error("Hiba a könyv elküldésénél:", error);
       }
+
+  }
+
+  const handleReject = async () => {
+    const exchangeId = props.exchange?.exchange_id;
+        if (!exchangeId) {
+            console.error("Nincs exchange ID, a kérés nem küldhető.");
+            return;
+        }
+        try {
+            // Meghívjuk az API-t a könyv adatainak elküldésére
+            const rejection = await patchRejectExchange(exchangeId);
+            // Ha sikeres volt, töröljük a localStorage-ból a kiválasztott könyvet
+            if (rejection) {
+              // Frissítjük az exchanges listát
+              if (typeof refreshExchanges === "function") {
+                refreshExchanges();
+              }
+            }
+          } catch (error) {
+            console.error("Hiba a könyv elküldésénél:", error);
+          }
 
   }
 
@@ -217,7 +242,7 @@ const handleExchangeRequest = async () => {
                             <span>Érdekelt könyvem: </span><br />
                             {desiredBook ? (
                                 <div className="wantedBook2">
-                                    <img className='exchange-books__image' 
+                                    <img className='exchange-books__image exchangecardimg' 
                                         src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                                         onClick={() => handleShowModalB(desiredBook)}
                                         style={{ cursor: "pointer" }} 
@@ -261,7 +286,7 @@ const handleExchangeRequest = async () => {
                                 <div className='feltoltoUserBookImage' onClick={() => {
                                     clearBook(); // Hookból, a useSelectedBook van hasznalva
                                 }}>
-                                    <img className="exchange-books__image" src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'}
+                                    <img className="exchange-books__image exchangecardimg" src={offeredBook?.img_url ? offeredBook.img_url.startsWith("http") ? offeredBook.img_url : `http://localhost:8000/${offeredBook.img_url}` : '/basic_book.png'}
                                     alt={offeredBook?.title || 'Alapértelmezett könyv'} />
                                     <span className="exchange-books__title">{offeredBook.title}</span>
                                     <small>(Katt a cseréhez!)</small>
@@ -285,7 +310,7 @@ const handleExchangeRequest = async () => {
                             <span>Érdekelt könyvem: </span><br />
                             {desiredBook ? (
                                 <div className="wantedBook2">
-                                    <img className='exchange-books__image' 
+                                    <img className='exchange-books__image exchangecardimg' 
                                         src={desiredBook?.img_url ? desiredBook.img_url.startsWith("http") ? desiredBook.img_url : `http://localhost:8000/${desiredBook.img_url}` : '/basic_book.png'} 
                                         onClick={() => handleShowModalB(desiredBook)}
                                         style={{ cursor: "pointer" }} 
@@ -306,14 +331,14 @@ const handleExchangeRequest = async () => {
                 )}
                 </div>
                 <div className="card-footer">
-                <button className="btn btn-primary -x">X</button>
+                <button className="btn btn-primary -x" onClick={handleReject}> X </button>
                 {props.exchange.exchange_status === 'k' ? (
                     <button className="btn btn-primary -yes" onClick={handleExchangeRequest}>
                         Elfogadom <BiCheck />
                     </button>
                 ) : props.exchange.exchange_status === 'f' ? (
                     <button className="btn btn-primary -yes" onClick={handleExchangeRequest2}>
-                      Kérem elküldeni <BiCheck />
+                      Elküldöm <BiCheck />
                     </button>
                   ):null}
                 </div>

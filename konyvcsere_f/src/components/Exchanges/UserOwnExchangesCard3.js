@@ -3,6 +3,8 @@ import useApiContext from "../../contexts/ApiContext";
 import useAuthContext from "../../contexts/AuthContext";
 import UserOwnExchangesModalOtherProfile from "./UserOwnExchangesModalOtherProfile";
 import UserOwnExchangesModalBook from "./UserOwnExchangesModalBook";
+import { FaArrowRightLong, FaArrowLeftLong, FaArrowRightArrowLeft } from "react-icons/fa6";
+
 
 export default function UserOwnExchangesCard3(props) {
 
@@ -69,49 +71,106 @@ export default function UserOwnExchangesCard3(props) {
     }, [props.exchange]);
 
   // dátumellenőrzés
-  const updatedDate = new Date(props.updated_at);
+  const dateToUse = new Date(props.exchange.updated_at || props.exchange.created_at);
+  //const updatedDate = new Date(props.updated_at);
   const today = new Date();
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(today.getMonth() - 1);
+  if (isNaN(dateToUse)) {
+    console.warn("Nincs érvényes dátum az exchange objektumban!");
+    return null;
+  }
+  /*
+  console.log("datum: ", props.exchange.updated_at);*/
 
-  if (props.exchange_status !== "a" || updatedDate < oneMonthAgo) return null;
+  if (dateToUse < oneMonthAgo) return null;
 
   return (
     <div className="exchangesStage3">
       <div className="card 3">
         <div className="card-header">
-          🎉 Sikeres csere! A részleteket e-mailben is megkaptad.
+        {props.exchange.exchange_status === "a"
+          ? "Sikeres csere! A részleteket e-mailben is megkaptad."
+          : props.exchange.exchange_status === "v"
+          ? "A csere nem jött létre. Lejárt vagy elutasították."
+          : null}
         </div>
         <div className="card-body">
+        {props.exchange.exchange_status === "a" && (
+          <>
           <div className="sectionLeft">
             <div className="feltoltoUser" onClick={() => handleShowModalU(interestedUser)}>
-              <img src={interestedUser?.img_url || "/user_basic_pfp.jpg"} className="user--profile-picture" />
+            <img src={interestedUser?.img_url ? interestedUser.img_url.startsWith("http") ? interestedUser.img_url : `http://localhost:8000/${interestedUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
+            className="user--profile-picture" />
               <span className="userProfileName">{interestedUser?.full_name}</span>
             </div>
             <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
               <img
-                className="exchange-books__image"
+                className="exchange-books__image exchangecardimg"
                 src={offeredBook?.img_url ? `http://localhost:8000/${offeredBook.img_url}` : "/basic_book.png"}
               />
               <span className="exchange-books__title">{offeredBook?.title}</span>
             </div>
           </div>
+          <div className="arrow">
+            <FaArrowRightArrowLeft />
+          </div>
           <div className="sectionRight">
             <div className="feltoltoUser" onClick={() => handleShowModalU(desiredBookOwnerUser)}>
-              <img src={desiredBookOwnerUser?.img_url || "/user_basic_pfp.jpg"} className="user--profile-picture" />
+            <img src={desiredBookOwnerUser?.img_url ? desiredBookOwnerUser.img_url.startsWith("http") ? desiredBookOwnerUser.img_url : `http://localhost:8000/${desiredBookOwnerUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
+            className="user--profile-picture" />
               <span className="userProfileName">{desiredBookOwnerUser?.full_name}</span>
             </div>
             <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
               <img
-                className="exchange-books__image"
+                className="exchange-books__image exchangecardimg"
                 src={desiredBook?.img_url ? `http://localhost:8000/${desiredBook.img_url}` : "/basic_book.png"}
               />
               <span className="exchange-books__title">{desiredBook?.title}</span>
             </div>
           </div>
+          </>
+        )}
+
+        {props.exchange.exchange_status === "v" && (
+          <>
+          <div className="sectionLeft">
+            <div className="feltoltoUser" onClick={() => handleShowModalU(interestedUser)}>
+            <img src={interestedUser?.img_url ? interestedUser.img_url.startsWith("http") ? interestedUser.img_url : `http://localhost:8000/${interestedUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
+            className="user--profile-picture" />
+              <span className="userProfileName">{interestedUser?.full_name}</span>
+            </div>
+            <div className="wantedBook2" onClick={() => handleShowModalB(offeredBook)}>
+              <img
+                className="exchange-books__image exchangecardimg"
+                src={offeredBook?.img_url ? `http://localhost:8000/${offeredBook.img_url}` : "/basic_book.png"}
+              />
+              <span className="exchange-books__title">{offeredBook?.title}</span>
+            </div>
+          </div>
+          <div className="arrow">
+            <FaArrowRightArrowLeft />
+          </div>
+          <div className="sectionRight">
+            <div className="feltoltoUser" onClick={() => handleShowModalU(desiredBookOwnerUser)}>
+            <img src={desiredBookOwnerUser?.img_url ? desiredBookOwnerUser.img_url.startsWith("http") ? desiredBookOwnerUser.img_url : `http://localhost:8000/${desiredBookOwnerUser.img_url}` : "user_basic_pfp.jpg"} alt="Profilkép" 
+            className="user--profile-picture" />
+              <span className="userProfileName">{desiredBookOwnerUser?.full_name}</span>
+            </div>
+            <div className="wantedBook2" onClick={() => handleShowModalB(desiredBook)}>
+              <img
+                className="exchange-books__image exchangecardimg"
+                src={desiredBook?.img_url ? `http://localhost:8000/${desiredBook.img_url}` : "/basic_book.png"}
+              />
+              <span className="exchange-books__title">{desiredBook?.title}</span>
+            </div>
+          </div>
+          </>
+        )}
+
         </div>
         <div className="card-footer">
-          <small>Csere lezárva: {updatedDate.toLocaleDateString()}</small>
+          <small>Csere lezárva: {dateToUse.toLocaleDateString()}</small>
         </div>
 
         {/* Modálok */}

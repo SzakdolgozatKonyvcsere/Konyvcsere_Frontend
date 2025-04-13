@@ -126,7 +126,7 @@ const getUserBookOffersInfo2 = async (user_id) => {
 }
 //osszes elerheto (s + f) konyv
   const getAllAvailableOfferedBooks = async () => {
-    //setLoading(true);
+    
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
       const { data } = await myAxios.get("/api/all-available-books");
@@ -262,14 +262,28 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
 // cserefolyamat 3 elfogadas
 const patchFinalizeExchange = async (exchangeId) => {
   try {
-    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/finalize`);
+    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/acceptfinal`);
     if (response.status === 200) {
-      alert('Sikeresen elküldted a beleegyezést!'); // Success message
+      alert('Sikeresen véglegesítetted a cserét! Minden további információt megkapsz e-mailben!'); // Success message
       return response.data || true;
     }
     return response.data;
   } catch (error) {
     console.error("Hiba a csere véglegesítésekor:", error);
+    return null;
+  }
+};
+//cserefolyamat 4 visszautasít
+const patchRejectExchange = async (exchangeId) => {
+  try {
+    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/reject`);
+    if (response.status === 200) {
+      alert('Sikeresen visszautasítottad a beleegyezést!'); // Success message
+      return response.data || true;
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Hiba a visszautasítás véglegesítésekor:", error);
     return null;
   }
 };
@@ -443,7 +457,7 @@ const patchFinalizeExchange = async (exchangeId) => {
           putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
           getExchangeByUser,  
           getBookByIdForExchange,
-          patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange,
+          patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange, patchRejectExchange,
           softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
           loading, setLoading
         }
