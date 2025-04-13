@@ -90,9 +90,9 @@ export default function UserOwnExchangesCard3(props) {
       <div className="card 3">
         <div className="card-header">
         {props.exchange.exchange_status === "a"
-          ? "Sikeres csere! A részleteket e-mailben is megkaptad."
+          ? <span >✨ Sikeres csere! ✨<br /> A részleteket és teendőket e-mailben megkaptad.</span>
           : props.exchange.exchange_status === "v"
-          ? "A csere nem jött létre. Lejárt vagy elutasították."
+          ? <span className="headerReject">❌ A csere nem jött létre, partnered elutasította. ❌</span>
           : null}
         </div>
         <div className="card-body">

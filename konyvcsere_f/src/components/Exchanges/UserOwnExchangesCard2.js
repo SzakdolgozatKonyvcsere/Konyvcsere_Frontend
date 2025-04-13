@@ -110,8 +110,8 @@ export default function UserOwnExchangesCard2(props) {
             {isInterestedUser && offeredBook
               ? "Találat! Elfogadod a csere feltételeit?"
               : !isInterestedUser && offeredBook
-              ? "Csere partnered válasza..."
-              : "A másik felhasználó beleegyezésére vár..."}
+              ? "Csere partnered beleegyezésére vársz..."
+              : "Csere partnered válasza..."}
           </div>
   
           <div className="card-body">

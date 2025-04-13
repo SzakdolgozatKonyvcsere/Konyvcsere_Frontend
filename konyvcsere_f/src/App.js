@@ -5,7 +5,6 @@ import UserLayout from "./layouts/UserLayout";
 import useAuthContext from "./contexts/AuthContext";
 import React, { Suspense } from "react";
 import Loader from "./components/Loader";
-import { BookuploadContext } from "./contexts/BookuploadContext";
 import UserOwnInfo from "./pages/UserOwnInfo";
 import AllAvailableBooks from "./pages/AllAvailabelBooks";
 import OtherUserInfo from "./pages/OtherUserInfo";

@@ -69,7 +69,7 @@ export default function OtherUserChooseBookCard(props) {
         const handleSelectBook = (book) => {
           const bookWithId = { ...book, id: book.offer_id }; // vagy simán book, ha mindenhol offer_id-vel dolgozol
           console.log("Mentés előtt a könyv:", bookWithId);
-          saveBook(bookWithId);  // ⬅️ így kell!
+          saveBook(bookWithId); 
           
           navigate(-1); // vissza a csere oldalra
           /* localStorage.setItem("selectedBook", JSON.stringify(book)); // Elmentjük a könyvet

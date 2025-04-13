@@ -32,6 +32,8 @@ export default function NavigacioUser() {
             return 'Mentett kereséseim';
         case '/konyvkereses':
             return 'Könyvek keresése';
+        case '/konyvcserek':
+            return 'Csere történeteim';
         case '/':
             return 'Kezdőlap';
         default:
