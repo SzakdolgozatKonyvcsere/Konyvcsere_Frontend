@@ -5,6 +5,7 @@ import useAuthContext from "../../contexts/AuthContext";
 import { Tab, Tabs } from "react-bootstrap";
 import UserOwnExchangesCard2 from "./UserOwnExchangesCard2";
 import UserOwnExchangesCard3 from "./UserOwnExchangesCard3";
+import UserOwnMatches from "./Matches/UserOwnMatches";
 
 
 export default function UserOwnExchanges() {
@@ -110,7 +111,7 @@ export default function UserOwnExchanges() {
             </Tab>
             <Tab eventKey="talalatok" title="Találatok">
                 <div className="exchangeCards">
-
+                    <UserOwnMatches />
                 </div>
             </Tab>
         </Tabs>

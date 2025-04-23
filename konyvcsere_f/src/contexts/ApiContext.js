@@ -29,6 +29,8 @@ export const ApiProvider = ({ children }) => {
   //const [userGetId, setUserGetId] = useState([]);
   //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
   //const csrf = () => myAxios.get("/sanctum/csrf-cookie");
+  const [demands, setDemands]     = useState([])
+  const [matches, setMatches]     = useState({})   // { [demandId]: [offers...] }
 
   //Users
   const getUsers = async (vegpont) => {
@@ -288,6 +290,35 @@ const patchRejectExchange = async (exchangeId) => {
   }
 };
 
+//kereslet kinalat 1
+  // 1) Keresések lekérdezése
+  const getAllDemands = async () => {
+    try {
+      const response = await myAxios.get('/api/book-demands-list')
+      return response.data;            // response.data: tömb [{ demand_id, … }, …]
+    } catch (error) {
+      console.error('Hiba a mentett keresések lekérdezésénél:', error)
+      return []; 
+    } finally {
+      setLoading(false);
+    }
+  }
+// 2) Egy konkrét keresés találatainak lekérdezése
+const getMatchesForDemand = async (demandId) => {
+  
+  try {
+    const response = await myAxios.get(`/api/book-demands-list/${demandId}/matches`)
+    setMatches(prev => ({ 
+      ...prev, 
+      [demandId]: response.data    // response.data: tömb ajánlatokkal
+    }))
+  } catch (error) {
+    console.error(`Hiba a találatok lekérdezésénél (demand=${demandId}):`, error)
+  } finally {
+    setLoading(false);
+  }
+}
+
 
 
 
@@ -437,6 +468,7 @@ const patchRejectExchange = async (exchangeId) => {
   useEffect(() => {
     if (user) {
       getGenreList();
+      
     }
   }, [user]);
 
@@ -457,9 +489,11 @@ const patchRejectExchange = async (exchangeId) => {
           putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
           getExchangeByUser,  
           getBookByIdForExchange,
+          getAllDemands, getMatchesForDemand, demands, matches,
           patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange, patchRejectExchange,
           softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
           loading, setLoading
+
         }
       }>
       {children}

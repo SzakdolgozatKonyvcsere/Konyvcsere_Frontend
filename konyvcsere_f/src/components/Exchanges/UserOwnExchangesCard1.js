@@ -35,7 +35,7 @@ export default function UserOwnExchangesCard1(props) {
     console.log("Visszanavigáltunk, új offeredBook állapot:", offeredBook);
     }, [location]);
     
-    const [clicked, setClicked] = useState(false);
+    //const [clicked, setClicked] = useState(false);
 
     const { user: authUser } = useAuthContext(); // Bejelentkezett felhasználó lekérése    
     const [user, setUser] = useState("");
