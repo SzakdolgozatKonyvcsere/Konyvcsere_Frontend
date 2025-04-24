@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 //import konyvVideo from "../assets/video/konyv.mp4";
 import { myAxios } from "../api/axios";
 import LegujabbKonyvAjanlat from "../components/LegujabbKonyvAjanlat";
+import kep2 from '../assets/kepek/kep2.jpg';
 
 
 export default function Kezdolap() {
@@ -54,11 +55,16 @@ export default function Kezdolap() {
                         <li>Cserélj, fedezz fel és ossz meg könyveket, hogy egy szorosabb, olvasásra épülő közösséget építhessünk együtt!</li>
                     </ul>
                 </aside>
-                <article className="image"></article>
-                </section>
-                <section className="books-section">
+                <div
+                    className="image"
+                    style={{ backgroundImage: `url(${kep2})` }}
+                    role="img"
+                    aria-label=""
+                />
+            </section>
+            <section className="books-section">
                 <LegujabbKonyvAjanlat />
-                </section>
+            </section>
             {/*
             <div className="body__main">
                 <div>
