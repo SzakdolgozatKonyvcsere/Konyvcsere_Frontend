@@ -14,7 +14,7 @@
 @import 'components/exchanges.scss';
 @import 'components/other_prof_choose.scss';
 
-$assetPath: "/assets/kepek/";
+$assetPath: '../../assets/kepek/';
 
 .App {
     max-width: $max-width;
@@ -23,12 +23,12 @@ $assetPath: "/assets/kepek/";
 body {
     background-color: $background-color;
     //font-family: 'Cormorant Garamond', serif;
-    
+
     color: $text-color;
     margin: 0;
     padding: 0;
-    padding-top: 80px; 
-    background-color: $background-color; 
+    padding-top: 80px;
+    background-color: $background-color;
     font-size: 16px;
 }
 
@@ -40,33 +40,34 @@ body {
         padding: 20px;
         height: 40vh;
         justify-content: flex-start;
+
         .fraunces-font {
             font-family: "Fraunces", serif;
             font-optical-sizing: auto;
             font-weight: 600;
             font-style: normal;
             font-variation-settings:
-              "SOFT" 400,
-              "WONK" 500;
-            }
+                "SOFT" 400,
+                "WONK" 500;
+        }
     }
 
     .navbar {
-        background-color: rgba(121, 102, 126, 0.9);  
+        background-color: rgba(121, 102, 126, 0.9);
         width: 100%;
         padding: 15px 0;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        position: fixed;  
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 1000; 
-        background-color: $primary-background-color; 
+        z-index: 1000;
+        background-color: $primary-background-color;
         //cim navban:
         align-items: center;
         justify-content: center;
         display: flex;
-        
+
         .title-in-navbar {
             position: absolute;
             left: 50%;
@@ -79,8 +80,9 @@ body {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             color: $primary-text-color;
-          }
-          //cim navban vege
+        }
+
+        //cim navban vege
     }
 
     .navbar .list-group {
@@ -89,47 +91,50 @@ body {
         top: 80%;
         left: 0;
         width: 40vh;
-        height: 91vh; 
-        overflow-y: auto; 
-        background-color: rgba(250, 250, 250, 0.9); 
+        height: 91vh;
+        overflow-y: auto;
+        background-color: rgba(250, 250, 250, 0.9);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
-        
+
     }
-    
-    
-    
+
+
+
     .nav-link {
-        color: $text-color; 
+        color: $text-color;
         transition: color 0.3s, text-shadow 0.3s;
         font-family: 'Playfair Display', serif;
         font-weight: 700;
+
         &:hover {
-            color: $accent-color; 
+            color: $accent-color;
             text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
         }
     }
-    
-    
+
+
     .navbar-nav {
         .nav-link {
             font-size: 1.1rem;
             font-weight: bold;
-            color: $text-color; 
+            color: $text-color;
             padding: 10px 20px;
             display: block;
+
             &:hover {
                 opacity: 85%;
-                color: $primary-color; 
+                color: $primary-color;
                 text-shadow: $primary-color 0.2px 0.2px;
             }
         }
     }
+
     .navbar-profile img {
         border-radius: 50%;
-        border: 3px solid $secondary-background-color;  
+        border: 3px solid $secondary-background-color;
     }
-    
+
 
 
     .card {
@@ -146,6 +151,7 @@ body {
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
     }
+
     .btn-primary {
         background-color: $button-color;
         color: white;
@@ -154,42 +160,44 @@ body {
         border: none;
         transition: all 0.2s ease-in-out, transform 0.2s;
         margin: 5px;
+
         &:hover {
             background-color: $primary-color;
             //transform: scale(1.05);
             box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         }
+
         &:active {
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
         }
     }
-   
+
     ul.list-group.ps-3 {
-        background-color: rgba(255, 255, 255, 0.8); 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-        border-radius: 5px; 
-        backdrop-filter: blur(8px); 
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        backdrop-filter: blur(8px);
         position: relative;
-        z-index: 10; 
+        z-index: 10;
         padding: 5px 0;
         width: 100%;
     }
-    
-    
+
+
     ul.list-group.ps-3 .nav-link {
         font-size: 1rem;
-        color: #2C1A19; 
+        color: #2C1A19;
         padding: 8px 20px;
         text-decoration: none;
     }
-    
-   
+
+
     ul.list-group.ps-3 .nav-link:hover {
-        color: #A899B5; 
+        color: #A899B5;
         text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
     }
-    
-    
+
+
 
     /* .list-group {
         position: absolute;
@@ -206,12 +214,12 @@ body {
     .main-container {
         display: flex;
         flex-direction: column;
-        align-items: center; 
-        justify-content: center; 
+        align-items: center;
+        justify-content: center;
         min-height: 125vh;
         padding: 20px;
     }
-    
+
     h1 {
         text-align: center;
         color: $primary-color;
@@ -222,18 +230,58 @@ body {
 
     .container {
         display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 40px;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+    }
+
+    .welcome-box {
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .books-section {
+        flex: 1;
+        min-width: 300px;
+        max-width: 600px;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
-        width: 100%;
+        border-radius: 15px;
+        padding: 20px;
+        color: white;
     }
+
 
     article {
         flex: 1;
         min-width: 300px;
         height: 50vh;
         display: flex;
-        //background-image: url("#{$assetPath}/kep2.jpg");
+        //background-image: url("#{$assetPath}kep2.jpg");
+        background-size: cover;
+        background-position: center;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .image {
+        flex: 1;
+        min-width: 300px;
+        height: 50vh;
+        background-image: url("#{$assetPath}kep2.jpg");
         background-size: cover;
         background-position: center;
         border-radius: 15px;
@@ -250,7 +298,7 @@ body {
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
-    h1, h2, h3 {
+    h1,h2,h3 {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         color: $primary-text-color;
@@ -277,41 +325,51 @@ body {
     }
 
     .ajanlas {
-        text-align: center;
-        margin-top: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
     }
-    
+
     .ajanlas ul {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
-        justify-content: space-between; 
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px 0;
+        list-style: none;
+        margin: 0;
     }
-    
+
     .book-item {
+        flex: 0 0 auto;
+        width: 200px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
+        justify-content: flex-start;
         border: 1px solid #ccc;
         padding: 10px;
+        border-radius: 10px;
+        background-color: white;
         text-align: center;
-        width: 30%;  
+        margin: 0; // új
     }
-    
+
     .kezdolapBooks {
-        width: 100%;  
-        max-width: 200px;  
-        height: 30vh;  
-        object-fit: contain;  
+        width: 100%;
+        max-width: 200px;
+        height: 30vh;
+        object-fit: contain;
     }
-    
+
     h6 {
         font-size: 16px;
         font-weight: bold;
         margin: 10px 0;
     }
-    
+
     p {
         font-size: 14px;
         color: #666;
@@ -327,54 +385,46 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      
-      .modal-content {
+    }
+
+    .modal-content {
         background: white;
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         text-align: center;
-      }
-      
-      .modal button {
-        margin: 10px;
-      }
+    }
 
-    
+    .modal button {
+        margin: 10px;
+    }
+
+
     @media (max-width: 768px) {
+        .book-item {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .navbar {
             padding: 10px 0;
         }
-    
-        
+
+
         ul.list-group.ps-3 {
-            width: 80%; 
-            left: 10%;  
+            width: 80%;
+            left: 10%;
         }
-    
+
     }
-    
-/* /* Videó szekció 
-.video-section {
-    position: relative;
-    width: 100%;  
-    height: 80vh;  
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center; 
-} */
 
 }
+
 .btn {
     &:active {
         background-color: gray !important;

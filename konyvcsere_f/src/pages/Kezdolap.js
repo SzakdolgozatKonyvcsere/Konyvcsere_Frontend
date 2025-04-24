@@ -45,8 +45,7 @@ export default function Kezdolap() {
 
             {/*<h1>Kezdőlap</h1>*/}
             <section className="container">
-                
-                <aside>
+                <aside className="welcome-box">
                     <h2>Üdvözöllek az Adok-Kapok Közösségben!</h2>
                     <ul>
                         <li>Képzeld el, hogy egy új könyv mindig csak egy csere távolságra van tőled!</li>
@@ -55,8 +54,11 @@ export default function Kezdolap() {
                         <li>Cserélj, fedezz fel és ossz meg könyveket, hogy egy szorosabb, olvasásra épülő közösséget építhessünk együtt!</li>
                     </ul>
                 </aside>
+                <article className="image"></article>
+                </section>
+                <section className="books-section">
                 <LegujabbKonyvAjanlat />
-            </section>
+                </section>
             {/*
             <div className="body__main">
                 <div>
