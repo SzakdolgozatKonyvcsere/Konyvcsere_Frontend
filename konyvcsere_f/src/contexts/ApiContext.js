@@ -295,6 +295,7 @@ const patchRejectExchange = async (exchangeId) => {
   const getAllDemands = async () => {
     try {
       const response = await myAxios.get('/api/book-demands-list')
+      setDemands(response.data);
       return response.data;            // response.data: tömb [{ demand_id, … }, …]
     } catch (error) {
       console.error('Hiba a mentett keresések lekérdezésénél:', error)
@@ -308,10 +309,11 @@ const getMatchesForDemand = async (demandId) => {
   
   try {
     const response = await myAxios.get(`/api/book-demands-list/${demandId}/matches`)
-    setMatches(prev => ({ 
-      ...prev, 
-      [demandId]: response.data    // response.data: tömb ajánlatokkal
-    }))
+    //setMatches(prev => ({ 
+    //  ...prev, 
+    //  [demandId]: response.data    // response.data: tömb ajánlatokkal
+    //}))
+    return response.data;
   } catch (error) {
     console.error(`Hiba a találatok lekérdezésénél (demand=${demandId}):`, error)
   } finally {

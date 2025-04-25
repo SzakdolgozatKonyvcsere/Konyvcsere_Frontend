@@ -112,7 +112,7 @@ export default function UserOwnExchangesCard1(props) {
 
     // 1. patch kérés
     // offeredBook frissítése location váltásra (pl. visszanavigálás után)
-  useEffect(() => {
+  /*useEffect(() => {
     const saved = localStorage.getItem("selectedBook");
     console.log("Frissítjük a selectedBook state-et a storage alapján:", saved);
     if (saved) {
@@ -123,7 +123,7 @@ export default function UserOwnExchangesCard1(props) {
           console.error("Hiba a JSON parse-nál:", err);
         }
       }
-  }, [location]);
+  }, [location]);*/
 
 // patch 
 const handleExchangeRequest = async () => {
@@ -165,6 +165,7 @@ const handleExchangeRequest = async () => {
         const result = await patchExchangeSelectOfferedBook(exchangeId, book.offer_id);
         // Ha sikeres volt, töröljük a localStorage-ból a kiválasztott könyvet
         if (result) {
+            clearBook();
           localStorage.removeItem("selectedBook"); 
           //alert("Sikeresen elküldted a kiválasztott könyvet!");
     

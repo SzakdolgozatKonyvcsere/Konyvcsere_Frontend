@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useApiContext from "../../contexts/ApiContext";
 import KonyvKeresKartyak from "./KonyvKeresKartyak";
 import { KonyvKeresModal } from "./KonyvKeresModal";
@@ -30,9 +30,9 @@ export default function KonyvKereses() {
 
   useEffect(() => {
     getAllAvailableOfferedBooks(); // <--- EZ FONTOS!
-  }, []);
+  }, [getAllAvailableOfferedBooks]);
   
-  useEffect(() => {
+  /*useEffect(() => {
     if (availableBookLista && availableBookLista.length > 0) {
       setSzurtLista([...availableBookLista]);
       console.log("Könyvek betöltve:", availableBookLista);
@@ -40,149 +40,94 @@ export default function KonyvKereses() {
     } else {
       console.log("❌ Még nincs adat, várunk...");
     }
-  }, [availableBookLista]);
+  }, [availableBookLista]);*/
   
 
+  const filteredBooks = useMemo(() => {
+    if (!availableBookLista) return [];
+    return availableBookLista.filter((book) => {
+      const title = book.title?.toLowerCase() || "";
+      const author = (book.authors || "").toLowerCase();
+      const publisher = (book.publisher_name || "").toLowerCase();
+      const year = parseInt(book.publication_year) || 0;
 
+      return (
+        title.includes(szuroertek.toLowerCase()) &&
+        (!filters.author || author.includes(filters.author.toLowerCase())) &&
+        (!filters.publisher || publisher.includes(filters.publisher.toLowerCase())) &&
+        year >= filters.minYear &&
+        year <= filters.maxYear
+      );
+    });
+  }, [availableBookLista, szuroertek, filters]);
 
   function handleReset() {
     setSzuroErtek(""); // Visszaállítja a keresési értéket üresre
-    setSzurtLista([...availableBookLista]); // Visszaállítja a könyvlistát az eredeti listára
+    //setSzurtLista([...availableBookLista]); // Visszaállítja a könyvlistát az eredeti listára
+    setFilters({ author: "", publisher: "", minYear: 1700, maxYear: new Date().getFullYear() })
 }
 
-  function handleSearch(e) {
-    //console.log(availableBookLista)
-    const ujszuroertek = e.target.value.toLowerCase();
-    setSzuroErtek(ujszuroertek);
-    console.log("ujszuroertek: ", ujszuroertek)
-    console.log("szuroertek: ", szuroertek)
-
-    const atmeneti = availableBookLista.filter((book) => {
-        console.log("Ellenőrzés: ", book);
-        return book.title.toLowerCase().includes(ujszuroertek);
-        
-    });
-    //console.log(atmeneti)
-    setSzurtLista([...atmeneti]);
-    console.log("atmeneti: ", atmeneti);
-    console.log("szurtlista: ", szurtLista);
-    
-  }
-
-
-
-
-  function handleFilterApply() {
-    console.log("handleFilterApply lefutott");
-    console.log("elérhető könyvek a szűrés előtt:", availableBookLista);
-    console.log("szűrési feltételek:", filters);
   
-
-    const finalFilteredBooks = availableBookLista.filter((book) => {
-      console.log("🔎 Vizsgált könyv:", book);
-        // Alapértelmezett üres értékekkel védekezünk az undefined ellen
-        const bookAuthors = book.authors ? book.authors.toLowerCase() : "";
-        const bookPublisher = book.publisher_name ? book.publisher_name.toLowerCase() : "";
-        const bookYear = book.publication_year ? parseInt(book.publication_year) : null;
-
-
-        const filterAuthor = filters.author ? filters.author.toLowerCase() : "";
-        const filterPublisher = filters.publisher ? filters.publisher.toLowerCase() : "";
-
-        const megfelel = (
-            (!filterAuthor || bookAuthors.includes(filterAuthor)) &&
-            (!filterPublisher || bookPublisher.includes(filterPublisher)) &&
-            (bookYear === null || (bookYear >= filters.minYear && bookYear <= filters.maxYear))
-        );
-      console.log("✅ Megfelel?", megfelel);
-
-    return megfelel;
-    });
-
-    console.log("Szűrt könyvek:", finalFilteredBooks); 
-    setSzurtLista([...finalFilteredBooks]);
-    
-  }
 
   return (
     <div>
     <div className="konyvkeresKezel">
-      <h1>Könyvek keresése</h1>
-      
-        <div className="form-floating mb-3">
-            <input
-            type="text" className="form-control" id="floatingTitle"
-            placeholder="Keresés könyvcím alapján..."
-            value={szuroertek}
-            onChange={(e) => handleSearch(e)}   
-        />
-            <label htmlFor="floatingTitle">Keresés könyvcím alapján...</label>
-      </div>
-      <div>
-      <Accordion className="acc">
-      <Accordion.Item eventKey="0" className="accI">
-        <Accordion.Header className="accH"><h3>További feltételek:</h3></Accordion.Header>
-        <Accordion.Body className="accB">
-        <div className="row g-2">
-        <div className="col-md">
-            <div className="form-floating">
-                <input
-                    type="text" className="form-control" id="floatingAuthor"
-                    placeholder="Keresés szerző alapján..."
-                    value={filters.author}
-                    onChange={(e) => setFilters({ ...filters, author: e.target.value })}
-                    
-                />
-                <label htmlFor="floatingAuthor">Keresés szerző alapján...</label>
+    <h1>Könyvek keresése</h1>
+    <div className="form-floating mb-3">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Keresés könyvcím alapján..."
+        value={szuroertek}
+        onChange={(e) => setSzuroErtek(e.target.value)}
+      />
+      <label>Keresés könyvcím alapján...</label>
+    </div>
+
+    <Accordion className="mb-3">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>További feltételek</Accordion.Header>
+        <Accordion.Body>
+          <div className="row g-2 mb-3">
+            <div className="col-md">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Szerző..."
+                value={filters.author}
+                onChange={(e) => setFilters(f => ({ ...f, author: e.target.value }))}
+              />
             </div>
-        </div>
-    <div className="col-md">
-        <div className="form-floating">
-            <input
-                type="text" className="form-control" id="floatingPublisher"
-                placeholder="Keresés kiadó alapján..." 
+            <div className="col-md">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Kiadó..."
                 value={filters.publisher}
-                onChange={(e) =>
-                setFilters({ ...filters, publisher: e.target.value })
-                }
-                
-            />
-            <label htmlFor="floatingPublisher">Keresés kiadó alapján...</label>
-        </div>
-    </div>
-    </div>
-    <div style={{ margin:"40px" }}>
-      <KonyvKeresRange
-      range={[filters.minYear, filters.maxYear]}
-      setRange={(newRange) => setFilters({ ...filters, minYear: newRange[0], maxYear: newRange[1] })}
-    />
-      
-    </div>
-    <button className="btn btn-primary alkalmaz-button" onClick={handleFilterApply} style={{ marginBottom: "20px" }}>
-        {" "}
-        Alkalmaz{" "}
-      </button>
-        
+                onChange={(e) => setFilters(f => ({ ...f, publisher: e.target.value }))}
+              />
+            </div>
+          </div>
+          <KonyvKeresRange
+            range={[filters.minYear, filters.maxYear]}
+            setRange={([min, max]) => setFilters(f => ({ ...f, minYear: min, maxYear: max }))}
+          />
         </Accordion.Body>
       </Accordion.Item>
-      </Accordion>
+    </Accordion>
+
+    <button className="btn btn-secondary me-2" onClick={handleReset}>
+      Reset
+    </button>
+
+    <div className="konyv row gx-3 gy-4 mt-4">
+      {filteredBooks.map(book => (
         
+          <KonyvKeresKartyak book={book} key={book.offer_id}/>
         
-      </div>
-      
-      <button className="btn btn-primary" onClick={handleReset} style={{ marginBottom: "20px" }}>
-      {" "}
-      Reset{" "}
-      </button>
-      
-        </div>
-      <div className="konyv">
-        {
-          szurtLista.map((book) => {
-            return <KonyvKeresKartyak book={book} key={book.offer_id} />;
-          })
-        }
-      </div>
+      ))}
     </div>
+    </div>
+  </div>
   );
 }

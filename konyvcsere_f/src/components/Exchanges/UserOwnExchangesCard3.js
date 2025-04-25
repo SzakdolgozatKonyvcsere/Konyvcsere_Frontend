@@ -24,6 +24,8 @@ export default function UserOwnExchangesCard3(props) {
         const [modalShowU, setModalShowU] = useState(false);
         const [selectedUser, setSelectedUser] = useState(null);
     
+
+
         const handleShowModalB = (book) => {
             if (book){
               setSelectedBook(book);
@@ -70,20 +72,26 @@ export default function UserOwnExchangesCard3(props) {
         fetchData();
     }, [props.exchange]);
 
-  // dátumellenőrzés
-  const dateToUse = new Date(props.exchange.updated_at || props.exchange.created_at);
-  //const updatedDate = new Date(props.updated_at);
-  const today = new Date();
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(today.getMonth() - 1);
-  if (isNaN(dateToUse)) {
-    console.warn("Nincs érvényes dátum az exchange objektumban!");
-    return null;
-  }
-  /*
-  console.log("datum: ", props.exchange.updated_at);*/
+ 
+    if (props.exchange.exchange_status !== 'a' && props.exchange.exchange_status !== 'v') {
+      return null;
+    }
 
-  if (dateToUse < oneMonthAgo) return null;
+       // 1.  megfelelő mezőt
+const dateString = props.exchange.updated_at ?? props.exchange.created_at;
+// 2) Date objektum
+const dateToUse = new Date(dateString || Date.now());
+
+if (isNaN(dateToUse.getTime())) {
+  console.warn("Érvénytelen dátum, használjuk a mai napot helyette");
+  // dateToUse már a Date.now() alapján lett inicializálva, így valid.
+}
+
+const THIRTY_DAYS_MS = 1000 * 60 * 60 * 24 * 30;
+if (Date.now() - dateToUse.getTime() > THIRTY_DAYS_MS) {
+  return null; 
+}
+
 
   return (
     <div className="exchangesStage3">
