@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 //import konyvVideo from "../assets/video/konyv.mp4";
 import { myAxios } from "../api/axios";
 import LegujabbKonyvAjanlat from "../components/LegujabbKonyvAjanlat";
+import kep2 from '../assets/kepek/kep2.jpg';
 
 
 export default function Kezdolap() {
@@ -45,8 +46,7 @@ export default function Kezdolap() {
 
             {/*<h1>Kezdőlap</h1>*/}
             <section className="container">
-                
-                <aside>
+                <aside className="welcome-box">
                     <h2>Üdvözöllek az Adok-Kapok Közösségben!</h2>
                     <ul>
                         <li>Képzeld el, hogy egy új könyv mindig csak egy csere távolságra van tőled!</li>
@@ -55,6 +55,14 @@ export default function Kezdolap() {
                         <li>Cserélj, fedezz fel és ossz meg könyveket, hogy egy szorosabb, olvasásra épülő közösséget építhessünk együtt!</li>
                     </ul>
                 </aside>
+                <div
+                    className="image"
+                    style={{ backgroundImage: `url(${kep2})` }}
+                    role="img"
+                    aria-label=""
+                />
+            </section>
+            <section className="books-section">
                 <LegujabbKonyvAjanlat />
             </section>
             {/*
