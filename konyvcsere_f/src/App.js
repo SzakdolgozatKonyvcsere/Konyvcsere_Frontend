@@ -12,20 +12,20 @@ import UserExchanges from "./pages/UserExchanges";
 import OtherUserChoose from "./pages/OtherUserChoose";
 import NoPage from "./pages/NoPage";
 
+import UsersTableAdminPage from "./pages/UsersTableAdminPage";
+import BooksTableAdminPage from "./pages/BooksTableAdminPage";
+import EditContentPage from "./pages/EditContentPage";
+
 const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
 const KezdolapUser = React.lazy(() => import("./pages/KezdolapUser"));
-const EditContentPage = React.lazy(() => import("./pages/EditContentPage"));
-const UsersTableAdminPage = React.lazy(() => import("./pages/UsersTableAdminPage"));
-const BooksTableAdminPage = React.lazy(() => import("./pages/BooksTableAdminPage")) ;
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
 const KonyvInfoSajat = React.lazy(() => import("./pages/UserOwnBooksInfo"));
 const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo"));
-
+ 
 function App() {
-  const { user } = useAuthContext();
-  const { loading } = useAuthContext();
+  const { user, loading } = useAuthContext();
 
   const isGuest = !user;
   const isAdmin = user && user.role === 0;

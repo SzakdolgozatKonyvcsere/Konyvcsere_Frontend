@@ -3,15 +3,23 @@ import TableAdminCreate from './TableAdminCreate.js';
 import useApiContext from '../../contexts/ApiContext.js';
 
 export default function BookTableAdmin({books}){
-    const {getBooks, setBookLista} = useApiContext();
+    const {getBooks, setBookLista, bookLista} = useApiContext();
   
     useEffect (()=>{
+        console.log("Fetching books..."); //logolás
         getBooks("/api/book-offers", setBookLista)
       }, []);
 
-
+      useEffect(() => {
+        console.log("bookLista state:", bookLista); // ellenőrizzük a frissítést
+      }, [bookLista]);
+    
+      //ha üres vagy null
+      if (!bookLista || !bookLista.length) {
+        return <p>Betöltés...</p>;
+      }
+    
     return (
-        <>
             <TableAdminCreate
                 tHeadLabels={
                     {
@@ -27,9 +35,8 @@ export default function BookTableAdmin({books}){
                     }
                 }        
                 tBodyContent={books}
-                edit={(row) => console.log("Editing", row)}
-                remove={(row) => console.log("Removing", row)}
+                editFn={(row) => console.log("Editing", row)}
+                removeFn={(row) => console.log("Removing", row)}
             />
-        </>
-    )
+    );
 }

@@ -38,6 +38,7 @@ export const ApiProvider = ({ children }) => {
     try{
       //console.log("getusers");
       const {data} = await myAxios.get(vegpont);
+      console.log("Users fetched:", data); // logolás
       setUserLista(data);
     } catch (error) {
         console.log("Hiba:", error);
@@ -62,6 +63,7 @@ export const ApiProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
+      console.log("Books fetched:", data); // logolás
       setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
