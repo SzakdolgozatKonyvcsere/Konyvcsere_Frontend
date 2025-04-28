@@ -1,6 +1,6 @@
 import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
 
 
@@ -297,6 +297,7 @@ const patchRejectExchange = async (exchangeId) => {
   const getAllDemands = async () => {
     try {
       const response = await myAxios.get('/api/book-demands-list')
+      setDemands(response.data);
       return response.data;            // response.data: tömb [{ demand_id, … }, …]
     } catch (error) {
       console.error('Hiba a mentett keresések lekérdezésénél:', error)
@@ -310,10 +311,11 @@ const getMatchesForDemand = async (demandId) => {
   
   try {
     const response = await myAxios.get(`/api/book-demands-list/${demandId}/matches`)
-    setMatches(prev => ({ 
-      ...prev, 
-      [demandId]: response.data    // response.data: tömb ajánlatokkal
-    }))
+    //setMatches(prev => ({ 
+    //  ...prev, 
+    //  [demandId]: response.data    // response.data: tömb ajánlatokkal
+    //}))
+    return response.data;
   } catch (error) {
     console.error(`Hiba a találatok lekérdezésénél (demand=${demandId}):`, error)
   } finally {
@@ -452,6 +454,18 @@ const getMatchesForDemand = async (demandId) => {
     }
   }
 
+  const userInfoUpdate = async (data, user_id) => {
+    setLoading(true);
+    try {
+      const response = await myAxios.put(`/api/user/${user_id}/update-info`, data);
+      return response.data;
+    } catch (error) {
+      console.log("Hiba, "+ error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   //useEffect(()=>{
     //if (user.role === 0) {
       //getUsers("/api/users", setUserLista)
@@ -484,7 +498,7 @@ const getMatchesForDemand = async (demandId) => {
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
           userBookDemandsInfo, getUserBookDemandsInfo,  
           availableBookLista, getAllAvailableOfferedBooks,  
-          patchUserPFP, selectedImage, setSelectedImage, 
+          patchUserPFP, selectedImage, setSelectedImage, userInfoUpdate,
           postExchangeRequest, getUserById, getUserByIdGenre,  
           genreList, getGenreList, postBookSearch,
           putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
