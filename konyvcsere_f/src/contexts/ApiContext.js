@@ -63,7 +63,7 @@ export const ApiProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
-      console.log("Books fetched:", data); // logolás
+      console.log("Books fetched:", data); //logolás
       setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
