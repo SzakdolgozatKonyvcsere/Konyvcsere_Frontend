@@ -1,6 +1,6 @@
 import { createContext, use, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
 
 
@@ -452,6 +452,18 @@ const getMatchesForDemand = async (demandId) => {
     }
   }
 
+  const userInfoUpdate = async (data, user_id) => {
+    setLoading(true);
+    try {
+      const response = await myAxios.put(`/api/user/${user_id}/update-info`, data);
+      return response.data;
+    } catch (error) {
+      console.log("Hiba, "+ error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   //useEffect(()=>{
     //if (user.role === 0) {
       //getUsers("/api/users", setUserLista)
@@ -484,7 +496,7 @@ const getMatchesForDemand = async (demandId) => {
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
           userBookDemandsInfo, getUserBookDemandsInfo,  
           availableBookLista, getAllAvailableOfferedBooks,  
-          patchUserPFP, selectedImage, setSelectedImage, 
+          patchUserPFP, selectedImage, setSelectedImage, userInfoUpdate,
           postExchangeRequest, getUserById, getUserByIdGenre,  
           genreList, getGenreList, postBookSearch,
           putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
