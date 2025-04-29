@@ -17,6 +17,7 @@
     "react-router": "^7.1.4",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.15.3",
     "run": "^1.5.0",
     "web-vitals": "^4.2.4"
   },

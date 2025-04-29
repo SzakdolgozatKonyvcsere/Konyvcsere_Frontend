@@ -349,6 +349,55 @@ const getMatchesForDemand = async (demandId) => {
   }
 }
 
+//admin stats
+const getRegistrationsStat = async (interval = 'daily') => {
+  const { data } = await myAxios.get(`/api/admin/new-reg?interval=${interval}`);
+  return data;
+};
+
+const getLoginsStat = async (interval = 'daily') => {
+  const { data } = await myAxios.get(`/api/admin/logins?interval=${interval}`);
+  return data;
+};
+
+const getUploadsByCategoryStat = async () => {
+  const { data } = await myAxios.get('/api/admin/book-by-categ');
+  return data;
+};
+
+const getUploadsTrendStat = async (interval = 'daily') => {
+  const { data } = await myAxios.get(`/api/admin/upload-trend?interval=${interval}`);
+  return data;
+};
+
+const getClosedExchangesStat = async (interval = 'daily') => {
+  const { data } = await myAxios.get(`/api/admin/exchange-closed?interval=${interval}`);
+  return data;
+};
+
+const getExchangeSuccessRatioStat = async () => {
+  const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
+  return data;
+};
+
+const getAvgExchangeTimeStat = async () => {
+  const { data } = await myAxios.get('/api/admin/exchange-avg-time');
+  return data;
+};
+
+const getTopBooksStat = async () => {
+  const { data } = await myAxios.get('/api/admin/book-top');
+  return data;
+};
+
+const getTopAuthorsGenresStat = async () => {
+  const { data } = await myAxios.get('/api/admin/author-genre-top');
+  return data;
+};
+
+
+
+
 
 
 
@@ -534,7 +583,17 @@ const getMatchesForDemand = async (demandId) => {
           getAllDemands, getMatchesForDemand, demands, matches,
           patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange, patchRejectExchange,
           softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
-          loading, setLoading
+          loading, setLoading,
+          
+          getRegistrationsStat,
+          getLoginsStat,
+          getUploadsByCategoryStat,
+          getUploadsTrendStat,
+          getClosedExchangesStat,
+          getExchangeSuccessRatioStat,
+          getAvgExchangeTimeStat,
+          getTopBooksStat,
+          getTopAuthorsGenresStat,
 
         }
       }>
