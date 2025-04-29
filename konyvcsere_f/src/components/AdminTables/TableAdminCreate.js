@@ -57,16 +57,18 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                     </td>
                   ))
                 }
-              {'full_name' in row ? (
-                <>
-                <td className='table_admin-row--button'>
-                  <button onClick={editFn}>módosít</button>
-                </td>
-                <td className='table_admin-row--button'>
-                  <button onClick={removeFn}>töröl</button>
-                </td> 
-              </>
-              ):(console.log)}
+                {
+                  !tBodyContent.some(row => 'full_name' in row) && (
+                    <>
+                      <td className='table_admin-row--button'>
+                        <button onClick={editFn}>módosít</button>
+                      </td>
+                      <td className='table_admin-row--button'>
+                        <button onClick={removeFn}>töröl</button>
+                      </td> 
+                    </>
+                  )
+                }
               
              </tr> 
             ))
