@@ -15,12 +15,23 @@ export default function KonyvKeresKartyak(props) {
           }
       };
 
+       // eldöntjük, elérhető-e
+      const isAvailable = props.book.book_status === 's' || props.book.book_status === 'f';
+
+
     return( 
         <div className="card all-available-books" style={{ width: "18rem" }}>
         <img className='all-available-books__image' style={{  maxHeight: "100%",
           maxWidth: "100%",
           objectFit: "contain",
           display: "inline-block", height: "180px" }} src={props.book.img_url ? `http://localhost:8000/${props.book.img_url}` : '/basic_book.png'}></img>
+          <span
+          className={`badge position-absolute top-0 end-0 m-2 ${
+            isAvailable ? 'bg-success' : 'bg-danger'
+          }`}
+        >
+          {isAvailable ? 'Elérhető' : 'Nem elérhető'}
+        </span>
                 <div className="card-body all-available-books">
                     <h5 className="card-title all-available-books" style={{border:"none", fontWeight: "bold", textAlign: "center"}}>{props.book.title || "Nincs cím"}</h5>
 

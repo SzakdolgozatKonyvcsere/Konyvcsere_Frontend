@@ -13,7 +13,7 @@ export default function KezdolapUser() {
             {/*<h1>Kezdőlap</h1>*/}
             <section className="container">
                 <aside className="welcome-box">
-                    <h2>Üdvözöllek az Adok-Kapok Közösségben!</h2>
+                    <h2>Üdvözöllek{user?.full_name ? `, ${user.full_name}` : ""} az Adok-Kapok Közösségben!</h2>
                     <ul>
                         <li>Képzeld el, hogy egy új könyv mindig csak egy csere távolságra van tőled!</li>
                         <li>Az oldalon lehetőséged van arra, hogy megoszd könyveidet másokkal, és új kedvenceket találj a cserék révén.</li>
