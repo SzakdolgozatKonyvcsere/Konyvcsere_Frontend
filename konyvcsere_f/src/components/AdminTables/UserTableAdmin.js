@@ -10,14 +10,26 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
     getUsers("/api/users")
   }, []);
 
-
+  const roles = {
+    0: "Admin",
+    1: "Felhasználó",
+    2: "Inaktív felhasználó"
+  };  
   const excludedKeys = ['remember_token', 'email_verified_at'];
-  const filteredUsers = users.map(user =>
-    Object.fromEntries(
-      Object.entries(user).filter(([key]) => !excludedKeys.includes(key))
-    )
-  );
-  console.log("Filtered Users:", filteredUsers);
+  const filteredUsers = users.map(user => {
+    const entries = Object.entries(user).filter(([key]) => !excludedKeys.includes(key));
+
+    // Role nélk. object'
+    const withoutRole = Object.fromEntries(entries.filter(([key]) => key !== 'role'));
+
+    // végére tesszük a role-t
+    return {
+      ...withoutRole,
+      ...(user.role !== undefined && { role: user.role })
+    };
+  });
+
+  
 
   return (
     <>
@@ -30,11 +42,11 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
             full_name:"Teljes név:",
             city:"Város:",
             tel:"Telefonszám:",
-            role:"Szerep:",
             online_status:"Státusz:",
             img_url:"Kép:",
             created_at:"Létrehozás dátuma:",
-            updated_at:"Utolsó módosítás:"
+            updated_at:"Utolsó módosítás:",
+            role:"Szerep:"
           }
         }
         tBodyContent={filteredUsers}

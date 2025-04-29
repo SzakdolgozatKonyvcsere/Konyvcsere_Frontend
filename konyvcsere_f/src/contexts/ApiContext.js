@@ -57,6 +57,19 @@ export const ApiProvider = ({ children }) => {
     }
   }
 
+  const adminRoleChange = async(user_id, selected_role) => {
+    setLoading(true);
+    try{
+        const response = await myAxios.patch(`/api/users/${user_id}/change-role`, {
+          role:selected_role
+        });
+    }catch(error){
+        console.log("Hiba",error);
+    }finally{
+      setLoading(false);
+    }
+  }
+
   //Books
   const getBooks = async (vegpont) => {
     //setLoading(true);
@@ -493,7 +506,7 @@ const getMatchesForDemand = async (demandId) => {
         { 
           userLista, bookLista, bookDemandLista,  
           getUsers, postUsers, getBooks, postBooks, getBookDemands,  
-          userProfileInfoList, getUserProfileInfo,  
+          userProfileInfoList, getUserProfileInfo, adminRoleChange,
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
           userBookDemandsInfo, getUserBookDemandsInfo,  
           availableBookLista, getAllAvailableOfferedBooks,  

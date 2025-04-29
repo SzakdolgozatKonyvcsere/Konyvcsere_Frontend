@@ -1,10 +1,7 @@
 import React from 'react'
-import useApiContext from '../../contexts/ApiContext';
 
 export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {    
   //console.log("cim:" + tHeadLabels + "\ntartalom:" + tBodyContent + "\neditfgv:" + editFn + "\ndelfgv:" + removeFn)
-  const {adminRoleChange} = useApiContext(); 
-  
   return (
     <div className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
       <table className="table table_admin">
@@ -40,25 +37,16 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
             tBodyContent.map((row, rowInd) => (
               <tr className='table_admin-row' key={rowInd}>
                 {
-                  Object.entries(row).map(([key, col], colInd) => (
-                    <td key={colInd} className={typeof col === 'string' && col.length >= 25 ? "table_admin-row--longText" : ""}>
-                      {key === "role" ? (
-                        <select
-                          defaultValue={col}
-                          onChange={(e) => adminRoleChange(row.id, parseInt(e.target.value))}
-                        >
-                          <option value="0">Admin</option>
-                          <option value="1">Felhasználó</option>
-                          <option value="2">Inaktív felhasználó</option>
-                        </select>
-                      ) : (
-                        col ? col : "-"
-                      )}
-                    </td>
-                  ))
-                }
+                  Object.values(row).map((col, colInd) => (
+                  <td key={colInd} className={typeof col === 'string' && col.length >= 25 ? "table_admin-row--longText" : ""}>
+                    {col?col:"-"} 
+                  </td>
+                  )
+                )}
               {'full_name' in row ? (
-                <>
+                <td></td>
+              ) : (
+              <>
                 <td className='table_admin-row--button'>
                   <button onClick={editFn}>módosít</button>
                 </td>
@@ -66,7 +54,7 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                   <button onClick={removeFn}>töröl</button>
                 </td> 
               </>
-              ):(console.log)}
+              )}
               
              </tr> 
             ))
