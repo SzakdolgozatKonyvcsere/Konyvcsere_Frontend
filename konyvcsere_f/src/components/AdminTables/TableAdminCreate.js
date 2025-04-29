@@ -38,16 +38,16 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
               <tr className='table_admin-row' key={rowInd}>
                 {
                   Object.values(row).map((col, colInd) => (
-                  <td key={colInd} className={col.length >= 25 ? "table_admin-row--longText" : ""}>
-                    {col} 
+                  <td key={colInd} className={typeof col === 'string' && col.length >= 25 ? "table_admin-row--longText" : ""}>
+                    {col?col:"-"} 
                   </td>
                   )
                 )}
               <td className='table_admin-row--button'>
-                <button onClick={editFn}>✎</button>
+                <button onClick={editFn}>módosít</button>
               </td>
               <td className='table_admin-row--button'>
-                <button onClick={removeFn}>🗑️</button>
+                <button onClick={removeFn}>töröl</button>
               </td> 
              </tr> 
             ))
