@@ -34,11 +34,9 @@ export const ApiProvider = ({ children }) => {
 
   //Users
   const getUsers = async (vegpont) => {
-    setLoading(true);
+    //setLoading(true);
     try{
-      //console.log("getusers");
       const {data} = await myAxios.get(vegpont);
-      console.log("Users fetched:", data); // logolás
       setUserLista(data);
     } catch (error) {
         console.log("Hiba:", error);
@@ -46,6 +44,7 @@ export const ApiProvider = ({ children }) => {
       setLoading(false); // Stop loading after fetching user 
     }
   }
+
   const postUsers = async(vegpont,adat)=>{
     setLoading(true);
     try{
@@ -60,7 +59,7 @@ export const ApiProvider = ({ children }) => {
 
   //Books
   const getBooks = async (vegpont) => {
-    setLoading(true);
+    //setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
       console.log("Books fetched:", data); // logolás

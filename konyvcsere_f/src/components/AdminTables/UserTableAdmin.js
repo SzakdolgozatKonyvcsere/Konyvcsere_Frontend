@@ -5,15 +5,11 @@ import useApiContext from '../../contexts/ApiContext';
 
 
 export default function UserTableAdmin({users}) { // destructuring, this saves a line of const users = props.users
-  const {getUsers, setUserLista, userLista} = useApiContext();
+  const {getUsers} = useApiContext();
   useEffect (()=>{
-    console.log("Fetching users..."); //logolás
-    getUsers("/api/users", setUserLista)
+    getUsers("/api/users")
   }, []);
 
-  useEffect(() => {
-    console.log("userLista state:", userLista); // ellenőrizzük a betöltött adatokat
-  }, [userLista]); // állapotváltozást követjük
 
   const excludedKeys = ['remember_token', 'email_verified_at'];
   const filteredUsers = users.map(user =>
@@ -22,10 +18,6 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
     )
   );
   console.log("Filtered Users:", filteredUsers);
-
-  if (!userLista?.length) {
-    return <p>Betöltés...</p>;
-  }
 
   return (
     <>

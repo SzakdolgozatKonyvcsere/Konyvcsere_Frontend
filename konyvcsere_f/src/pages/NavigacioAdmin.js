@@ -32,7 +32,7 @@ export default function NavigacioAdmin() {
                                 Tartalom szerkesztése
                             </button>
                             {editMenuOpen && ( // Ha a menü nyitva van, akkor mutatja a linkeket
-                                <ul className="list-group ps-3">
+                                <ul className="ps-3">
                                     <li className="list-group-item border-0">
                                         <Link className="nav-link" to="/osszesuser" onClick={() => setMenuOpen(false)}>
                                             Felhasználók
