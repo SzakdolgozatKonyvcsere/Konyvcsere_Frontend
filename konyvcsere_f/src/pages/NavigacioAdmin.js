@@ -43,6 +43,11 @@ export default function NavigacioAdmin() {
                                             Könyvek
                                         </Link>
                                     </li>
+                                    <li className="list-group-item border-0">
+                                        <Link className="nav-link" to="/osszescsere" onClick={() => setMenuOpen(false)}>
+                                            Cserefolyamatok
+                                        </Link>
+                                    </li>
                                 </ul>
                             )}
                         </li>

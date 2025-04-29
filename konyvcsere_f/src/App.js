@@ -12,6 +12,7 @@ import UserExchanges from "./pages/UserExchanges";
 import OtherUserChoose from "./pages/OtherUserChoose";
 import NoPage from "./pages/NoPage";
 
+import ExchangesTableAdminPage from "./pages/ExchangesTableAdminPage";
 import UsersTableAdminPage from "./pages/UsersTableAdminPage";
 import BooksTableAdminPage from "./pages/BooksTableAdminPage";
 import EditContentPage from "./pages/EditContentPage";
@@ -52,6 +53,7 @@ function App() {
           <Route path="osszesuser" element={<UsersTableAdminPage />} />
           <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
           <Route path="tartalomszerk" element={<EditContentPage />} />
+          <Route path="osszescsere" element={<ExchangesTableAdminPage/>} />
           <Route path="profil" element={<UserOwnInfo />} />
           <Route path="*" element={<NoPage />} />
         </Route>}

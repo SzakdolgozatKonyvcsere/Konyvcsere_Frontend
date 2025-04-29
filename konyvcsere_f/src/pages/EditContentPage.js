@@ -1,5 +1,6 @@
 import React from "react";
 import UsersTableAdminPage from "./UsersTableAdminPage";
+import ExchangesTableAdminPage from "./ExchangesTableAdminPage";
 import { Link } from "react-router-dom";
 
 function EditContentPage() {
@@ -12,6 +13,9 @@ function EditContentPage() {
           </Link>
           <Link className="content-edit--selection__item" to="/osszeskonyv">
             Könyvek
+          </Link>
+          <Link className="content-edit--selection__item" to="/osszescsere">
+            Cserefolyamatok
           </Link>
         </div>
       </div>

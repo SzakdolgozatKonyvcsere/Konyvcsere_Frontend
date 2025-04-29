@@ -14,6 +14,7 @@ export const ApiProvider = ({ children }) => {
 
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
+  const [exchangeLista, setExchangeLista] = useState([]);
   const [genreList, setGenreList] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
@@ -62,7 +63,6 @@ export const ApiProvider = ({ children }) => {
     //setLoading(true);
     try {
       const { data } = await myAxios.get(vegpont);
-      console.log("Books fetched:", data); //logolás
       setBookLista(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
@@ -291,6 +291,20 @@ const patchRejectExchange = async (exchangeId) => {
   }
 };
 
+//összes cserefolyamata
+const getExchange = async (url) => {
+  setLoading(true);
+  try {
+    const response = await myAxios.get(url);
+    setExchangeLista(response.data);
+  } catch (error) {
+    console.error("Exchange fetch error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 //kereslet kinalat 1
   // 1) Keresések lekérdezése
   const getAllDemands = async () => {
@@ -491,7 +505,7 @@ const getMatchesForDemand = async (demandId) => {
     <ApiContext.Provider
       value={
         { 
-          userLista, bookLista, bookDemandLista,  
+          userLista, bookLista, getExchange,exchangeLista, setExchangeLista, bookDemandLista,  
           getUsers, postUsers, getBooks, postBooks, getBookDemands,  
           userProfileInfoList, getUserProfileInfo,  
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
