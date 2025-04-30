@@ -367,17 +367,9 @@ export const ApiProvider = ({ children }) => {
     return data;
   };
 
-  const getUploadsTrendStat = async (interval = 'daily') => {
-    const { data } = await myAxios.get(`/api/admin/upload-trend?interval=${interval}`);
-    return data;
-  };
+  
 
-  const getClosedExchangesStat = async (interval = 'daily') => {
-    const { data } = await myAxios.get(`/api/admin/exchange-closed?interval=${interval}`);
-    return data;
-  };
-const getUploadsByCategoryStat = async () => {
-  const { data } = await myAxios.get('/api/admin/book-by-categ');
+  
 
 const getExchangeSuccessRatioStat = async () => {
   const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
@@ -394,10 +386,6 @@ const getClosedExchangesStat = async (interval = 'daily') => {
   return data;
 };
 
-  const getExchangeSuccessRatioStat = async () => {
-    const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
-    return data;
-  };
 
   const getAvgExchangeTimeStat = async () => {
     const { data } = await myAxios.get('/api/admin/exchange-avg-time');
