@@ -73,9 +73,9 @@ export default function UserOwnMatches(){
               <tr>
                 <th>Cím</th>
                 <th>Évjárat</th>
-                <th>Műfaj</th>
+                
                 <th>Szerzők</th>
-                <th>Kiadó</th>
+                
                 <th>Nyelv</th>
                 <th className="text-center">Talált</th>
                 <th></th>
@@ -94,9 +94,9 @@ export default function UserOwnMatches(){
                       <td>
                         {d.min_publication_year} &ndash; {d.max_publication_year}
                       </td>
-                      <td>{d.genre || "—"}</td>
+                      
                       <td>{d.authors?.join(", ") || "—"}</td>
-                      <td>{d.publisher || "—"}</td>
+                      
                       <td>{d.language || "—"}</td>
                       <td className="px-4 py-2 text-center font-semibold">
                         {offers.length}
