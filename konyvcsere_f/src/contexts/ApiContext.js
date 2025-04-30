@@ -377,9 +377,6 @@ export const ApiProvider = ({ children }) => {
     return data;
   };
 
-
-
-
 const getExchangeSuccessRatioStat = async () => {
   const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
   return data;
