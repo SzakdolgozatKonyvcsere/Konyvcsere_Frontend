@@ -18,13 +18,22 @@ import BooksTableAdminPage from "./pages/BooksTableAdminPage";
 import EditContentPage from "./pages/EditContentPage";
 import StatisticsPageAdmin from "./pages/StatisticsPageAdmin";
 
-const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
+import Kezdolap from "./pages/Kezdolap";
+import Bejelentkezes from "./pages/Bejelentkezes";
+import Regisztracio from "./pages/Regisztracio";
+import KezdolapUser from "./pages/KezdolapUser";
+import KonyvFeltoltes from "./components/KonyvFeltoltes";
+import KonyvInfoSajat from "./pages/UserOwnBooksInfo";
+import KeresesekInfoSajat from "./pages/UserOwnBookSearchesInfo";
+import EmailTableAdminPage from "./pages/EmailTableAdminPage";
+
+/* const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
 const KezdolapUser = React.lazy(() => import("./pages/KezdolapUser"));
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
 const KonyvInfoSajat = React.lazy(() => import("./pages/UserOwnBooksInfo"));
-const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo"));
+const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo")); */
  
 function App() {
   const { user, loading } = useAuthContext();
@@ -55,6 +64,7 @@ function App() {
           <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
           <Route path="tartalomszerk" element={<EditContentPage />} />
           <Route path="osszescsere" element={<ExchangesTableAdminPage/>} />
+          <Route path="osszesemail" element={<EmailTableAdminPage/>} />
           <Route path="profil" element={<UserOwnInfo />} />
           <Route path="stats" element={<StatisticsPageAdmin />} />
           <Route path="*" element={<NoPage />} />

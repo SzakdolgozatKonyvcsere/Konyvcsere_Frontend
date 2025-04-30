@@ -41,7 +41,7 @@ function UserOwnBookOffers() {
         .map((bookDetail, index) => (
         <div key={index} className="card all-available-books" style={{ width: "18rem" }}>
           <img className='all-available-books__image'
-            src={bookDetail?.img_url ? `http://localhost:8000/${bookDetail?.img_url}`
+            style={{objectFit: "contain"}} src={bookDetail?.img_url ? `http://localhost:8000/${bookDetail?.img_url}`
               : '/basic_book.png'}
             onError={(e) => {
               e.target.onerror = null; // Végtelen ciklus elkerülése érdekében

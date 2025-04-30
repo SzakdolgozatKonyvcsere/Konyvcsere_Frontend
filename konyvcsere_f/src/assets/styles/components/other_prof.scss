@@ -52,17 +52,20 @@
     
   
     .otherUserBooksInfo {
-        
+      flex: 3;
       
   
       .konyv {
-        flex: 3;
+        
         display: flex;
         flex-wrap: wrap;
         gap: 15px;
         justify-content: flex-start;
         flex-direction: column;
         
+        > * {
+          flex: 1 1 calc(33.333% - 15px); // Desktop: 3 per sor
+        }
         .card{
             background-color: $primary-background-color;
             flex-direction: column;
@@ -177,4 +180,28 @@
     } 
     }
   }
+  @media (max-width: 991px) {
+    .otherUserBooksInfo .konyv > * {
+      flex: 1 1 calc(50% - 15px);
+    }
+  }
+
+  // Mobil: profil felül, könyvek alul, és 1 per sor
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+
+    .otherUserProfileInfo,
+    .otherUserBooksInfo {
+      width: 100%;
+    }
+    .otherUserBooksInfo .konyv {
+      justify-content: center;
+    }
+    .otherUserBooksInfo .konyv > * {
+      flex: 1 1 100%;
+    }
+  }
+
 }
+

@@ -8,6 +8,9 @@
     background: $secondary-color;
     min-height: 100vh;      // teljes magasság
 
+    .card{
+        width: auto !important;
+    }
     .section-divider {
         border: none;
         height: 2px;
