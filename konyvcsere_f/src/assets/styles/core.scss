@@ -142,6 +142,7 @@ body {
 
     .card {
         max-width: 1200px;
+        width: 75vh;
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         border-radius: 15px;
@@ -149,10 +150,10 @@ body {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 
-        &:hover {
+        /*&:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
+        }*/
     }
 
     .btn-primary {
