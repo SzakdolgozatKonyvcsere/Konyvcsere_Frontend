@@ -11,7 +11,7 @@ export default function BookTableAdmin({books}){
                   {
                     offer_id: "ID:",
                     name: "Felhasználó:",
-                    img_url: "Kép URL:",
+                    img_url: "Kép",
                     publisher_name: "Kiadó:",
                     title: "Cím:",
                     genre_name: "Műfaj:",

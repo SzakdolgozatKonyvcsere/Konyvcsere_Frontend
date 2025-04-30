@@ -14,7 +14,6 @@
     
     &--longText{
       font-size: 0.60rem;
-      text-align: center;
       overflow: hidden;
       
     }
@@ -33,6 +32,14 @@
         }
       }
       
+    }
+
+    .table_admin-row_image {
+      width: 10vh;
+      height: 10vh;
+      border-radius: 5px;
+      display: flex;
+      justify-self: center;
     }
   }
   

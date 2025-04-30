@@ -48,6 +48,18 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, removeFn, r
                           <option value="1">Felhasználó</option>
                           <option value="2">Inaktív felhasználó</option>
                         </select>
+                      ) : key === "img_url" ? (
+                        <img className='table_admin-row_image' alt='admin felület - rekord képe' src={
+                            col
+                              ? col.includes("http")
+                                ? col
+                                : `http://localhost:8000/${col}`
+                              : 'http://localhost:8000/no_img.jpeg'
+                          }
+                        onError={(e) => {
+                          e.target.onerror = null; // Végtelen ciklus elkerülése érdekében
+                          e.target.src = 'http://localhost:8000/no_img.jpeg'
+                        }}></img>
                       ) : (
                         col ? col : "-"
                       )}

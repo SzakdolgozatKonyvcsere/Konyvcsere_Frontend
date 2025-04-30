@@ -42,7 +42,8 @@ export default function UserTableAdmin({users}) { // destructuring, this saves a
           }
         }
         tBodyContent={filteredUsers}
-        removeFn={(row) => console.log("Removing:", row)}
+        removeFn={() => {}}
+        rowIdKey={() => {}}
       />
     </>
   )
