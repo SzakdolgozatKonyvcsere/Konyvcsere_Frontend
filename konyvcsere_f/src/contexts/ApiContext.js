@@ -378,6 +378,9 @@ export const ApiProvider = ({ children }) => {
   };
 const getUploadsByCategoryStat = async () => {
   const { data } = await myAxios.get('/api/admin/book-by-categ');
+
+const getExchangeSuccessRatioStat = async () => {
+  const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
   return data;
 };
 
