@@ -51,6 +51,11 @@ export default function NavigacioAdmin() {
                                             Cserefolyamatok
                                         </Link>
                                     </li>
+                                    <li className="list-group-item border-0">
+                                    <Link className="nav-link" to="/osszesemail" onClick={() => setMenuOpen(false)}>
+                                       Email ellenőrzés
+                                    </Link>
+                                </li>
                                 </ul>
                             )}
                         </li>

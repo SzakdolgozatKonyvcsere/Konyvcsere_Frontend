@@ -25,6 +25,8 @@ import KezdolapUser from "./pages/KezdolapUser";
 import KonyvFeltoltes from "./components/KonyvFeltoltes";
 import KonyvInfoSajat from "./pages/UserOwnBooksInfo";
 import KeresesekInfoSajat from "./pages/UserOwnBookSearchesInfo";
+import EmailTableAdminPage from "./pages/EmailTableAdminPage";
+
 /* const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
@@ -62,6 +64,7 @@ function App() {
           <Route path="osszeskonyv" element={<BooksTableAdminPage />} />
           <Route path="tartalomszerk" element={<EditContentPage />} />
           <Route path="osszescsere" element={<ExchangesTableAdminPage/>} />
+          <Route path="osszesemail" element={<EmailTableAdminPage/>} />
           <Route path="profil" element={<UserOwnInfo />} />
           <Route path="stats" element={<StatisticsPageAdmin />} />
           <Route path="*" element={<NoPage />} />
