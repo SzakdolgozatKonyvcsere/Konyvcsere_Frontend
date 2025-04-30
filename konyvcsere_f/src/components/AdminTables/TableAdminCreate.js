@@ -1,7 +1,7 @@
 import React from 'react'
 import useApiContext from '../../contexts/ApiContext';
 
-export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {    
+export default function TableAdminCreate({tHeadLabels, tBodyContent, removeFn, rowIdKey}) {    
   //console.log("cim:" + tHeadLabels + "\ntartalom:" + tBodyContent + "\neditfgv:" + editFn + "\ndelfgv:" + removeFn)
   const {adminRoleChange} = useApiContext(); 
   
@@ -27,10 +27,7 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                 }
                 {/* IGNORE - Edit & Delete column heads */}
                 {!tBodyContent.some(row => 'full_name' in row) && (
-                  <>
-                    <th scope="col">Módosítás</th>
-                    <th scope="col">Törlés</th>
-                  </>
+                  <th scope="col">Törlés</th>
                 )}
             </tr>
         </thead>
@@ -59,14 +56,9 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                 }
                 {
                   !tBodyContent.some(row => 'full_name' in row) && (
-                    <>
-                      <td className='table_admin-row--button'>
-                        <button onClick={editFn}>módosít</button>
-                      </td>
-                      <td className='table_admin-row--button'>
-                        <button onClick={removeFn}>töröl</button>
-                      </td> 
-                    </>
+                    <td className='table_admin-row--button'>
+                      <button onClick={() => removeFn(row[rowIdKey])}>töröl</button>
+                    </td> 
                   )
                 }
               

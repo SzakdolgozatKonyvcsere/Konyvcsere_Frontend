@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TableAdminCreate from './TableAdminCreate.js';
 import useApiContext from '../../contexts/ApiContext.js';
 
 export default function BookTableAdmin({books}){
-    const {getBooks, setBookLista, bookLista} = useApiContext();
-  
-    useEffect (()=>{
-        getBooks("/api/book-offers")
-      }, []);
+    const {softDeleteBookOffer} = useApiContext();
     
     return (
             <TableAdminCreate
@@ -29,8 +25,8 @@ export default function BookTableAdmin({books}){
                   }
                 }        
                 tBodyContent={books}
-                editFn={(row) => console.log("Editing", row)}
-                removeFn={(row) => console.log("Removing", row)}
+                removeFn={softDeleteBookOffer}
+                rowIdKey="offer_id"
             />
     );
 }
