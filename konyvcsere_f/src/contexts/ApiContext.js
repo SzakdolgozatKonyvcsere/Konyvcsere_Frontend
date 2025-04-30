@@ -376,20 +376,9 @@ export const ApiProvider = ({ children }) => {
     const { data } = await myAxios.get(`/api/admin/exchange-closed?interval=${interval}`);
     return data;
   };
-const getUploadsByCategoryStat = async () => {
-  const { data } = await myAxios.get('/api/admin/book-by-categ');
-  return data;
-};
 
-const getUploadsTrendStat = async (interval = 'daily') => {
-  const { data } = await myAxios.get(`/api/admin/upload-trend?interval=${interval}`);
-  return data;
-};
 
-const getClosedExchangesStat = async (interval = 'daily') => {
-  const { data } = await myAxios.get(`/api/admin/exchange-closed?interval=${interval}`);
-  return data;
-};
+
 
 const getExchangeSuccessRatioStat = async () => {
   const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
@@ -415,25 +404,10 @@ const getMostExchangedCity = async () => {
   return data;
 };
 
-  const getExchangeSuccessRatioStat = async () => {
-    const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
-    return data;
-  };
+ 
 
-  const getAvgExchangeTimeStat = async () => {
-    const { data } = await myAxios.get('/api/admin/exchange-avg-time');
-    return data;
-  };
+  
 
-  const getTopBooksStat = async () => {
-    const { data } = await myAxios.get('/api/admin/book-top');
-    return data;
-  };
-
-  const getTopAuthorsGenresStat = async () => {
-    const { data } = await myAxios.get('/api/admin/author-genre-top');
-    return data;
-  };
 
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
