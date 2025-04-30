@@ -7,6 +7,18 @@
     padding: 2rem;
     background: $secondary-color;
     min-height: 100vh;      // teljes magasság
+
+    .section-divider {
+        border: none;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          rgba(136,132,216,0) 0%,
+          $button-color 50%,
+          rgba(136,132,216,0) 100%
+        );
+        margin: 1.5rem 0;
+      }
   
     h1.page-title {
       font-size: 2rem;

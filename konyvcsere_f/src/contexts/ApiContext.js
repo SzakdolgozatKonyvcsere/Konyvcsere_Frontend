@@ -394,8 +394,10 @@ const getTopAuthorsGenresStat = async () => {
   const { data } = await myAxios.get('/api/admin/author-genre-top');
   return data;
 };
-
-
+const getMostExchangedCity = async () => {
+  const { data } = await myAxios.get('/api/admin/most-exchanged-city');
+  return data;
+};
 
 
 
@@ -584,7 +586,7 @@ const getTopAuthorsGenresStat = async () => {
           patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange, patchRejectExchange,
           softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
           loading, setLoading,
-          
+
           getRegistrationsStat,
           getLoginsStat,
           getUploadsByCategoryStat,
@@ -594,7 +596,7 @@ const getTopAuthorsGenresStat = async () => {
           getAvgExchangeTimeStat,
           getTopBooksStat,
           getTopAuthorsGenresStat,
-
+          getMostExchangedCity
         }
       }>
       {children}
