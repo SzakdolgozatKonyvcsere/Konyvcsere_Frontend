@@ -79,7 +79,7 @@ export default function Konyvfeltoltes() {
 
     const konyvAdat = new FormData();
     konyvAdat.append("user", user);
-    konyvAdat.append("author", author);
+    konyvAdat.append("authors", author);
     konyvAdat.append("title", title);
     konyvAdat.append("publisher", publisher);
     konyvAdat.append("publication_year", publication_year);
