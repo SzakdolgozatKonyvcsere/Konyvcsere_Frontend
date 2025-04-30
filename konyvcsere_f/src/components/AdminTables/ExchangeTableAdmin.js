@@ -16,7 +16,7 @@ export default function ExchangeTableAdmin({ exchanges }) {
         desired_owner_email: exchange.desired_owner_email,
         desired_owner_city: exchange.desired_owner_city,
         desired_owner_tel: exchange.desired_owner_tel,
-        offered_book_title: exchange.offered_book_title,
+        offered_book_title: exchange.offered_book_title,  
         offered_owner_name: exchange.offered_owner_name,
         offered_owner_email: exchange.offered_owner_email,
         offered_owner_city: exchange.offered_owner_city,

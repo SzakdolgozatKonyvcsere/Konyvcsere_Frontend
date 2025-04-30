@@ -17,13 +17,20 @@ import UsersTableAdminPage from "./pages/UsersTableAdminPage";
 import BooksTableAdminPage from "./pages/BooksTableAdminPage";
 import EditContentPage from "./pages/EditContentPage";
 
-const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
+import Kezdolap from "./pages/Kezdolap";
+import Bejelentkezes from "./pages/Bejelentkezes";
+import Regisztracio from "./pages/Regisztracio";
+import KezdolapUser from "./pages/KezdolapUser";
+import KonyvFeltoltes from "./components/KonyvFeltoltes";
+import KonyvInfoSajat from "./pages/UserOwnBooksInfo";
+import KeresesekInfoSajat from "./pages/UserOwnBookSearchesInfo";
+/* const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
 const Regisztracio = React.lazy(() => import("./pages/Regisztracio"));
 const KezdolapUser = React.lazy(() => import("./pages/KezdolapUser"));
 const KonyvFeltoltes = React.lazy(() => import("./components/KonyvFeltoltes"));
 const KonyvInfoSajat = React.lazy(() => import("./pages/UserOwnBooksInfo"));
-const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo"));
+const KeresesekInfoSajat = React.lazy(() => import("./pages/UserOwnBookSearchesInfo")); */
  
 function App() {
   const { user, loading } = useAuthContext();

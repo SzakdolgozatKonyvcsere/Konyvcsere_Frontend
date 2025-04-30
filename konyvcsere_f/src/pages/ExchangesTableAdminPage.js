@@ -2,7 +2,7 @@ import useApiContext from "../contexts/ApiContext";
 import ExchangeTableAdmin from "../components/AdminTables/ExchangeTableAdmin";;
 
 export default function ExchangesTableAdminPage() {
-    const { exchangeLista, loading } = useApiContext();
+    const { exchangeLista} = useApiContext();
 
   return (
     <main>
