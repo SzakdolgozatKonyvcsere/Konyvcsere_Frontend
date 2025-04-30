@@ -12,10 +12,13 @@ import {
   PieChart,
   Pie,
   Cell,
-  Legend
+  Legend,
+  RadialBar,
+  RadialBarChart
 } from 'recharts';
 import useApiContext from '../../contexts/ApiContext';
 import useAuthContext from '../../contexts/AuthContext';
+import AdminSummaryStats from './AdminSummaryStats';
 
 export default function StatisticsAdmin() {
   const { user } = useAuthContext();
@@ -28,7 +31,8 @@ export default function StatisticsAdmin() {
     getExchangeSuccessRatioStat,
     getAvgExchangeTimeStat,
     getTopBooksStat,
-    getTopAuthorsGenresStat
+    getTopAuthorsGenresStat,
+    getMostExchangedCity,
   } = useApiContext();
 
   // State hooks for stats
@@ -41,6 +45,7 @@ export default function StatisticsAdmin() {
   const [avgTime, setAvgTime] = useState(null);
   const [topBooks, setTopBooks] = useState([]);
   const [topAG, setTopAG] = useState({ authors: [], genres: [] });
+  const [mostCity, setMostCity] = useState(null);
 
   // Interval state
   const [intervalReg, setIntervalReg] = useState('daily');
@@ -62,19 +67,17 @@ export default function StatisticsAdmin() {
       setAvgTime(avg.avg_hours);
       setTopBooks(await getTopBooksStat());
       setTopAG(await getTopAuthorsGenresStat());
+      const cityRes = await getMostExchangedCity();
+      setMostCity(cityRes[0] || null);
+    
     }
     fetchStats();
   }, [user, intervalReg, intervalLogin, intervalUploadTrend, intervalClosedEx]);
 
-  // KPI Card Component
-  const StatsCard = ({ title, value }) => (
-    <Card className="mb-3 shadow-sm">
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text as="h2">{value}</Card.Text>
-      </Card.Body>
-    </Card>
-  );
+  const data = [
+    { name: 'Átlagos csereidő', value: avgTime || 0 }
+  ];
+
 
   return (
     <div className="stats-container">
@@ -83,16 +86,34 @@ export default function StatisticsAdmin() {
       Üdvözöllek {user?.full_name ? `, ${user.full_name}` : ""}!
         Itt áttekintheted a felhasználói aktivitást, a könyvfeltöltéseket és a cserefolyamatokat különböző bontásokban.
       </p>
-    <Container fluid>
-      {/* KPI Row */}
-      <Row className="mb-4">
-        <Col><StatsCard title="Új regisztrációk (napi)" value={regStats.reduce((sum, r) => sum + r.count, 0)} /></Col>
-        <Col><StatsCard title="Bejelentkezések (heti)" value={loginStats.reduce((sum, l) => sum + l.count, 0)} /></Col>
-        <Col><StatsCard title="Lezárt cserék (havi)" value={closedEx.reduce((sum, e) => sum + e.count, 0)} /></Col>
-        <Col><StatsCard title="Átlagos csereidő" value={`${avgTime} óra`} /></Col>
-      </Row>
 
-      {/* Trend and Category Charts */}
+       <hr className="section-divider" />
+       
+      <AdminSummaryStats />
+    <Container fluid>
+
+      <Card.Title className="mb-4"><p className="intro">Átlagos Csereidő</p></Card.Title>
+              <ResponsiveContainer width="100%" height={250}>
+                <RadialBarChart
+                  cx="50%" cy="50%" innerRadius="70%" outerRadius="100%"
+                  barSize={20} data={data} startAngle={180} endAngle={0}
+                >
+                  <RadialBar
+                    minAngle={15} background clockWise dataKey="value"
+                    fill="#8884d8"
+                  />
+                  <Legend
+                    iconSize={0}
+                    layout="vertical"
+                    verticalAlign="middle"
+                    align="center"
+                    formatter={() => avgTime !== null ? `${avgTime} óra` : 'Betöltés...'}
+                  />
+                  <Tooltip formatter={val => `${val} óra`} />
+                </RadialBarChart>
+              </ResponsiveContainer>
+
+      {/* Trend , Category */}
       <Row className="mb-4">
         <Col md={6}>
           <Card className="mb-3 shadow-sm">
@@ -132,7 +153,7 @@ export default function StatisticsAdmin() {
         </Col>
       </Row>
 
-      {/* Success Ratio and Top Lists */}
+      {/* Success Ratio, Top Lists */}
       <Row className="mb-4">
         <Col md={4}>
           <Card className="mb-3 shadow-sm">
@@ -158,7 +179,7 @@ export default function StatisticsAdmin() {
               <Card.Title>Legnépszerűbb könyvek</Card.Title>
               <Table striped bordered hover size="sm">
                 <thead>
-                  <tr><th>Könyv</th><th>Kérések</th></tr>
+                  <tr><th>Könyv</th><th>Keresések</th></tr>
                 </thead>
                 <tbody>
                   {topBooks.map((row, idx) => (
@@ -173,7 +194,7 @@ export default function StatisticsAdmin() {
               <Card.Title>Top szerzők</Card.Title>
               <Table striped bordered hover size="sm" className="mb-2">
                 <thead>
-                  <tr><th>Szerző</th><th>Kérések</th></tr>
+                  <tr><th>Szerző</th><th>Keresések</th></tr>
                 </thead>
                 <tbody>
                   {topAG.authors.map((row, idx) => (
@@ -184,7 +205,7 @@ export default function StatisticsAdmin() {
               <Card.Title>Top műfajok</Card.Title>
               <Table striped bordered hover size="sm">
                 <thead>
-                  <tr><th>Műfaj</th><th>Kérések</th></tr>
+                  <tr><th>Műfaj</th><th>Keresések</th></tr>
                 </thead>
                 <tbody>
                   {topAG.genres.map((row, idx) => (
@@ -192,6 +213,21 @@ export default function StatisticsAdmin() {
                   ))}
                 </tbody>
               </Table>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      {/* Most Exchanged City */}
+
+      <Row className="mb-4">
+        <Col md={4}>
+          <Card className="shadow-sm">
+            <Card.Body>
+              <Card.Title>Legtöbbet cserélt város</Card.Title>
+              {mostCity
+                ? <p>{mostCity.city}: {mostCity.exchange_number} csere</p>
+                : <p>Nincs elérhető adat</p>
+              }
             </Card.Body>
           </Card>
         </Col>
@@ -214,7 +250,7 @@ export default function StatisticsAdmin() {
         </Card.Body>
       </Card>
 
-      {/* Manual Refresh Button */}
+      {/* Refresh Button */}
       <Button onClick={() => window.location.reload()} className="mt-3">Adatok frissítése</Button>
     </Container>
     </div>
