@@ -16,6 +16,7 @@ import ExchangesTableAdminPage from "./pages/ExchangesTableAdminPage";
 import UsersTableAdminPage from "./pages/UsersTableAdminPage";
 import BooksTableAdminPage from "./pages/BooksTableAdminPage";
 import EditContentPage from "./pages/EditContentPage";
+import StatisticsPageAdmin from "./pages/StatisticsPageAdmin";
 
 import Kezdolap from "./pages/Kezdolap";
 import Bejelentkezes from "./pages/Bejelentkezes";
@@ -62,6 +63,7 @@ function App() {
           <Route path="tartalomszerk" element={<EditContentPage />} />
           <Route path="osszescsere" element={<ExchangesTableAdminPage/>} />
           <Route path="profil" element={<UserOwnInfo />} />
+          <Route path="stats" element={<StatisticsPageAdmin />} />
           <Route path="*" element={<NoPage />} />
         </Route>}
 

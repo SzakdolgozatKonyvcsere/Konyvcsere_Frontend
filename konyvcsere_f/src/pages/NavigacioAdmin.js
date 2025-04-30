@@ -25,6 +25,9 @@ export default function NavigacioAdmin() {
                             <Link className="nav-link" to="/" onClick={() => setMenuOpen(false)}>Kezdőlap</Link>
                         </li>
                         <li className="list-group-item border-0">
+                            <Link className="nav-link" to="/stats" onClick={() => setMenuOpen(false)}>Áttekintés</Link>
+                        </li>
+                        <li className="list-group-item border-0">
                             <button 
                                 className="nav-link btn btn-link" 
                                 onClick={() => setEditMenuOpen(!editMenuOpen)} // Lenyíló menü
