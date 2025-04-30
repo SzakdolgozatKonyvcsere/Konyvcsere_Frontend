@@ -26,6 +26,7 @@ import KonyvFeltoltes from "./components/KonyvFeltoltes";
 import KonyvInfoSajat from "./pages/UserOwnBooksInfo";
 import KeresesekInfoSajat from "./pages/UserOwnBookSearchesInfo";
 import EmailTableAdminPage from "./pages/EmailTableAdminPage";
+import InactiveUser from "./pages/InactiveUser";
 
 /* const Kezdolap = React.lazy(() => import("./pages/Kezdolap"));
 const Bejelentkezes = React.lazy(() => import("./pages/Bejelentkezes"));
@@ -41,6 +42,7 @@ function App() {
   const isGuest = !user;
   const isAdmin = user && user.role === 0;
   const isUser = user && user.role === 1;
+  const isInactive = user && user.role === 2;
 
   if (loading) return <Loader />;
 
@@ -85,6 +87,13 @@ function App() {
 
           {/*<Route path="osszeskonyv" element={<TablazatKonyvek />} />*/}          
         </Route>}
+
+        {isInactive && (
+          <Route element={<InactiveUser />}>        
+              <Route path="/" element={<InactiveUser/>} />    
+              {/*<Route path="*" element={<NoPage />} />*/}    
+          </Route>  
+        )}
       </Routes>
     </Suspense>
   );

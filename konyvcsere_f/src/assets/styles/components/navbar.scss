@@ -62,6 +62,9 @@
                     margin: 0;
                     font-size: 1rem;
                     text-align: center;
+                    @media (max-width: $medium-screen) {
+                        display: none;
+                    }
                 }
             }
         }
