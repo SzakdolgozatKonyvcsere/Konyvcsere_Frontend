@@ -396,12 +396,6 @@ const getTopAuthorsGenresStat = async () => {
   return data;
 };
 
-
-
-
-
-
-
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
