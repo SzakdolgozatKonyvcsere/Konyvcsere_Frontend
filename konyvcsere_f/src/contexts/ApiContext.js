@@ -351,7 +351,7 @@ export const ApiProvider = ({ children }) => {
     }
   }
 
-  //admin stats
+  //admin statss
   const getRegistrationsStat = async (interval = 'daily') => {
     const { data } = await myAxios.get(`/api/admin/new-reg?interval=${interval}`);
     return data;
