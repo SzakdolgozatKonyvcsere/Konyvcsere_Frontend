@@ -8,13 +8,14 @@ export const ApiContext = createContext("");
 
 export const ApiProvider = ({ children }) => {
   const navigate = useNavigate();
-  const {user, crsf} = useAuthContext();
-  
+  const { user, crsf } = useAuthContext();
+
   const [loading, setLoading] = useState(false);
 
   const [userLista, setUserLista] = useState([]);
   const [bookLista, setBookLista] = useState([]);
   const [exchangeLista, setExchangeLista] = useState([]);
+  const [emailLista, setEmailLista] = useState([]);
   const [genreList, setGenreList] = useState([]);
   const [bookDemandLista, setBookDemandLista] = useState([]);
   const [availableBookLista, setAvailableBookLista] = useState([]);
@@ -22,7 +23,7 @@ export const ApiProvider = ({ children }) => {
   const [userUpdateBookDemand, setUserUpdateBookDemand] = useState([]);
   const [userUpdateBookOffer, setUserUpdateBookOffer] = useState([]);
 
-  const [userProfileInfoList, setUserProfileInfoList] = useState([]); 
+  const [userProfileInfoList, setUserProfileInfoList] = useState([]);
   const [userBookOffersInfo, setUserBookOffersInfo] = useState([]);
   const [userBookDemandsInfo, setUserBookDemandsInfo] = useState([]);
 
@@ -30,43 +31,43 @@ export const ApiProvider = ({ children }) => {
   //const [userGetId, setUserGetId] = useState([]);
   //const [booksAllForExchangeList, setBooksAllForExchangeList] = useState([]);
   //const csrf = () => myAxios.get("/sanctum/csrf-cookie");
-  const [demands, setDemands]     = useState([])
-  const [matches, setMatches]     = useState({})   // { [demandId]: [offers...] }
+  const [demands, setDemands] = useState([])
+  const [matches, setMatches] = useState({})   // { [demandId]: [offers...] }
 
   //Users
   const getUsers = async (vegpont) => {
     setLoading(true);
-    try{
-      const {data} = await myAxios.get(vegpont);
+    try {
+      const { data } = await myAxios.get(vegpont);
       setUserLista(data);
     } catch (error) {
-        console.log("Hiba:", error);
-    }finally{
+      console.log("Hiba:", error);
+    } finally {
       setLoading(false); // Stop loading after fetching user 
     }
   }
 
-  const postUsers = async(vegpont,adat)=>{
+  const postUsers = async (vegpont, adat) => {
     setLoading(true);
-    try{
-        const response = await myAxios.post(vegpont,adat);
-        //console.log("adat:", response.data)
-    }catch(error){
-        console.log("Hiba",error);
-    }finally{
+    try {
+      const response = await myAxios.post(vegpont, adat);
+      //console.log("adat:", response.data)
+    } catch (error) {
+      console.log("Hiba", error);
+    } finally {
       setLoading(false);
     }
   }
 
-  const adminRoleChange = async(user_id, selected_role) => {
+  const adminRoleChange = async (user_id, selected_role) => {
     setLoading(true);
-    try{
-        const response = await myAxios.patch(`/api/users/${user_id}/change-role`, {
-          role:selected_role
-        });
-    }catch(error){
-        console.log("Hiba",error);
-    }finally{
+    try {
+      const response = await myAxios.patch(`/api/users/${user_id}/change-role`, {
+        role: selected_role
+      });
+    } catch (error) {
+      console.log("Hiba", error);
+    } finally {
       setLoading(false);
     }
   }
@@ -81,23 +82,23 @@ export const ApiProvider = ({ children }) => {
       if (error.response && error.response.status !== 401) {
         console.log("Hiba:" + error.message);
       }
-    } finally{
+    } finally {
       setLoading(false); // Stop loading after fetching books
     }
   };
-  const postBooks = async(vegpont,adat)=>{
+  const postBooks = async (vegpont, adat) => {
     setLoading(true);
-    try{
-        const response = await myAxios.post(vegpont,adat);
-        //console.log("adat:", response.data)
-    }catch(error){
-        console.log("Hiba",error);
-    }finally{
+    try {
+      const response = await myAxios.post(vegpont, adat);
+      //console.log("adat:", response.data)
+    } catch (error) {
+      console.log("Hiba", error);
+    } finally {
       setLoading(false);
     }
   }
 
-  const getGenreList = async() => {
+  const getGenreList = async () => {
     setLoading(true);
     try {
       const response = await myAxios.get("/api/genres");
@@ -119,30 +120,30 @@ export const ApiProvider = ({ children }) => {
       if (error.response && error.response.status !== 401) {
         console.log("Hiba:" + error.message);
       }
-    } finally{
+    } finally {
       setLoading(false); // Stop loading after fetching
     }
   };
 
 
   // adott felhasználó könyveinek (s + f) lekérése
-const getUserBookOffersInfo2 = async (user_id) => {
-  //setLoading(true);
-  try {
-    const {data} = await myAxios.get(`/api/user/${user_id}/book-offers`);
-    console.log("Kapott user könyv adatok:", user_id);
-    setUserBookOffersInfo2(data);
-  } catch (error) {
-    if (error.response && error.response.status !== 401) {
-      console.log("Hiba:" + error.message);
+  const getUserBookOffersInfo2 = async (user_id) => {
+    //setLoading(true);
+    try {
+      const { data } = await myAxios.get(`/api/user/${user_id}/book-offers`);
+      console.log("Kapott user könyv adatok:", user_id);
+      setUserBookOffersInfo2(data);
+    } catch (error) {
+      if (error.response && error.response.status !== 401) {
+        console.log("Hiba:" + error.message);
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
   }
-}
-//osszes elerheto (s + f) konyv
+  //osszes elerheto (s + f) konyv
   const getAllAvailableOfferedBooks = async () => {
-    
+
     try {
       //console.log("Fetching data from backend..."); // Debug log before request
       const { data } = await myAxios.get("/api/all-available-books");
@@ -153,11 +154,11 @@ const getUserBookOffersInfo2 = async (user_id) => {
       if (error.response && error.response.status !== 401) {
         console.log("Hiba:" + error.message);
       }
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
-//csere tortenet valtoztatasa elso kerelemmel
+  //csere tortenet valtoztatasa elso kerelemmel
   const postExchangeRequest = async (adat) => {
     //setLoading(true);
     try {
@@ -181,82 +182,82 @@ const getUserBookOffersInfo2 = async (user_id) => {
   const getUserById = async (id) => {
     //setLoading(true);
     try {
-        const response = await myAxios.get(`/api/user/${id}/showinfo`);
-        return response.data;
-        //return response.data.length > 0 ? response.data[0] : null;
+      const response = await myAxios.get(`/api/user/${id}/showinfo`);
+      return response.data;
+      //return response.data.length > 0 ? response.data[0] : null;
     } catch (error) {
-        console.error("Hiba a user lekérdezésnél:", error);
-        return null;
+      console.error("Hiba a user lekérdezésnél:", error);
+      return null;
     } finally {
       setLoading(false);
     }
-};
-// adott user legtobbet cserelt mufaja
-const getUserByIdGenre = async (id) => {
-  //setLoading(true);
-  try {
+  };
+  // adott user legtobbet cserelt mufaja
+  const getUserByIdGenre = async (id) => {
+    //setLoading(true);
+    try {
       const response = await myAxios.get(`/api/user/${id}/book-offers`);
       return response.data;
       //return response.data.length > 0 ? response.data[0] : null;
-  } catch (error) {
+    } catch (error) {
       console.error("Hiba a user lekérdezésnél:", error);
       return null;
-  } finally {
-    setLoading(false);
-  }
-};
-// adott userhez kapcsolodo osszes exchange
-const getExchangeByUser = async (userId) => {
-  //setLoading(true);
-  try {
+    } finally {
+      setLoading(false);
+    }
+  };
+  // adott userhez kapcsolodo osszes exchange
+  const getExchangeByUser = async (userId) => {
+    //setLoading(true);
+    try {
       const response = await myAxios.get(`/api/user/${userId}/my-exchanges`);
       console.log("csere api 1: ", response.data)
       return response.data;
-  } catch (error) {
+    } catch (error) {
       console.error("Hiba az exchange by user lekérdezésnél:", error);
       return null;
-  } finally {
-    setLoading(false);
-  }
-};
-// adott konyv lekerese az exchange kiirashoz
-const getBookByIdForExchange = async (id) => {
-  //setLoading(true);
-  try {
-    const response = await myAxios.get(`/api/user/${id}/book-by-id`);
-    return response.data;
-} catch (error) {
-    console.error("Hiba a user lekérdezésnél:", error);
-    return null;
-} finally {
-  setLoading(false);
-}
-};
-// cserefolyamat 1 elfogadas
-const patchAcceptExchange = async (exchange_id) => {
-  try {
-    //await csrf();
-    console.log("Sending PATCH request with exchange_id:", exchange_id);
-    const response = await myAxios.patch(`/api/user/exchange/${exchange_id}/accept`, {
-      exchange_status: "f"
-    });
-    const data = response.data; // kell majd a local state frissiteshez
-    if (response.status === 200) {
-      alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+    } finally {
+      setLoading(false);
     }
-    return data;
-  } catch (error) {
+  };
+  // adott konyv lekerese az exchange kiirashoz
+  const getBookByIdForExchange = async (id) => {
+    //setLoading(true);
+    try {
+      const response = await myAxios.get(`/api/user/${id}/book-by-id`);
+      return response.data;
+    } catch (error) {
+      console.error("Hiba a user lekérdezésnél:", error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+  // cserefolyamat 1 elfogadas
+  const patchAcceptExchange = async (exchange_id) => {
+    try {
+      //await csrf();
+      console.log("Sending PATCH request with exchange_id:", exchange_id);
+      const response = await myAxios.patch(`/api/user/exchange/${exchange_id}/accept`, {
+        exchange_status: "f"
+      });
+      const data = response.data; // kell majd a local state frissiteshez
+      if (response.status === 200) {
+        alert('Sikeresen elküldted a kiválasztott könyvet!'); // Success message
+      }
+      return data;
+    } catch (error) {
       console.error("acceptExchange error:", error);
       return null;
-  } finally {
-    setLoading(false);
-  }
-};
+    } finally {
+      setLoading(false);
+    }
+  };
 
-//cserefolyamat 2 konyv kivalasztasa
-const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
-  setLoading(true);
-  try {
+  //cserefolyamat 2 konyv kivalasztasa
+  const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
+    setLoading(true);
+    try {
       const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/select-book`, {
         offered_item: bookId
       });
@@ -265,61 +266,61 @@ const patchExchangeSelectOfferedBook = async (exchangeId, bookId) => {
         return response.data || true;
       }
       // Ha mégis más státusz jött
-    console.warn("Váratlan státuszkód:", response.status);
-    return null;
+      console.warn("Váratlan státuszkód:", response.status);
+      return null;
       //return data;
-  } catch (error) {
+    } catch (error) {
       console.error("selectOfferedBook error2:", error);
       return null;
-  } finally {
-    setLoading(false);
-  }
-};
-// cserefolyamat 3 elfogadas
-const patchFinalizeExchange = async (exchangeId) => {
-  try {
-    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/acceptfinal`);
-    if (response.status === 200) {
-      alert('Sikeresen véglegesítetted a cserét! Minden további információt megkapsz e-mailben!'); // Success message
-      return response.data || true;
+    } finally {
+      setLoading(false);
     }
-    return response.data;
-  } catch (error) {
-    console.error("Hiba a csere véglegesítésekor:", error);
-    return null;
-  }
-};
-//cserefolyamat 4 visszautasít
-const patchRejectExchange = async (exchangeId) => {
-  try {
-    const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/reject`);
-    if (response.status === 200) {
-      alert('Sikeresen visszautasítottad a beleegyezést!'); // Success message
-      return response.data || true;
+  };
+  // cserefolyamat 3 elfogadas
+  const patchFinalizeExchange = async (exchangeId) => {
+    try {
+      const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/acceptfinal`);
+      if (response.status === 200) {
+        alert('Sikeresen véglegesítetted a cserét! Minden további információt megkapsz e-mailben!'); // Success message
+        return response.data || true;
+      }
+      return response.data;
+    } catch (error) {
+      console.error("Hiba a csere véglegesítésekor:", error);
+      return null;
     }
-    return response.data;
-  } catch (error) {
-    console.error("Hiba a visszautasítás véglegesítésekor:", error);
-    return null;
-  }
-};
+  };
+  //cserefolyamat 4 visszautasít
+  const patchRejectExchange = async (exchangeId) => {
+    try {
+      const response = await myAxios.patch(`/api/user/exchange/${exchangeId}/reject`);
+      if (response.status === 200) {
+        alert('Sikeresen visszautasítottad a beleegyezést!'); // Success message
+        return response.data || true;
+      }
+      return response.data;
+    } catch (error) {
+      console.error("Hiba a visszautasítás véglegesítésekor:", error);
+      return null;
+    }
+  };
 
-//összes cserefolyamata
-const getExchange = useCallback(async (url) => {
-  console.log("SzijaMIJA")
-  setLoading(true);
-  try {
-    const response = await myAxios.get(url);
-    setExchangeLista(response.data);
-  } catch (error) {
-    console.error("Exchange fetch error:", error);
-  } finally {
-    setLoading(false);
-  }
-}, []);
+  //összes cserefolyamata
+  const getExchange = useCallback(async (url) => {
+    console.log("SzijaMIJA")
+    setLoading(true);
+    try {
+      const response = await myAxios.get(url);
+      setExchangeLista(response.data);
+    } catch (error) {
+      console.error("Exchange fetch error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
 
-//kereslet kinalat 1
+  //kereslet kinalat 1
   // 1) Keresések lekérdezése
   const getAllDemands = async () => {
     try {
@@ -328,39 +329,53 @@ const getExchange = useCallback(async (url) => {
       return response.data;            // response.data: tömb [{ demand_id, … }, …]
     } catch (error) {
       console.error('Hiba a mentett keresések lekérdezésénél:', error)
-      return []; 
+      return [];
     } finally {
       setLoading(false);
     }
   }
-// 2) Egy konkrét keresés találatainak lekérdezése
-const getMatchesForDemand = async (demandId) => {
-  
-  try {
-    const response = await myAxios.get(`/api/book-demands-list/${demandId}/matches`)
-    //setMatches(prev => ({ 
-    //  ...prev, 
-    //  [demandId]: response.data    // response.data: tömb ajánlatokkal
-    //}))
-    return response.data;
-  } catch (error) {
-    console.error(`Hiba a találatok lekérdezésénél (demand=${demandId}):`, error)
-  } finally {
-    setLoading(false);
+  // 2) Egy konkrét keresés találatainak lekérdezése
+  const getMatchesForDemand = async (demandId) => {
+
+    try {
+      const response = await myAxios.get(`/api/book-demands-list/${demandId}/matches`)
+      //setMatches(prev => ({ 
+      //  ...prev, 
+      //  [demandId]: response.data    // response.data: tömb ajánlatokkal
+      //}))
+      return response.data;
+    } catch (error) {
+      console.error(`Hiba a találatok lekérdezésénél (demand=${demandId}):`, error)
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
-//admin stats
-const getRegistrationsStat = async (interval = 'daily') => {
-  const { data } = await myAxios.get(`/api/admin/new-reg?interval=${interval}`);
-  return data;
-};
+  //admin stats
+  const getRegistrationsStat = async (interval = 'daily') => {
+    const { data } = await myAxios.get(`/api/admin/new-reg?interval=${interval}`);
+    return data;
+  };
 
-const getLoginsStat = async (interval = 'daily') => {
-  const { data } = await myAxios.get(`/api/admin/logins?interval=${interval}`);
-  return data;
-};
+  const getLoginsStat = async (interval = 'daily') => {
+    const { data } = await myAxios.get(`/api/admin/logins?interval=${interval}`);
+    return data;
+  };
 
+  const getUploadsByCategoryStat = async () => {
+    const { data } = await myAxios.get('/api/admin/book-by-categ');
+    return data;
+  };
+
+  const getUploadsTrendStat = async (interval = 'daily') => {
+    const { data } = await myAxios.get(`/api/admin/upload-trend?interval=${interval}`);
+    return data;
+  };
+
+  const getClosedExchangesStat = async (interval = 'daily') => {
+    const { data } = await myAxios.get(`/api/admin/exchange-closed?interval=${interval}`);
+    return data;
+  };
 const getUploadsByCategoryStat = async () => {
   const { data } = await myAxios.get('/api/admin/book-by-categ');
   return data;
@@ -400,20 +415,36 @@ const getMostExchangedCity = async () => {
   return data;
 };
 
+  const getExchangeSuccessRatioStat = async () => {
+    const { data } = await myAxios.get('/api/admin/exchange-succes-ratio');
+    return data;
+  };
 
+  const getAvgExchangeTimeStat = async () => {
+    const { data } = await myAxios.get('/api/admin/exchange-avg-time');
+    return data;
+  };
 
+  const getTopBooksStat = async () => {
+    const { data } = await myAxios.get('/api/admin/book-top');
+    return data;
+  };
 
+  const getTopAuthorsGenresStat = async () => {
+    const { data } = await myAxios.get('/api/admin/author-genre-top');
+    return data;
+  };
 
   //Mindet at lehete irni nem parameteresre
   const getUserProfileInfo = async (user_id) => {
     setLoading(true);
     try {
-      const {data} = await myAxios.get(`/api/user/${user_id}/profile-info`);
+      const { data } = await myAxios.get(`/api/user/${user_id}/profile-info`);
       setUserProfileInfoList(data);
     } catch (error) {
       if (error.response && error.response.status !== 401) {
         console.log("Hiba:" + error.message);
-      } 
+      }
     } finally {
       setLoading(false);
     }
@@ -421,10 +452,10 @@ const getMostExchangedCity = async () => {
   const getUserBookOffersInfo = async (user_id) => {
     //setLoading(true);
     try {
-      const {data} = await myAxios.get(`/api/user/${user_id}/book-offer-info`);
+      const { data } = await myAxios.get(`/api/user/${user_id}/book-offer-info`);
       setUserBookOffersInfo(data);
     } catch (error) {
-        console.log("Hiba:" + error.message);
+      console.log("Hiba:" + error.message);
     } finally {
       setLoading(false);
     }
@@ -432,10 +463,10 @@ const getMostExchangedCity = async () => {
   const getUserBookDemandsInfo = async (user_id) => {
     //setLoading(true);
     try {
-      const {data} = await myAxios.get(`/api/user/${user_id}/book-demand-info`);
+      const { data } = await myAxios.get(`/api/user/${user_id}/book-demand-info`);
       setUserBookDemandsInfo(data);
     } catch (error) {
-        console.log("Hiba:" + error.message);
+      console.log("Hiba:" + error.message);
     } finally {
       setLoading(false);
     }
@@ -444,7 +475,7 @@ const getMostExchangedCity = async () => {
   const patchUserPFP = async (vegpont, adat) => {
     setLoading(true);
     try {
-      await myAxios.post(vegpont, adat);      
+      await myAxios.post(vegpont, adat);
     } catch (error) {
       console.log(error.message)
     } finally {
@@ -455,7 +486,7 @@ const getMostExchangedCity = async () => {
   const putUserUpdateBookDemand = async (book_demand_id, adat) => {
     setLoading(true);
     try {
-      await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);  
+      await myAxios.put(`/api/book-demands/${book_demand_id}/user-update`, adat);
     } catch (error) {
       console.log(error.message)
     } finally {
@@ -520,13 +551,21 @@ const getMostExchangedCity = async () => {
     }
   }
 
+  const softDeleteEmail = async (exchangeId) => {
+    try {
+      await myAxios.patch(`/api/soft-delete/${exchangeId}/exchange`);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   const postBookSearch = async (data) => {
     setLoading(true);
     try {
       const response = await myAxios.post('/api/keresesfeltoltes', data);
       return response.data;
     } catch (error) {
-      console.log("Hiba, "+ error.message);
+      console.log("Hiba, " + error.message);
     } finally {
       setLoading(false);
     }
@@ -538,54 +577,68 @@ const getMostExchangedCity = async () => {
       const response = await myAxios.put(`/api/user/${user_id}/update-info`, data);
       return response.data;
     } catch (error) {
-      console.log("Hiba, "+ error.message);
+      console.log("Hiba, " + error.message);
     } finally {
       setLoading(false);
     }
   }
 
   //useEffect(()=>{
-    //if (user.role === 0) {
-      //getUsers("/api/users", setUserLista)
-      //getBooks("/api/book-offers", setBookLista)
-      //getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
-      //getUserById("/api/user/${adat}/showinfo", user_id)
-      //getUsers("/api/users", setUserLista)
-      //getBooks("/api/book-offers", setBookLista)
-    //} 
-    //getBookDemands("/api/book-demands", setBookDemandLista)
-    //postWorks("/api/work-upload")
-    //postBooks("/api/book-offer-upload")
-   
+  //if (user.role === 0) {
+  //getUsers("/api/users", setUserLista)
+  //getBooks("/api/book-offers", setBookLista)
+  //getAllAvailableOfferedBooks("/api/all-available-books", setAvailableBookLista)
+  //getUserById("/api/user/${adat}/showinfo", user_id)
+  //getUsers("/api/users", setUserLista)
+  //getBooks("/api/book-offers", setBookLista)
+  //} 
+  //getBookDemands("/api/book-demands", setBookDemandLista)
+  //postWorks("/api/work-upload")
+  //postBooks("/api/book-offer-upload")
+
   //},[])
+
+  //email ellenőrzés
+  const getEmail = useCallback(async (url) => {
+    console.log("valami")
+    setLoading(true);
+    try {
+      const response = await myAxios.get(url);
+      setEmailLista(response.data);
+    } catch (error) {
+      console.error("Exchange fetch error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
       getGenreList();
-      
+
     }
   }, [user]);
 
   return (
     <ApiContext.Provider
       value={
-        { 
-          userLista, bookLista, getExchange, exchangeLista, setExchangeLista, bookDemandLista,  
-          getUsers, postUsers, getBooks, postBooks, getBookDemands,  
+        {
+          userLista, bookLista, getExchange, exchangeLista, setExchangeLista, emailLista, getEmail, setEmailLista, bookDemandLista,
+          getUsers, postUsers, getBooks, postBooks, getBookDemands,
           userProfileInfoList, getUserProfileInfo, adminRoleChange,
-          userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  
-          userBookDemandsInfo, getUserBookDemandsInfo,  
-          availableBookLista, getAllAvailableOfferedBooks,  
+          userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,
+          userBookDemandsInfo, getUserBookDemandsInfo,
+          availableBookLista, getAllAvailableOfferedBooks,
           patchUserPFP, selectedImage, setSelectedImage, userInfoUpdate,
-          postExchangeRequest, getUserById, getUserByIdGenre,  
+          postExchangeRequest, getUserById, getUserByIdGenre,
           genreList, getGenreList, postBookSearch,
           putUserUpdateBookDemand, userUpdateBookDemand, setUserUpdateBookDemand,
           putUserUpdateBookOffer, userUpdateBookOffer, setUserUpdateBookOffer,
-          getExchangeByUser,  
+          getExchangeByUser,
           getBookByIdForExchange,
           getAllDemands, getMatchesForDemand, demands, matches,
           patchAcceptExchange, patchExchangeSelectOfferedBook, patchFinalizeExchange, patchRejectExchange,
-          softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange,
+          softDeleteBookDemand, softDeleteBookOffer, softDeleteExchange, softDeleteEmail,
           loading, setLoading,
 
           getRegistrationsStat,
