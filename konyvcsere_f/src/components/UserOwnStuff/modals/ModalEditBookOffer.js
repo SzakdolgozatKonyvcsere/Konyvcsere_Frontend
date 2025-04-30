@@ -59,7 +59,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
   if (!userUpdateBookOffer) return null;
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className='custom-modal-1'>
       <Modal.Header closeButton>
         <Modal.Title>szerkesztés</Modal.Title>
       </Modal.Header>
@@ -181,7 +181,7 @@ function ModalEditBookOffer({ show, handleClose, book, onUpdated}) {
           )*/}
         </Form>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className='custom-modal-footer-1'>
         <Button variant="secondary" onClick={handleClose}>vissza</Button>
         <Button
           variant="primary"

@@ -1,8 +1,13 @@
 import useApiContext, { ApiContext } from "../contexts/ApiContext";
 import UserTableAdmin from "../components/AdminTables/UserTableAdmin";
+import { useEffect } from "react";
 
 export default function UsersTableAdminPage() {
-    const { userLista } = useApiContext(); 
+    const {getUsers, userLista} = useApiContext();
+    useEffect (()=>{
+      if(userLista.length === 0) getUsers("/api/users")
+    }, []);
+
     return (
         <main>
             <h1>Táblázat Összes User - Admin</h1>

@@ -1,7 +1,7 @@
 import React from 'react'
 import useApiContext from '../../contexts/ApiContext';
 
-export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, removeFn}) {    
+export default function TableAdminCreate({tHeadLabels, tBodyContent, removeFn, rowIdKey}) {    
   //console.log("cim:" + tHeadLabels + "\ntartalom:" + tBodyContent + "\neditfgv:" + editFn + "\ndelfgv:" + removeFn)
   const {adminRoleChange} = useApiContext(); 
   
@@ -27,10 +27,7 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                 }
                 {/* IGNORE - Edit & Delete column heads */}
                 {!tBodyContent.some(row => 'full_name' in row) && (
-                  <>
-                    <th scope="col">Módosítás</th>
-                    <th scope="col">Törlés</th>
-                  </>
+                  <th scope="col">Törlés</th>
                 )}
             </tr>
         </thead>
@@ -51,6 +48,18 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                           <option value="1">Felhasználó</option>
                           <option value="2">Inaktív felhasználó</option>
                         </select>
+                      ) : key === "img_url" ? (
+                        <img className='table_admin-row_image' alt='admin felület - rekord képe' src={
+                            col
+                              ? col.includes("http")
+                                ? col
+                                : `http://localhost:8000/${col}`
+                              : 'http://localhost:8000/no_img.jpeg'
+                          }
+                        onError={(e) => {
+                          e.target.onerror = null; // Végtelen ciklus elkerülése érdekében
+                          e.target.src = 'http://localhost:8000/no_img.jpeg'
+                        }}></img>
                       ) : (
                         col ? col : "-"
                       )}
@@ -59,14 +68,9 @@ export default function TableAdminCreate({tHeadLabels, tBodyContent, editFn, rem
                 }
                 {
                   !tBodyContent.some(row => 'full_name' in row) && (
-                    <>
-                      <td className='table_admin-row--button'>
-                        <button onClick={editFn}>módosít</button>
-                      </td>
-                      <td className='table_admin-row--button'>
-                        <button onClick={removeFn}>töröl</button>
-                      </td> 
-                    </>
+                    <td className='table_admin-row--button'>
+                      <button onClick={() => removeFn(row[rowIdKey])}>töröl</button>
+                    </td> 
                   )
                 }
               

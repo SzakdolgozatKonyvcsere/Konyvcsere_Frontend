@@ -1,4 +1,4 @@
-import { createContext, use, useContext, useEffect, useState } from "react";
+import { createContext, use, useCallback, useContext, useEffect, useState } from "react";
 import { myAxios } from "../api/axios";
 import { data, useNavigate } from "react-router-dom";
 import useAuthContext from "./AuthContext";
@@ -35,7 +35,7 @@ export const ApiProvider = ({ children }) => {
 
   //Users
   const getUsers = async (vegpont) => {
-    //setLoading(true);
+    setLoading(true);
     try{
       const {data} = await myAxios.get(vegpont);
       setUserLista(data);
@@ -305,7 +305,8 @@ const patchRejectExchange = async (exchangeId) => {
 };
 
 //összes cserefolyamata
-const getExchange = async (url) => {
+const getExchange = useCallback(async (url) => {
+  console.log("SzijaMIJA")
   setLoading(true);
   try {
     const response = await myAxios.get(url);
@@ -315,7 +316,7 @@ const getExchange = async (url) => {
   } finally {
     setLoading(false);
   }
-};
+}, []);
 
 
 //kereslet kinalat 1
@@ -569,7 +570,7 @@ const getMostExchangedCity = async () => {
     <ApiContext.Provider
       value={
         { 
-          userLista, bookLista, getExchange,exchangeLista, setExchangeLista, bookDemandLista,  
+          userLista, bookLista, getExchange, exchangeLista, setExchangeLista, bookDemandLista,  
           getUsers, postUsers, getBooks, postBooks, getBookDemands,  
           userProfileInfoList, getUserProfileInfo, adminRoleChange,
           userBookOffersInfo, userBookOffersInfo2, getUserBookOffersInfo, getUserBookOffersInfo2,  

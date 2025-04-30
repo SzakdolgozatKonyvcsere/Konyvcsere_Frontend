@@ -21,9 +21,9 @@ export default function NavigacioAdmin() {
 
                 {menuOpen && (
                     <ul className="list-group position-absolute mt-2 bg-white shadow rounded p-2">
-                        {/*<li className="list-group-item border-0">
+                        <li className="list-group-item border-0">
                             <Link className="nav-link" to="/" onClick={() => setMenuOpen(false)}>Kezdőlap</Link>
-                        </li>*/}
+                        </li>
                         <li className="list-group-item border-0">
                             <Link className="nav-link" to="/stats" onClick={() => setMenuOpen(false)}>Áttekintés</Link>
                         </li>
